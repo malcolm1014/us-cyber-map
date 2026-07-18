@@ -25,6 +25,9 @@ addresses, phones, schedules, county library systems).
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| NE | **pass 1** (2026-07-18) | Kernelcon Apr cadence + origin (DC402/NEbraskaCERT/OWASP); DC402 + NEbraskaCERT added. TODO deep: urls for both, Omaha Maker Group, UNL, Lincoln |
+| NH | **pass 1** (2026-07-18) | DC603 2nd-Sat 7pm at Gusanoz, Lebanon. TODO deep: BSides NH existence, Port City Makerspace, UNH, Nashua/Seacoast |
+| NJ | **pass 1** (2026-07-18) | BSides South Jersey inaugural @ Rowan (200+) verified; DC201 at MakerBar Hoboken; DC862; MakerBar. TODO deep: DC201/MakerBar urls, Rutgers, north-Jersey libraries |
 | MS | **pass 1** (2026-07-18) | BSides Jackson (Nov, Ridgeland); MS Cyber Initiative mapped (MSU lead + Keesler + USM); Keesler AFB. TODO deep: BSides Jackson url/2026, MGCCC, makerspaces, Jackson libraries |
 | MT | **pass 1** (2026-07-18) | UM Missoula (MsDOS group) + MSU cyber lab; Bozeman Makerspace (public Thursdays). TODO deep: BSides MT existence, CyberMontana entry?, Missoula/Billings makerspaces |
 | ND | **pass 1** (2026-07-18) | BSides Fargo @ NDSU (Oct, HTB CTF) + Cybercon Bismarck State; NDSU CAE-R institute. TODO deep: urls for both cons, Fargo makerspace, NDIT |
