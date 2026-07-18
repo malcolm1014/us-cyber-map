@@ -22,9 +22,20 @@ addresses, phones, schedules, county library systems).
 
 ## Status
 
+**🎉 PASS 1 COMPLETE — all 50 states + DC + PR swept and web-verified (2026-07-18).**
+Next phase: deep passes per the TODO columns below (Florida-level detail:
+county library systems, meeting venues/phones, every chapter org).
+
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| RI | **pass 1** (2026-07-18) | DC401 = resurrection w/ founder's blessing; Ocean State Maker Mill. TODO deep: QuahogCon status, Providence libraries |
+| SC | **pass 1** (2026-07-18) | BSides Greenville Aug 29 + BSides Charleston Nov 7 verified upcoming. TODO deep: CyberSC org, Columbia meetups |
+| SD | **pass 1** (2026-07-18) | Already strong (WWHF, DakotaCon, DSU) — nothing new needed. TODO deep: Sioux Falls, SDSU |
+| VT | **pass 1** (2026-07-18) | Already covered (Norwich, Champlain/Leahy, Generator). TODO deep: BSides VT existence, VTC |
+| WV | **pass 1** (2026-07-18) | SecureWV Oct 22–23 verified upcoming (304 Geeks). TODO deep: Marshall forensics, makerspaces |
+| WY | **pass 1** (2026-07-18) | Cyber Cheyenne Oct 16 verified upcoming (CyberWyoming + regional Shindigs). TODO deep: makerspaces, Casper/Gillette |
+| PR | **pass 1** (2026-07-18) | BSidesPR = oldest PR hacker con (2013), bsides.pr verified. TODO deep: UPR, Engine-4, meetups |
 | NM | **pass 1** (2026-07-18) | BSides ABQ Sep 25–26 verified upcoming (UNM CE Center); DC505 active; CNM Cyber Center. TODO deep: NM Tech, Santa Fe, ABQ libraries |
 | NV | **pass 1** (2026-07-18) | DC775 1st-Wed at Bridgewire (SDR/ham/CTF); UNR Cyber Center + Nevada Cyber Club. TODO deep: Bridgewire url, UNLV, BSides Reno existence, Vegas libraries |
 | OK | **pass 1** (2026-07-18) | BSidesOK verified (free, ~600, Glenpool); Fab Lab Tulsa; TU = OCII home. TODO deep: BSides OKC, DC405, OU, OKC metro libraries |
