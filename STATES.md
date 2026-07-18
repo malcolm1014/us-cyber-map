@@ -25,6 +25,9 @@ addresses, phones, schedules, county library systems).
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| MS | **pass 1** (2026-07-18) | BSides Jackson (Nov, Ridgeland); MS Cyber Initiative mapped (MSU lead + Keesler + USM); Keesler AFB. TODO deep: BSides Jackson url/2026, MGCCC, makerspaces, Jackson libraries |
+| MT | **pass 1** (2026-07-18) | UM Missoula (MsDOS group) + MSU cyber lab; Bozeman Makerspace (public Thursdays). TODO deep: BSides MT existence, CyberMontana entry?, Missoula/Billings makerspaces |
+| ND | **pass 1** (2026-07-18) | BSides Fargo @ NDSU (Oct, HTB CTF) + Cybercon Bismarck State; NDSU CAE-R institute. TODO deep: urls for both cons, Fargo makerspace, NDIT |
 | KY | **pass 1** (2026-07-18) | DC502 founded Jul 2025 (new!). TODO deep: BSides Louisville existence, Lexington/UK, Louisville library maker |
 | LA | **pass 1** (2026-07-18) | BSidesNOLA (May 12, InterContinental, ICS focus) verified; NOLAcon site live; DCG 504 chartered. TODO deep: BSidesNOLA own url, NOLAcon dates, ULL, NOPL libraries, Baton Rouge |
 | ME | **pass 1** (2026-07-18) | BSides Maine inaugural May 30 2026 SOLD OUT (USM Hannaford Hall); Open Bench Project; UMaine Hackerspace. TODO deep: 2027 edition, Bangor/library systems |
