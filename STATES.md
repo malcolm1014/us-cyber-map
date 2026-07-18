@@ -25,6 +25,9 @@ addresses, phones, schedules, county library systems).
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| IA | **pass 1** (2026-07-18) | CornCon 12 Oct 2–3 verified upcoming (Docent Institute, RiverCenter); BSides Des Moines exists (no site found). TODO deep: SecDSM, Area 515, ISU CDC dates, Cedar Rapids |
+| ID | **pass 1** (2026-07-18) | BSides Boise (Oct-ish) + BSides Idaho Falls (EICEA 501c3) verified; Reuseum. TODO deep: Reuseum url, Boise Makers council spaces, ISU Pocatello |
+| KS | **pass 1** (2026-07-18) | BSidesKC reassigned to KS (7250 State Ave venue is Kansas side); K-State + Wichita State added. TODO deep: Johnson County Library MakerSpace, CyberICT Wichita, Topeka |
 | CT | **pass 1** (2026-07-18) | CT Hackerspace (oldest in CT) + MakerspaceCT (28k sq ft, G. Fox Bldg) verified; UNewHaven added. TODO deep: BSidesCT existence, Yale, Stamford/Fairfield corridor, more library systems |
 | DE | **pass 1** (2026-07-18) | Route 9 Library & Innovation Center verified (maker flagship). TODO deep: BSides Delaware status (still unconfirmed), Dover, DSU |
 | HI | **pass 1** (2026-07-18) | DC808 exiting hibernation (honest note); HICapacity @ Manoa Innovation Center; LocoMocoSec last known 2024. TODO deep: BSides Hawaii next edition, HPL libraries, neighbor islands |
