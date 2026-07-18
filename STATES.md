@@ -25,6 +25,7 @@ addresses, phones, schedules, county library systems).
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| NY | **pass 1** (2026-07-18) | BSides Buffalo (Jun 6, Canisius), NYS Cyber Conf (June, Albany), Rochester Security Summit (Oct 14–15) verified; DC585+Rochester 2600 joint 1st-Fri meeting at Interlock; Buffalo Launch Pad + BPL Teen Tech Centers; RPI/UAlbany/West Point/Rome Labs. TODO deep: NYC DCG status, Long Island, Hudson Valley (Squidwrench?), Tech Valley CoG Troy, NYPL system, Pace/Columbia, BSidesNYC next edition |
 | TX | **pass 1** (2026-07-18) | HOU.SEC.CON→CYBR.SEC.CON rebrand caught (Sep 15–16); BSidesSATX Jun/BSidesDFW Nov verified; DC512/DC214/DCG-SATX with meeting days; APL Innovate + TECHLink libraries; CyberTexas Foundation. TODO deep: BSides Austin site, Dallas PL "Story Center" unverified, Houston DCG, 2600 meetings, TexSAW/UNT, El Paso/Lubbock/RGV, county libraries |
 | FL | **deep** (external) | Lives in florida-cyber-map; anchors mirrored here |
 | All others | anchors | From Jul 2026 national sweep |
