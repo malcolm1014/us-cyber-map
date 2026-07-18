@@ -25,6 +25,9 @@ addresses, phones, schedules, county library systems).
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| UT | **pass 1** (2026-07-18) | BSidesSLC (April) verified; U of U added; SAINTCON/DC801/801 Labs already solid. TODO deep: Make Salt Lake, SLCPL creative lab, BYU/UVU, Ogden/Hill AFB |
+| MO | **pass 1** (2026-07-18) | BSidesKC (Apr, KCK) + ShowMeCon (Feb) verified; BSidesSTL skipping 2026→2027 noted; DC314 at The Crack Fox; Hammerspace KC; Missouri S&T; NGA West. TODO deep: KC/STL library systems, Mid-Continent Square One, WashU/SLU, Springfield |
+| WI | **pass 1** (2026-07-18) | CypherCon 10 Mar 24–25 2027 + BSidesMKE Mar 26 verified upcoming (joint week); DC608 Madison 501c3; MSOE Diercks Hall. TODO deep: WISCON, Milwaukee PL, UW-Madison, Green Bay/Fox Valley |
 | OR | **pass 1** (2026-07-18) | BSidesPDX Oct 23–24 verified upcoming; Rockwood Makerspace (Multnomah's first, 2015). TODO deep: DC503, PDX 2600, OWASP Portland, Eugene Maker Space, PSU CAE, Bend/Eugene coverage |
 | TN | **pass 1** (2026-07-18) | BSides Nashville (May 15, Marathon Music Works) + Knoxville (May 22, Mill & Mine) verified; PhreakNIC 27 alive; DC615 last-Thu 2000+ members; Knox Makers. Library layer was already strong (4th Floor/Cloud901/Studio NPL). TODO deep: BSides Knoxville url, Make Nashville, TN Tech CEROC, Memphis meetups, Chatt*Lab |
 | MN | **pass 1** (2026-07-18) | Cyber Security Summit Oct 27–28 verified upcoming (Bloomington, 16th); Secure360 May cadence; DC612; Best Buy Teen Tech Center @ Mpls Central; UMN TLI. TODO deep: BSidesMSP status, Createch SPPL, Metro State/MN Cyber, Hack Factory verify, Duluth/Rochester |
