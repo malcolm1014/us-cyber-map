@@ -39,6 +39,8 @@
     --c-meetup:  #d55181;
     --c-maker:   #9085e9;
     --c-school:  #3987e5;
+    --c-library: #199e70;
+    --c-youth:   #c98500;
     --c-gov:     #8195AB;  /* neutral "other" slot — deliberately outside the hue palette */
 
     --sans: 'Space Grotesk', system-ui, sans-serif;
@@ -283,7 +285,7 @@
 <aside id="panel">
   <header class="pad hairline">
     <h1><span class="prompt">❯</span>US Cyber Resource Map</h1>
-    <p class="sub">Hacker cons, DEF CON groups, 2600 meetings, OWASP chapters, hackerspaces, cyber schools, and gov hubs — by region.</p>
+    <p class="sub">Hacker cons, DEF CON groups, 2600 meetings, hackerspaces, cyber schools, library makerspaces, and student STEM programs — by region, state, and category.</p>
     <div class="status"><b id="statusText">ALL SECTORS</b> · <span id="visCount"></span> NODES<span class="cursor"></span></div>
   </header>
 
@@ -297,6 +299,11 @@
   <div class="pad hairline">
     <div class="label">Sectors</div>
     <div class="sectors" id="sectors"></div>
+  </div>
+
+  <div class="pad hairline" id="statewrap" style="display:none">
+    <div class="label">States</div>
+    <div class="cats" id="states"></div>
   </div>
 
   <div class="pad hairline">
@@ -334,12 +341,19 @@ const REGIONS = {
 
 /* Fixed display order — also the palette's validated adjacency order. */
 const CATEGORIES = {
-  con:    { label:"Conferences",                color:getCSS('--c-con')    },
-  meetup: { label:"Meetups & groups",           color:getCSS('--c-meetup') },
-  maker:  { label:"Hackerspaces & makerspaces", color:getCSS('--c-maker')  },
-  school: { label:"Schools & universities",     color:getCSS('--c-school') },
-  gov:    { label:"Gov & research",             color:getCSS('--c-gov')    },
+  con:    { label:"Conferences",                color:getCSS('--c-con')     },
+  meetup: { label:"Meetups & groups",           color:getCSS('--c-meetup')  },
+  maker:  { label:"Hackerspaces & makerspaces", color:getCSS('--c-maker')   },
+  school: { label:"Schools & universities",     color:getCSS('--c-school')  },
+  library:{ label:"Library makerspaces",        color:getCSS('--c-library') },
+  youth:  { label:"Student STEM & cyber",       color:getCSS('--c-youth')   },
+  gov:    { label:"Gov & research",             color:getCSS('--c-gov')     },
 };
+
+/* States (from STATE_GEO in regions.js) — the second drill-down tier. */
+const STATES = {};
+for (const f of STATE_GEO.features)
+  STATES[f.properties.code] = { name:f.properties.name, region:f.properties.region };
 
 function getCSS(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
 function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -383,6 +397,63 @@ function restyleRegions(){
   }
 }
 
+/* State polygons — drawn on top of the active region only */
+let activeState = null;
+let stateLayers = {};
+function stateStyle(code){
+  const color = activeRegion !== null ? REGIONS[activeRegion].color : '#888';
+  const on = activeState === null || code === activeState;
+  return { color, weight: code === activeState ? 2 : 1, opacity: on ? .85 : .3,
+           fillColor: color, fillOpacity: code === activeState ? .10 : .03 };
+}
+function showStates(){
+  for (const l of Object.values(stateLayers)) map.removeLayer(l);
+  stateLayers = {};
+  if (activeRegion === null) return;
+  for (const f of STATE_GEO.features){
+    if (f.properties.region !== activeRegion) continue;
+    const code = f.properties.code;
+    stateLayers[code] = L.geoJSON(f, { style: stateStyle(code) })
+      .on('click', () => selectState(code))
+      .addTo(map);
+  }
+}
+function restyleStates(){
+  for (const [code, l] of Object.entries(stateLayers)) l.setStyle(stateStyle(code));
+}
+function selectState(code){
+  activeState = (activeState === code) ? null : code;   // click again to clear
+  restyleStates();
+  renderStateChips();
+  if (activeState){
+    map.flyToBounds(stateLayers[activeState].getBounds().pad(0.08), {duration:.8});
+  } else if (activeRegion !== null){
+    map.flyToBounds(regionLayers[activeRegion].getBounds().pad(0.05), {duration:.8});
+  }
+  refresh();
+}
+function renderStateChips(){
+  const wrap = document.getElementById('statewrap');
+  const el = document.getElementById('states');
+  el.innerHTML = "";
+  if (activeRegion === null){ wrap.style.display = 'none'; return; }
+  wrap.style.display = '';
+  const color = REGIONS[activeRegion].color;
+  Object.entries(STATES)
+    .filter(([, s]) => s.region === activeRegion)
+    .sort((a, b) => a[1].name.localeCompare(b[1].name))
+    .forEach(([code, s]) => {
+      const n = RESOURCES.filter(r => r.st === code).length;
+      const b = document.createElement('button');
+      b.className = 'chip';
+      b.setAttribute('aria-pressed', String(activeState === null || activeState === code));
+      b.style.setProperty('--cc', color);
+      b.innerHTML = `<span class="dot"></span>${s.name}&nbsp;<span style="opacity:.55">${n}</span>`;
+      b.onclick = () => selectState(code);
+      el.appendChild(b);
+    });
+}
+
 /* Marker clustering — declusters fully by zoom 12 */
 const clusters = L.markerClusterGroup({
   maxClusterRadius: 42,
@@ -412,6 +483,7 @@ const markers = RESOURCES.map(r => {
   const m = L.marker([r.lat, r.lng], { icon:makeIcon(cat.color) });
   const facts = [];
   if (r.address) facts.push(`<div class="fact"><span class="fk">LOC</span><span>${esc(r.address)}</span></div>`);
+  if (r.org)     facts.push(`<div class="fact"><span class="fk">ORG</span><span>${esc(r.org)}</span></div>`);
   if (r.phone)   facts.push(`<div class="fact"><span class="fk">TEL</span><a href="tel:${esc(String(r.phone).replace(/[^+\d]/g,''))}">${esc(r.phone)}</a></div>`);
   if (r.when)    facts.push(`<div class="fact"><span class="fk">TIME</span><span>${esc(r.when)}${isPast(r) ? ' <span class="stale">· listed dates have passed — check site</span>' : ''}</span></div>`);
   m.bindPopup(`
@@ -434,7 +506,8 @@ let searchTerm = "";
 function visible(r){
   return enabledCats.has(r.category)
     && (activeRegion === null || r.region === activeRegion)
-    && (searchTerm === "" || (r.name + " " + r.city).toLowerCase().includes(searchTerm));
+    && (activeState === null || r.st === activeState)
+    && (searchTerm === "" || (r.name + " " + r.city + " " + (r.st || "")).toLowerCase().includes(searchTerm));
 }
 
 function refresh(){
@@ -459,15 +532,19 @@ function refresh(){
   document.getElementById('empty').style.display = shown.length ? 'none' : 'block';
   document.getElementById('visCount').textContent = shown.length;
   document.getElementById('statusText').textContent =
-    activeRegion ? REGIONS[activeRegion].name.toUpperCase() : "ALL SECTORS";
+    activeState ? STATES[activeState].name.toUpperCase()
+    : activeRegion ? REGIONS[activeRegion].name.toUpperCase() : "ALL SECTORS";
 }
 
 /* ============ PANEL UI ============ */
 function selectRegion(id){
   activeRegion = (activeRegion === id) ? null : id;   // click again to clear
+  activeState = null;
   document.querySelectorAll('.sector').forEach(b =>
     b.classList.toggle('active', Number(b.dataset.id) === activeRegion));
   restyleRegions();
+  showStates();
+  renderStateChips();
   if (activeRegion){
     map.flyToBounds(regionLayers[activeRegion].getBounds().pad(0.05), {duration:.8});
   } else {
