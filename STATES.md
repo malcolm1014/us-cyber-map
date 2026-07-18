@@ -25,6 +25,9 @@ addresses, phones, schedules, county library systems).
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| AL | **pass 1** (2026-07-18) | HMCPL Makerspace Studios (8 branches); BSides Birmingham still unverified (entry keeps note). TODO deep: BSides Huntsville existence, DC256, Birmingham/Mobile/Montgomery coverage |
+| AK | **pass 1** (2026-07-18) | BSides Alaska (ArcticShield, Egan Center) + DC907 (monthly at Anchorage Makerspace) verified. TODO deep: Anchorage Makerspace url/location, Loussac Library, UAF, Fairbanks/Juneau |
+| AR | **pass 1** (2026-07-18) | NWACC CAE-CD (1st AR CC, thru 2028) + UALR Cyber Gym verified. TODO deep: BSides Little Rock status, UA Fayetteville, library systems |
 | IN | **pass 1** (2026-07-18) | BSides Indy @ IUPUI Hine Hall verified; CircleCityCon confirmed ended (2024 final) — kept off map; b01lers CTF; IndyPL Central makerspace (PC teardown + Linux club); NSWC Crane. TODO deep: DC317 status, Ruckus, Ivy Tech, Fort Wayne/Evansville/South Bend (ND?) |
 | UT | **pass 1** (2026-07-18) | BSidesSLC (April) verified; U of U added; SAINTCON/DC801/801 Labs already solid. TODO deep: Make Salt Lake, SLCPL creative lab, BYU/UVU, Ogden/Hill AFB |
 | MO | **pass 1** (2026-07-18) | BSidesKC (Apr, KCK) + ShowMeCon (Feb) verified; BSidesSTL skipping 2026→2027 noted; DC314 at The Crack Fox; Hammerspace KC; Missouri S&T; NGA West. TODO deep: KC/STL library systems, Mid-Continent Square One, WashU/SLU, Springfield |
