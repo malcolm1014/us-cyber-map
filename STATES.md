@@ -25,6 +25,7 @@ addresses, phones, schedules, county library systems).
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| MN | **pass 1** (2026-07-18) | Cyber Security Summit Oct 27–28 verified upcoming (Bloomington, 16th); Secure360 May cadence; DC612; Best Buy Teen Tech Center @ Mpls Central; UMN TLI. TODO deep: BSidesMSP status, Createch SPPL, Metro State/MN Cyber, Hack Factory verify, Duluth/Rochester |
 | MI | **pass 1** (2026-07-18) | MiSec ecosystem mapped (6 chapters, runs Converge + BSides Detroit at TechTown); DC313 1st/3rd Sat at Bamboo w/ organizers; OmniCorp Thursdays; HYPE + AADL Secret Lab libraries; Ferris State. TODO deep: Converge dates, DC313/OmniCorp urls, Maker Works A2, MSU, GR/Lansing/UP coverage |
 | AZ | **pass 1** (2026-07-18) | CactusCon 15 Feb 5–6 2027 verified upcoming; DC480 revived (monthly, rotating Valley venues); MACH1 @ Burton Barr (Hacker Haven!); Fort Huachuca. TODO deep: BSides Phoenix/Tucson existence, AZ Cyber Initiative, Pima County libraries, ERAU Prescott, GCU, CREATE Tempe |
 | NC | **pass 1** (2026-07-18) | BSides RDU Dec 18 verified upcoming; BSides Charlotte (Mar, Discovery Place); CarolinaCon 20+ yrs; DC919; Splat Space. TODO deep: BSides Asheville, Charlotte-Mecklenburg Idea Box, Forge Initiative Cary, ECU/NC A&T, Fort Liberty, Wilmington/coastal |
