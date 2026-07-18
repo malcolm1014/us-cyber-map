@@ -28,7 +28,7 @@ county library systems, meeting venues/phones, every chapter org).
 
 | State | Status | Notes |
 |---|---|---|
-| CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| CA | **pass 2** (2026-07-18) | Pass 2: MākMō (LA County mobile fleet), Root Access Fresno (Central Valley!), San Diego CCOE (+ sandiegocyber.org calendar). RESOLVED: BSides LA — no active edition found, kept off map. TODO deep-3: DC562, MAG Lab, ISACA/ISC2 chapter pages, Sac/Fresno State CAE confirm, OC libraries (craft-level only so far) |
 | RI | **pass 1** (2026-07-18) | DC401 = resurrection w/ founder's blessing; Ocean State Maker Mill. TODO deep: QuahogCon status, Providence libraries |
 | SC | **pass 1** (2026-07-18) | BSides Greenville Aug 29 + BSides Charleston Nov 7 verified upcoming. TODO deep: CyberSC org, Columbia meetups |
 | SD | **pass 1** (2026-07-18) | Already strong (WWHF, DakotaCon, DSU) — nothing new needed. TODO deep: Sioux Falls, SDSU |
