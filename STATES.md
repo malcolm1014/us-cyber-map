@@ -25,6 +25,9 @@ addresses, phones, schedules, county library systems).
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| NM | **pass 1** (2026-07-18) | BSides ABQ Sep 25–26 verified upcoming (UNM CE Center); DC505 active; CNM Cyber Center. TODO deep: NM Tech, Santa Fe, ABQ libraries |
+| NV | **pass 1** (2026-07-18) | DC775 1st-Wed at Bridgewire (SDR/ham/CTF); UNR Cyber Center + Nevada Cyber Club. TODO deep: Bridgewire url, UNLV, BSides Reno existence, Vegas libraries |
+| OK | **pass 1** (2026-07-18) | BSidesOK verified (free, ~600, Glenpool); Fab Lab Tulsa; TU = OCII home. TODO deep: BSides OKC, DC405, OU, OKC metro libraries |
 | NE | **pass 1** (2026-07-18) | Kernelcon Apr cadence + origin (DC402/NEbraskaCERT/OWASP); DC402 + NEbraskaCERT added. TODO deep: urls for both, Omaha Maker Group, UNL, Lincoln |
 | NH | **pass 1** (2026-07-18) | DC603 2nd-Sat 7pm at Gusanoz, Lebanon. TODO deep: BSides NH existence, Port City Makerspace, UNH, Nashua/Seacoast |
 | NJ | **pass 1** (2026-07-18) | BSides South Jersey inaugural @ Rowan (200+) verified; DC201 at MakerBar Hoboken; DC862; MakerBar. TODO deep: DC201/MakerBar urls, Rutgers, north-Jersey libraries |
