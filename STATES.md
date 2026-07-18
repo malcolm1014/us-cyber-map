@@ -25,6 +25,7 @@ addresses, phones, schedules, county library systems).
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 1** (2026-07-18) | BSidesSF/SD dates verified; DC408, DC858/619, LA CTF, WRCCDC, IDEA Labs/Design Spot/STEAMstacks verified. TODO deep: BSides LA status unclear; DC562, MAG Lab, Fab Lab SD, county library systems, ISACA/ISC2 chapters, Sacramento/Fresno/Central Valley |
+| IN | **pass 1** (2026-07-18) | BSides Indy @ IUPUI Hine Hall verified; CircleCityCon confirmed ended (2024 final) — kept off map; b01lers CTF; IndyPL Central makerspace (PC teardown + Linux club); NSWC Crane. TODO deep: DC317 status, Ruckus, Ivy Tech, Fort Wayne/Evansville/South Bend (ND?) |
 | UT | **pass 1** (2026-07-18) | BSidesSLC (April) verified; U of U added; SAINTCON/DC801/801 Labs already solid. TODO deep: Make Salt Lake, SLCPL creative lab, BYU/UVU, Ogden/Hill AFB |
 | MO | **pass 1** (2026-07-18) | BSidesKC (Apr, KCK) + ShowMeCon (Feb) verified; BSidesSTL skipping 2026→2027 noted; DC314 at The Crack Fox; Hammerspace KC; Missouri S&T; NGA West. TODO deep: KC/STL library systems, Mid-Continent Square One, WashU/SLU, Springfield |
 | WI | **pass 1** (2026-07-18) | CypherCon 10 Mar 24–25 2027 + BSidesMKE Mar 26 verified upcoming (joint week); DC608 Madison 501c3; MSOE Diercks Hall. TODO deep: WISCON, Milwaukee PL, UW-Madison, Green Bay/Fox Valley |
