@@ -564,6 +564,18 @@ const markers = RESOURCES.map(r => {
           </div>`).join("")}
       </div>
     </details>` : "";
+  const eventsHtml = (r.category !== "con" && r.events && r.events.length) ? `
+    <details class="talks">
+      <summary>CLASSES &amp; EVENTS (${r.events.length})</summary>
+      <div class="talklist">
+        ${r.events.map(ev => `
+          <div class="talk">
+            <div class="tt">${esc(ev.title)}</div>
+            ${ev.when ? `<div class="ts">${esc(ev.when)}</div>` : ""}
+            ${(ev.topics || []).map(t => `<span class="tag" style="color:var(--accent); border-color:var(--accent)">${esc(TOPICS[t] || t)}</span>`).join("")}
+          </div>`).join("")}
+      </div>
+    </details>` : "";
   m.bindPopup(`
     <div class="popup">
       <h3>${esc(r.name)}</h3>
@@ -572,7 +584,7 @@ const markers = RESOURCES.map(r => {
       ${topicTags}
       <p>${esc(r.notes)}</p>
       ${facts.length ? `<div class="facts">${facts.join("")}</div>` : ""}
-      ${talksHtml}
+      ${talksHtml}${eventsHtml}
       ${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">Website ↗</a>` : ""}
     </div>`, { maxWidth: 320 });
   m._data = r;
@@ -590,7 +602,8 @@ function visible(r){
     && (activeState === null || r.st === activeState)
     && (searchTerm === "" || (r.name + " " + r.city + " " + (r.st || "")).toLowerCase().includes(searchTerm))
     && (enabledTopics.size === 0 || (r.topics || []).some(t => enabledTopics.has(t))
-        || (r.talks || []).some(tk => (tk.topics || []).some(t => enabledTopics.has(t))));
+        || (r.talks || []).some(tk => (tk.topics || []).some(t => enabledTopics.has(t)))
+        || (r.events || []).some(ev => (ev.topics || []).some(t => enabledTopics.has(t))));
 }
 
 function refresh(){
@@ -667,6 +680,7 @@ const topicsEl = document.getElementById('topics');
 for (const [key, label] of Object.entries(TOPICS)){
   const n = RESOURCES.filter(r =>
     (r.topics || []).includes(key) || (r.talks || []).some(tk => (tk.topics || []).includes(key))
+    || (r.events || []).some(ev => (ev.topics || []).includes(key))
   ).length;
   if (!n) continue;   // no point offering an empty filter
   const b = document.createElement('button');
