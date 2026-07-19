@@ -979,4 +979,9 @@ const RESOURCES = [
   { name:"GoCreate", category:"maker", region:3, st:"KS", lat:37.7290, lng:-97.2870, city:"Wichita, KS", url:"https://www.gocreate.com", address:"4000 E 17th St N (Wichita State Innovation Campus, Experiential Engineering Bldg)", phone:"(316) 978-2738", when:"", notes:"University-affiliated makerspace/studio complex." },
   { name:"Grand Forks Makerspace", category:"maker", region:3, st:"ND", lat:47.9170, lng:-97.0590, city:"Grand Forks, ND", url:"https://www.makerspacegf.com", address:"1503 DeMers Ave", phone:"", when:"24/7 for members", notes:"North Dakota's community workshop — tools and space for any project." },
   { name:"MakeShift Lincoln", category:"maker", region:3, st:"NE", lat:40.8210, lng:-96.6850, city:"Lincoln, NE", url:"https://makeshiftlincoln.org", address:"1135 N 22nd St (behind Turbine Flats)", phone:"", when:"", notes:"Lincoln's community makerspace/hacklab." },
+
+  // -- Nationwide makerspace deep-search (Jul 2026) — batch 9 (MT, RI) --
+  { name:"MOP Shop Makerspace", category:"maker", region:5, st:"MT", lat:46.6100, lng:-112.0700, city:"Helena, MT", url:"http://mopshopmakerspace.com", address:"3790 W US Highway 12", phone:"(406) 202-1105", when:"", notes:"'Means of Production' — Helena's co-op makerspace, geared toward adult learners." },
+  { name:"FabNewport", category:"maker", region:1, st:"RI", lat:41.4870, lng:-71.3140, city:"Newport, RI", url:"https://fabnewport.org", address:"73 Pelham St", phone:"(401) 342-8180", when:"", notes:"Small-scale community fab lab — computer lab, 3D printing, laser/vinyl cutting, electronics." },
+  { name:"AS220", category:"maker", region:1, st:"RI", lat:41.8250, lng:-71.4130, city:"Providence, RI", url:"https://as220.org", address:"115 Empire St (Empire Street Complex)", phone:"", when:"", notes:"Nonprofit community arts org with a fab lab, digital media lab, and darkroom alongside gallery/performance space." },
 ];
