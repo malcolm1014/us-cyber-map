@@ -36,9 +36,9 @@ county library systems, meeting venues/phones, every chapter org).
 | WV | **pass 1** (2026-07-18) | SecureWV Oct 22–23 verified upcoming (304 Geeks). TODO deep: Marshall forensics, makerspaces |
 | WY | **pass 1** (2026-07-18) | Cyber Cheyenne Oct 16 verified upcoming (CyberWyoming + regional Shindigs). TODO deep: makerspaces, Casper/Gillette |
 | PR | **pass 1** (2026-07-18) | BSidesPR = oldest PR hacker con (2013), bsides.pr verified. TODO deep: UPR, Engine-4, meetups |
-| NM | **pass 1** (2026-07-18) | BSides ABQ Sep 25–26 verified upcoming (UNM CE Center); DC505 active; CNM Cyber Center. TODO deep: NM Tech, Santa Fe, ABQ libraries |
-| NV | **pass 1** (2026-07-18) | DC775 1st-Wed at Bridgewire (SDR/ham/CTF); UNR Cyber Center + Nevada Cyber Club. TODO deep: Bridgewire url, UNLV, BSides Reno existence, Vegas libraries |
-| OK | **pass 1** (2026-07-18) | BSidesOK verified (free, ~600, Glenpool); Fab Lab Tulsa; TU = OCII home. TODO deep: BSides OKC, DC405, OU, OKC metro libraries |
+| NM | **pass 2** (2026-07-18) | Pass-2 attempt: NM Tech/Santa Fe/ABQ libraries unresolved — NM stays as-is. TODO deep-3: same items |
+| NV | **pass 2** (2026-07-18) | Pass 2: bridgewire.org (Thu open house); UNLV Libraries makerspace. RESOLVED: BSides Reno — not found. TODO deep-3: Clark County libraries |
+| OK | **pass 2** (2026-07-18) | Pass 2: MLS Studios (3 branches + mobile); OU Libraries MakerSpace. RESOLVED: BSides OKC + DC405 — not found. TODO deep-3: OU cyber program detail |
 | NE | **pass 2** (2026-07-18) | Pass 2: nebraskacert.org (CSF 3rd Wed) + cybersecurityomaha.com hub. TODO deep-3: DC402 url, Omaha Maker Group, UNL/Lincoln |
 | NH | **pass 2** (2026-07-18) | Pass 2: BSides NH exists; Port City Makerspace (68 Morning St, since 2012). TODO deep-3: BSides NH url/dates, UNH, Nashua |
 | NJ | **pass 2** (2026-07-18) | Pass 2: defcon201.org (3rd Fri 7–10pm @ MakerBar 38 Jackson St) + makerbar.com; Rutgers/RUSec. TODO deep-3: north-Jersey libraries |
