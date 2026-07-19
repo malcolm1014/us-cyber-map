@@ -25,6 +25,11 @@ addresses, phones, schedules, county library systems).
 **🎉 PASS 1 + PASS 2 COMPLETE NATIONWIDE (2026-07-18) — every state/DC/PR swept twice
 with web verification.** Remaining work lives in the deep-3 notes below.
 
+**🏅 PASS 3 PRIORITY LIST COMPLETE (2026-07-19) — all 21 priority states/regions
+(CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
+remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
+MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
+
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 3** (2026-07-18) | Pass 3: DC562 (2x/mo talks+CTF); MAG Lab Walnut; 032.la live (Null Space url fixed); Sac State CIAS (CAE-CD '28, $7M SFS); ISC2 Sacramento; Cal-CSIC fusion center. Remaining: Fresno State, OC libraries |
