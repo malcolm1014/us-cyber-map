@@ -91,3 +91,21 @@ throughout — deep-4 (further verification/expansion) can pick any state.
 
 TX → NY → VA+MD+DC → WA → PA → GA → CO → IL → OH → MA → NC → AZ → MI →
 MN → TN → OR → UT → MO → WI → IN → rest alphabetically.
+
+## 2026-07-19: Nationwide makerspace deep-search (user request, after pass-3 complete)
+
+Goal: find every hacker/makerspace not yet on the map, one state batch at a
+time. Method: search "[state] makerspace/hackerspace list", cross-check
+against existing `maker`-category rows per state (dedupe by name), verify
+address/current status for anything ambiguous (some directories are stale —
+e.g. Gangplank Chandler AZ confirmed closed 2024 and skipped), add with real
+addresses only.
+
+**10 batches, one commit each: CA(+13) → CT/LA/MD/MI/MN/OH/SC/TN/VA/WI(+9 net,
+caught 3 pre-existing dups from earlier passes) → TX/PA/WA(+7) → GA/NC/CO(+7)
+→ MA/NY/MO/IN(+5) → AL/AR/KY/OK(+5) → OR/UT/NJ/AZ(+6) → KS/ND/NE(+3, ND's
+first makerspace) → MT/RI(+3) → DC/IA(+2).** Maker category grew 145→204.
+Total map 802→862 entries. Every state touched at least once; AK/HI/DE/NM/WV
+were already comprehensively covered by earlier passes and needed no/minimal
+additions. Not exhaustive — smaller/newer spaces will keep surfacing; treat
+this as a strong baseline, not a final count.
