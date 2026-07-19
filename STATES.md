@@ -585,7 +585,7 @@ for future continuations):
 |---|---|---|
 | con | 127 | Talks done for DEF CON 34 (villages), HOPE 26, GrrCON, CYBR.SEC.CON (168 talks). ~38 dated + 85 undated cons still untouched. |
 | maker | 495 | Events done for 14 flagship hackerspaces (74 events, ~3% coverage). Library maker programs (separate `library` category) were a dead end — skip those, go straight to member-run spaces. |
-| meetup | 154 (+23 new locksport) | **Not yet started** — next up. TOOOL/locksport chapters added as a targeted exception (user-requested), general sweep still pending. |
+| meetup | 154 (+23 new locksport) | **In progress** — 20 of 154 done (13%): 15 meetup.com-hosted groups + 5 more DEF CON Groups with their own domains got real events/organizers. See detail below. |
 | library | 96 | Checked 8 flagship city systems for events, all gated behind uninspectable calendar platforms — deprioritize vs. other categories until a better source technique is found. |
 | school | 165 | Not started. |
 | gov | 72 | Not started. |
@@ -596,3 +596,46 @@ for future continuations):
 Next session should pick up with **meetup** (task queued), since it's the
 next-largest un-swept category and most meetup groups are exactly the kind
 of member-run/volunteer org that yielded high signal in the maker pass.
+
+### meetup category — progress log
+
+**Batch 1 (15 groups, meetup.com-hosted):** DC401 (Providence, org David
+Fisher), DC214 (Dallas), DC305 (Miami, org Allan Brooks), Seattle 2600 (org
+El Guapos Ghost), OWASP Maine (added `ctf` topic — Secure Coding
+Tournament), Infosec 716 (org Matthew Gracie, 4 upcoming meetups), Baton
+Rouge + Tulsa Cyber Security for Control Systems (org Derek Harp, founder
+of CS2AI — same person runs both, confirmed via each page's own network
+description), SecMidwest (org Thad Lux, 4 upcoming), 920Sec (4 upcoming,
+org left blank — page only credits the group account itself, not a
+person). **5 groups had dead meetup.com URLs** (DC316, DC313, OWASP
+Hartford, 2nd Sight Lab, Suncoast LUG) — appended a dated caveat to each
+resource's `notes` rather than deleting or marking "confirmed dead," since
+a dead Meetup page doesn't prove the org itself dissolved (could've moved
+platforms) — this is a real state (verify-before-relying), distinct from
+the stronger "confirmed closed" language used elsewhere in this file for
+orgs with explicit closure announcements.
+
+**Batch 2 (5 groups, own-domain DEF CON Groups):** DC215 Philadelphia
+(added `physical` topic — recurring "Third Friday Open Pick Night"
+lockpicking meetup, plus Line Con and Open House events), DC212 NYC
+(recurring cadence only, ~every 1–2 months), DC404 Atlanta (added `osint`
+topic from real talk history — a real speaker gave "From Hunted to Hunter:
+a beginner's guide to OSINT and mindset" — but individual past-dated talks
+were **not** added to `events` since none were still upcoming as of
+2026-07-19; only the recurring monthly cadence was added), DC256 Huntsville
+(org: North Alabama Chapter of ISSA / NAC-ISSA, the real co-sponsoring
+org — used instead of a bare handle credited on the same page), DC402
+Omaha (real upcoming named-speaker talk: "How to Make Your Own Website,"
+Mike Kunz, Aug 11, 2026).
+
+**Technique note for future batches:** own-domain DEF CON Group sites
+(dcXXX.org) vary wildly in fetchability — some (DC404, DC402, DC256,
+DC215) have rich real content; others hit DNS failures, TLS cert errors,
+or 403s (DC585, DC615, DC201, DC608) purely due to hosting quirks, not
+group inactivity — don't read a fetch failure as evidence the group is
+dead, unlike a meetup.com "Group not found" which is a real signal about
+that specific page. ~130 meetup entries remain untouched — mostly OWASP/
+ISSA/ISACA chapters on owasp.org (which routes ALL chapters through one
+generic `/chapters/` page, no per-chapter content — will need each
+chapter's actual own site/Meetup, not the OWASP umbrella URL currently on
+file) and more DEF CON Groups.
