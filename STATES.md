@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS done 2026-07-19. MT done 2026-07-19 — 635 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT done 2026-07-19. ND done 2026-07-19 — 636 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -49,7 +49,7 @@ AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS done 2026-07-19. MT done 2026-07-19 — 6
 | NJ | **pass 2** (2026-07-18) | Pass 2: defcon201.org (3rd Fri 7–10pm @ MakerBar 38 Jackson St) + makerbar.com; Rutgers/RUSec. TODO deep-3: north-Jersey libraries |
 | MS | **pass 3** (2026-07-19) | Pass 3: MGCCC RESOLVED (Perkinston — CAE-CD, only CC in MS with the designation, RESTORE Act tuition-free track). Jackson swept — Jackson State University (Microsoft-backed cyber-readiness) + its Innovation Center Makerspace, The Bean Path (Dr. Nashlie Sephus's tech-divide nonprofit), MSAIC state fusion center. BSides Jackson url still not found (social-only) — checked again, unresolved. MS complete for now. |
 | MT | **pass 3** (2026-07-19) | Pass 3: Billings SCRaP resolved (Share Create Reuse and Promote, since 2015, STEAM/youth focus). Montana 2600 (Missoula) + MATIC state fusion center (Fort Harrison) added. MT complete for now. |
-| ND | **pass 2** (2026-07-18) | Pass 2: bsidesfargo.org + cyberconbsc.com urls landed; CyberCon = 'premier cyber + critical infrastructure con.' TODO deep-3: Fargo Makerworks status, NDIT |
+| ND | **pass 3** (2026-07-19) | Pass 3: Fargo Makerworks RESOLVED — closed, succeeded by MELD Workshop (fee-for-service laser shop, no memberships — not a community space, kept off map). NDIT's Cybersecurity Operations Center added as gov (founded the multi-state J-CSOC, first state-to-state cyber intel sharing in the country). No Fargo DC/2600 group found — checked. ND complete for now. |
 | KY | **pass 3** (2026-07-19) | Pass 3: Lexington/UK resolved — University of Kentucky (cyber certificate, no confirmed CAE unlike EKU/Murray State/KY State), Lexington Makerspace (24/7, 510 Henry Clay Blvd), Lexington Public Library learning spaces (Kloiber STEAM Lab + 3 branches); ISSA Kentuckiana added as statewide meetup. KY complete for now. |
 | LA | **pass 3** (2026-07-19) | Pass 3: ULL (cyber concentration + CGI Center of Excellence, Lafayette); NOPL Teen Tech Center + REACH Center; Baton Rouge swept — make.br, BRSec Meetup, ICS/OT-focused BR Cyber Security for Control Systems meetup, EBR Parish Library MakerSpace; Cyber Innovation Center/NICERC (Bossier City — DHS-funded, national K-12 cyber curriculum) added as gov. LA complete for now. |
 | ME | **pass 3** (2026-07-19) | Pass 3: Bangor resolved — Bangor Makerspace (Hermon, 24/7, Tue build nights). Portland meetup scene swept — DC207, Maine 2600, OWASP Maine, (ISC)² Maine; MIAC (state fusion center, Augusta) added as gov. 2027 BSides Maine date still not published — checked, confirmed TBA. ME complete for now. |
