@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID/KS/KY done 2026-07-19. LA done 2026-07-19 — 621 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA done 2026-07-19. ME done 2026-07-19 — 627 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -52,7 +52,7 @@ AL/AK/AR/CT/DE/HI/IA/ID/KS/KY done 2026-07-19. LA done 2026-07-19 — 621 entrie
 | ND | **pass 2** (2026-07-18) | Pass 2: bsidesfargo.org + cyberconbsc.com urls landed; CyberCon = 'premier cyber + critical infrastructure con.' TODO deep-3: Fargo Makerworks status, NDIT |
 | KY | **pass 3** (2026-07-19) | Pass 3: Lexington/UK resolved — University of Kentucky (cyber certificate, no confirmed CAE unlike EKU/Murray State/KY State), Lexington Makerspace (24/7, 510 Henry Clay Blvd), Lexington Public Library learning spaces (Kloiber STEAM Lab + 3 branches); ISSA Kentuckiana added as statewide meetup. KY complete for now. |
 | LA | **pass 3** (2026-07-19) | Pass 3: ULL (cyber concentration + CGI Center of Excellence, Lafayette); NOPL Teen Tech Center + REACH Center; Baton Rouge swept — make.br, BRSec Meetup, ICS/OT-focused BR Cyber Security for Control Systems meetup, EBR Parish Library MakerSpace; Cyber Innovation Center/NICERC (Bossier City — DHS-funded, national K-12 cyber curriculum) added as gov. LA complete for now. |
-| ME | **pass 2** (2026-07-18) | Pass-2 deferred: 2027 BSides Maine date not yet announced; Bangor/libraries unresolved. TODO deep-3: same |
+| ME | **pass 3** (2026-07-19) | Pass 3: Bangor resolved — Bangor Makerspace (Hermon, 24/7, Tue build nights). Portland meetup scene swept — DC207, Maine 2600, OWASP Maine, (ISC)² Maine; MIAC (state fusion center, Augusta) added as gov. 2027 BSides Maine date still not published — checked, confirmed TBA. ME complete for now. |
 | IA | **pass 3** (2026-07-19) | Pass 3: BSides Des Moines confirmed (bsidesdsm.org, 2026 year-2 edition Jun 13 @ FFA Center Ankeny — pin moved from DSM to Ankeny); ISEAGE's ITO CDC dated (Apr 25 2026) as new ctf entry; Cedar Rapids corridor swept — SecMidwest, Hacker Space ICR, Cedar Rapids Maker Space, OWASP Cedar Rapids; DMACC (CAE-CD community college) added. IA complete for now. |
 | ID | **pass 3** (2026-07-19) | Pass 3: Reuseum url/address/phone RESOLVED (reuseum.com, 3131 W Chinden Blvd, Garden City — pin corrected off Boise proper); Idaho State University — NIATEC RESOLVED (Pocatello, one of the original 7 NSA CAE schools, first hands-on Industrial Cybersecurity Eng. Tech. degree); DC208 (DEF CON group, Coeur d'Alene + Boise sub-chapter) found; Albertsons Library MakerLab (Boise State) added. ID complete for now. |
 | KS | **pass 3** (2026-07-19) | Pass 3: Topeka resolved — TSCPL Level 2 Tech Center (library) + Kansas Intelligence Fusion Center (gov, joint KS AG + Adjutant General/Guard). DC316 (Wichita DEF CON group, Friends University) added. Confirmed SecKC's physical venue (Knuckleheads Garage) is on the MO side — correctly filed under MO, not duplicated here. KS complete for now. |
