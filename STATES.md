@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID done 2026-07-19. KS done 2026-07-19 — 609 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID/KS done 2026-07-19. KY done 2026-07-19 — 613 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -50,7 +50,7 @@ AL/AK/AR/CT/DE/HI/IA/ID done 2026-07-19. KS done 2026-07-19 — 609 entries tota
 | MS | **pass 2** (2026-07-18) | Pass-2 attempt: BSides Jackson url + MGCCC cyber both unresolved — MS stays as-is. TODO deep-3: same items |
 | MT | **pass 2** (2026-07-18) | Pass 2: Missoula PL MakerSpace (2013) + CyberMontana (Legislature-funded statewide). RESOLVED: BSides Montana — not found. TODO deep-3: Billings SCRAP |
 | ND | **pass 2** (2026-07-18) | Pass 2: bsidesfargo.org + cyberconbsc.com urls landed; CyberCon = 'premier cyber + critical infrastructure con.' TODO deep-3: Fargo Makerworks status, NDIT |
-| KY | **pass 2** (2026-07-18) | Pass 2: LFPL's FOUR makerspaces (Maker Pavilion/Maker Den/Portland Pod/COLLIDER). RESOLVED: BSides Louisville — not found. TODO deep-3: Lexington/UK |
+| KY | **pass 3** (2026-07-19) | Pass 3: Lexington/UK resolved — University of Kentucky (cyber certificate, no confirmed CAE unlike EKU/Murray State/KY State), Lexington Makerspace (24/7, 510 Henry Clay Blvd), Lexington Public Library learning spaces (Kloiber STEAM Lab + 3 branches); ISSA Kentuckiana added as statewide meetup. KY complete for now. |
 | LA | **pass 2** (2026-07-18) | Pass 2: NOLAcon dates (May 15–17 + trainings — full NOLA security week w/ BSidesNOLA May 12). TODO deep-3: ULL, NOPL libraries, Baton Rouge |
 | ME | **pass 2** (2026-07-18) | Pass-2 deferred: 2027 BSides Maine date not yet announced; Bangor/libraries unresolved. TODO deep-3: same |
 | IA | **pass 3** (2026-07-19) | Pass 3: BSides Des Moines confirmed (bsidesdsm.org, 2026 year-2 edition Jun 13 @ FFA Center Ankeny — pin moved from DSM to Ankeny); ISEAGE's ITO CDC dated (Apr 25 2026) as new ctf entry; Cedar Rapids corridor swept — SecMidwest, Hacker Space ICR, Cedar Rapids Maker Space, OWASP Cedar Rapids; DMACC (CAE-CD community college) added. IA complete for now. |
