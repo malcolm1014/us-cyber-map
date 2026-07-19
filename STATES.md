@@ -51,9 +51,9 @@ county library systems, meeting venues/phones, every chapter org).
 | IA | **pass 1** (2026-07-18) | CornCon 12 Oct 2–3 verified upcoming (Docent Institute, RiverCenter); BSides Des Moines exists (no site found). TODO deep: SecDSM, Area 515, ISU CDC dates, Cedar Rapids |
 | ID | **pass 1** (2026-07-18) | BSides Boise (Oct-ish) + BSides Idaho Falls (EICEA 501c3) verified; Reuseum. TODO deep: Reuseum url, Boise Makers council spaces, ISU Pocatello |
 | KS | **pass 1** (2026-07-18) | BSidesKC reassigned to KS (7250 State Ave venue is Kansas side); K-State + Wichita State added. TODO deep: Johnson County Library MakerSpace, CyberICT Wichita, Topeka |
-| CT | **pass 1** (2026-07-18) | CT Hackerspace (oldest in CT) + MakerspaceCT (28k sq ft, G. Fox Bldg) verified; UNewHaven added. TODO deep: BSidesCT existence, Yale, Stamford/Fairfield corridor, more library systems |
-| DE | **pass 1** (2026-07-18) | Route 9 Library & Innovation Center verified (maker flagship). TODO deep: BSides Delaware status (still unconfirmed), Dover, DSU |
-| HI | **pass 1** (2026-07-18) | DC808 exiting hibernation (honest note); HICapacity @ Manoa Innovation Center; LocoMocoSec last known 2024. TODO deep: BSides Hawaii next edition, HPL libraries, neighbor islands |
+| CT | **pass 2** (2026-07-18) | Pass 2: BSides CT verified (bsidesct.org + year-round meetups). TODO deep-3: Yale, Stamford/Fairfield, library systems |
+| DE | **pass 2** (2026-07-18) | Pass 2: BSides Delaware CONFIRMED alive (bsidesdelaware.com; 2025 @ UDel, 2026 planning) — moved pin to Newark. TODO deep-3: Dover, DSU |
+| HI | **pass 2** (2026-07-18) | Pass 2: BSides Hawaii verified (bsideshawaii.org, 2025 Oct 8); HSPLS STEM Makerspaces (statewide system). TODO deep-3: 2026 edition date, neighbor islands |
 | AL | **pass 2** (2026-07-18) | Pass 2: bsidesbham.org found; BSides Huntsville exists; DC256 (wardriving comps @ UAH I2C). TODO deep-3: Mobile/Montgomery, BSides HSV url |
 | AK | **pass 2** (2026-07-18) | Pass 2: Anchorage Makerspace url+address (1406 W 33rd); UAF Makerspace Network (Fairbanks). TODO deep-3: Loussac Library, Juneau |
 | AR | **pass 2** (2026-07-18) | Pass 2: UALR statewide cyber clinic network ($1M Google.org) + Cyberspace Ops center; UA Fayetteville CISR; CALS Main Library teen makerspace. RESOLVED: BSides Little Rock — status unclear, off map |
