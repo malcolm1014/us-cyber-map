@@ -264,3 +264,90 @@ alone; only the new color's own pairings were in scope.
 region, all traced to the same known coastal/border-precision pattern (plus
 a few section-fallback points sitting near a border) — no actual wrong-state
 assignments found on spot-check. Total map: 1154 → **3,929 entries.**
+
+## 2026-07-19 — Topic tags + con talks/villages (first pass, foundation for monthly refresh)
+
+User: "Let's build it all. I'll build a script to update the map monthly on
+the first. I want this to be the main resource for people in the cyber
+security community. No back end." Goal: a second, cross-cutting filter
+dimension (topic interest, e.g. "AI") layered on top of the existing
+category/region/state filters, plus talk/village-level detail inside `con`
+popups so a topic search can point at specific relevant content, not just an
+event's front door. Stayed a static, zero-build site — no backend added.
+
+**Schema (`data.js`, both fields optional, additive-only):**
+- `topics:["ai","cloud",...]` — any resource, cross-cutting across category.
+- `talks:[{title,speaker,track,topics:[...]}]` — `con` category only, first
+  nested-array structure in an otherwise flat row schema.
+
+Fixed taxonomy, 16 topics: `ai cloud osint iot radio redteam blueteam
+forensics malware physical socialengineering privacy policy ics ctf
+community`. `radio` (SDR/RF) is deliberately cross-cutting with the
+`hamradio` *category* — a con's RF/signals village matters to both
+audiences. Documented in the `data.js` header comment alongside a fix for
+that header's category list, which had been missing `hamradio` since it was
+added in the prior phase.
+
+**Populating `topics` — two tiers, same discipline as the ARRL geocoding
+pass:** (1) scripted keyword-matcher over each row's name+org+notes (script
+at `tag_topics.py` pattern, kept in project scratch, not committed) —
+suppressed a topic where the category already fully captures it (e.g. no
+`radio` tag on `hamradio` rows, no `ctf` tag on `ctf` rows, no `community`
+tag on `youth` rows) to avoid pure-noise duplication; (2) manual,
+verified-by-search research pass on the 127 `con` entries specifically,
+targeting DEF CON's published villages and a short list of other cons with
+clear, specific signal in existing notes (e.g. "energy-sector heavy" →
+`ics`, "blue-team-leaning" → `blueteam`). Left ~85 of 127 cons untagged
+where no clean signal existed rather than force a mapping — same
+never-guess rule as every prior data phase. **Result: 115 of 3,929 rows
+carry a `topics` array.** This is intentionally sparse, not a bug — most of
+the existing notes text is short editorial blurbs that don't contain the
+specific keyword phrases the tagger looks for; broadening topic coverage on
+non-con rows is exactly the kind of incremental work the user's monthly
+script is meant to pick up going forward.
+
+**Populating `talks` — DEF CON 34 only, this pass.** Verified via web
+search DEF CON 34's 20 villages with a clean single-topic mapping (AI, IoT,
+Recon/OSINT, Cloud, Red Team, Blue Team, ICS, Social Engineering Community,
+Car Hacking, Lock Pick, Crypto & Privacy, Policy, Malware, Radio Frequency,
+Ham Radio, Voting, Adversary, AppSec, Embedded Systems, Packet Hacking) out
+of ~37 total villages — skipped villages without a clean single-topic fit.
+Each village is a `talks` entry with empty `speaker` (no individual speaker
+data, this is village-level). **Deliberately did not add a `talks` array
+for Black Hat USA or RSA Conference** — only track-category-level
+information was found for them, not individual named talks/speakers, and
+fabricating specific talk titles would violate this project's data-quality
+rule; their `topics` arrays (Black Hat: ai/cloud/malware/redteam; RSA:
+ai/cloud/policy) stand alone as sufficient coverage for now.
+
+**UI (`index.html`):** new `TOPICS` const (mirrors `CATEGORIES`) + a
+"Topics" chip row under Categories in the sidebar (mirrors the category
+chip loop, using the existing `.cats`/`.chip` CSS, phosphor `--accent`
+color for active state since topics are a filter dimension, not a marker
+color identity — chips with zero matches are skipped so the row never shows
+a dead filter). `visible()` gained one clause: a resource matches an active
+topic filter if the topic is in its own `topics` array **or** in any of its
+`talks[].topics`, so DEF CON 34 correctly surfaces under an "AI" filter via
+its AI Village talk entry even though the con-level topics array also
+happens to include `ai` directly. Con popups gained a native
+`<details>/<summary>` "Talks & Villages" section (no JS toggle — popup HTML
+is a static string built once at marker-construction time, so native
+disclosure was the only option) listing each talk with its topic tags,
+gated on `category==="con" && talks.length`.
+
+**Verification:** Playwright/Chromium is non-functional in this sandbox
+session (browser process fails to launch — `Target.createTarget: Not
+supported` — unrelated to the map code), so no live click-through this
+round. Verified instead by (1) `node --check`-equivalent parse of the
+inline `<script>` block via `new Function()` — no syntax errors; (2)
+re-running the actual `visible()`/chip-count/popup-template logic in Node
+against the real `RESOURCES` data — confirmed every one of the 16 topics
+has ≥1 match (so no chip renders dead), confirmed an `ai` filter returns 8
+resources including DEF CON 34 via its talks-topic match, and confirmed the
+DEF CON 34 popup's `talks` HTML renders correctly. Full browser
+verification is still owed next session once Playwright is working again.
+
+**Next for the monthly refresh script:** broaden `topics` coverage beyond
+the current 115 rows (most non-con resources have no topics yet — this was
+a foundation pass, not a full sweep), and populate `talks` for more cons as
+their schedules publish closer to event dates.
