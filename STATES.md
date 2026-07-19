@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT done 2026-07-19. DE done 2026-07-19 — 590 entries total.
+AL/AK/AR/CT/DE done 2026-07-19. HI done 2026-07-19 — 597 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -58,7 +58,7 @@ AL/AK/AR/CT done 2026-07-19. DE done 2026-07-19 — 590 entries total.
 | KS | **pass 2** (2026-07-18) | Pass 2: Black & Veatch MakerSpace @ JoCo Central Resource Library. RESOLVED: CyberICT — not confirmed. TODO deep-3: Topeka |
 | CT | **pass 2** (2026-07-18) | Pass 2: BSides CT verified (bsidesct.org + year-round meetups). TODO deep-3: Yale, Stamford/Fairfield, library systems |
 | DE | **pass 3** (2026-07-19) | Pass 3: BSides Delaware date confirmed (2025 was Nov 14–15 @ UD FinTech building); 2600 Newark (Christiana Mall B&N) + Barrel of Makers (@ Route 9 Library) meetups; UD MakerSpace/MakerGym (Pearson Hall); Delaware State University (Dover, lapsed CAE-CD 2016–2021) + Delaware Tech CC (4 campuses) schools; DIAC (Dover, state fusion center) gov. DE complete for now. |
-| HI | **pass 2** (2026-07-18) | Pass 2: BSides Hawaii verified (bsideshawaii.org, 2025 Oct 8); HSPLS STEM Makerspaces (statewide system). TODO deep-3: 2026 edition date, neighbor islands |
+| HI | **pass 3** (2026-07-19) | Pass 3: neighbor-island makerspaces added — Maui Makers (Central Maui Baseyard), Kauai Makerspace, Big Island Tech Works (Hilo) — all 4 major islands now covered; CyberHawaii (statewide industry nonprofit) + ISC2 Hawaii meetups, GenCyber Hawai'i youth camps (NSA/NSF, @ UH Manoa), Hawaii State Fusion Center gov. BSides Hawaii 2026 date not yet published — checked, still TBA. |
 | AL | **pass 3** (2026-07-19) | Pass 3: BSides HSV url filled (bsideshuntsville.org, NAC-ISSA @ Calhoun CC, Fri trainings+Sat talks); Mobile Makerspace (805 Church St Ste D). Remaining: Montgomery (TechLab Defense Accelerator + Maxwell-Gunter cyber ecosystem — no community entry verified yet) |
 | AK | **pass 3** (2026-07-19) | Pass 3: Juneau Makerspace (3915 N Douglas Hwy, juneaumakerspace.org). RESOLVED: Loussac Library makerspace — only 2013 planning-era sources found, status unclear, kept off. Remaining: Loussac recheck |
 | AR | **pass 3** (2026-07-19) | Pass 3: 501 Makers @ Rock It! Lab (CALS, Cox Bldg basement, 120 River Market); Central Arkansas Hackers (@ LR Tech Park, no official site — verify-note). RESOLVED: AR Regional Innovation Hub (state s first makerspace) CLOSED, relaunch pending — kept off. Remaining: Innovation Hub relaunch recheck, NWA makerspace |
