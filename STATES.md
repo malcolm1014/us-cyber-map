@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH/NJ/NM done 2026-07-19. NV done 2026-07-19 — 650 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH/NJ/NM/NV done 2026-07-19. OK done 2026-07-19 — 656 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -43,7 +43,7 @@ AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH/NJ/NM done 2026-07-19. NV don
 | PR | **pass 2** (2026-07-18) | Pass 2: Engine-4 Bayamón (24k sq ft, only IoT lab on island); Obsidis Consortia verified → org restored on BSidesPR. TODO deep-3: UPR |
 | NM | **pass 3** (2026-07-19) | Pass 3: all 3 unknowns resolved — New Mexico Tech (Socorro, CAE-R+CAE-CD, hosts NMCCoE); Make Santa Fe (501c3 community workspace); ABQ's FUSE Makerspace (CNM Ingenuity) + AFRL Maker Hub (near Kirtland AFB). NM complete for now. |
 | NV | **pass 3** (2026-07-19) | Pass 3: Clark County libraries resolved — Las Vegas-Clark County Library District makerspace program (3D/laser/AV/VR/robotics across branches). SNCTC (Las Vegas Metro PD's regional fusion center) added as gov, distinct from the state-level NTAC in Carson City. NV complete for now. |
-| OK | **pass 2** (2026-07-18) | Pass 2: MLS Studios (3 branches + mobile); OU Libraries MakerSpace. RESOLVED: BSides OKC + DC405 — not found. TODO deep-3: OU cyber program detail |
+| OK | **pass 3** (2026-07-19) | Pass 3: OU cyber program RESOLVED — BS offered only at OU-Tulsa (not Norman), no confirmed CAE. Added ISSA OKC, OWASP OKC, Information Warfare Summit (FBI InfraGard), Tulsa ICS/OT meetup, Tinker AFB (38th Cyberspace Engineering Group) as gov. OK complete for now. |
 | NE | **pass 3** (2026-07-19) | Pass 3: DC402 url resolved (dc402.org, DJ's Dugout, 2nd Tue); Omaha Maker Group added (8410 K St, since 2010, merged w/ Made New Makerspace); UNL added as school (cyber BS/PhD, no confirmed CAE unlike UNO). NE complete for now. |
 | NH | **pass 3** (2026-07-19) | Pass 3: BSides NH pin corrected to Londonderry (its actual base) — 2026 date still not published, checked. UNH added as school (NH's only NSA CAE-CD, since 2019, redesignated through 2030). Nashua resolved — MakeIt Labs (NH's first makerspace, 2010, 20k sq ft, hosts MakeItFest). NH complete for now. |
 | NJ | **pass 3** (2026-07-19) | Pass 3: north-Jersey libraries resolved — Made@NPL (Newark), Jersey City FPL Communipaw Branch makerspace, Bergen Makerspace (w/ Bergen County Tech Schools + Community College). NJCCIC/NJ ROIC (state cyber fusion center, West Trenton) added as gov. NJ complete for now. |
