@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT done 2026-07-19. ND done 2026-07-19 — 636 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND done 2026-07-19. NE done 2026-07-19 — 638 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -44,7 +44,7 @@ AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT done 2026-07-19. ND done 2026-07-19 �
 | NM | **pass 2** (2026-07-18) | Pass-2 attempt: NM Tech/Santa Fe/ABQ libraries unresolved — NM stays as-is. TODO deep-3: same items |
 | NV | **pass 2** (2026-07-18) | Pass 2: bridgewire.org (Thu open house); UNLV Libraries makerspace. RESOLVED: BSides Reno — not found. TODO deep-3: Clark County libraries |
 | OK | **pass 2** (2026-07-18) | Pass 2: MLS Studios (3 branches + mobile); OU Libraries MakerSpace. RESOLVED: BSides OKC + DC405 — not found. TODO deep-3: OU cyber program detail |
-| NE | **pass 2** (2026-07-18) | Pass 2: nebraskacert.org (CSF 3rd Wed) + cybersecurityomaha.com hub. TODO deep-3: DC402 url, Omaha Maker Group, UNL/Lincoln |
+| NE | **pass 3** (2026-07-19) | Pass 3: DC402 url resolved (dc402.org, DJ's Dugout, 2nd Tue); Omaha Maker Group added (8410 K St, since 2010, merged w/ Made New Makerspace); UNL added as school (cyber BS/PhD, no confirmed CAE unlike UNO). NE complete for now. |
 | NH | **pass 2** (2026-07-18) | Pass 2: BSides NH exists; Port City Makerspace (68 Morning St, since 2012). TODO deep-3: BSides NH url/dates, UNH, Nashua |
 | NJ | **pass 2** (2026-07-18) | Pass 2: defcon201.org (3rd Fri 7–10pm @ MakerBar 38 Jackson St) + makerbar.com; Rutgers/RUSec. TODO deep-3: north-Jersey libraries |
 | MS | **pass 3** (2026-07-19) | Pass 3: MGCCC RESOLVED (Perkinston — CAE-CD, only CC in MS with the designation, RESTORE Act tuition-free track). Jackson swept — Jackson State University (Microsoft-backed cyber-readiness) + its Innovation Center Makerspace, The Bean Path (Dr. Nashlie Sephus's tech-divide nonprofit), MSAIC state fusion center. BSides Jackson url still not found (social-only) — checked again, unresolved. MS complete for now. |
