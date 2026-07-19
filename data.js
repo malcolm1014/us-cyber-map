@@ -974,4 +974,9 @@ const RESOURCES = [
   { name:"NJIT Makerspace", category:"maker", region:1, st:"NJ", lat:40.7420, lng:-74.1790, city:"Newark, NJ", url:"https://www.njitmakerspace.com", address:"NJIT campus", phone:"", when:"", notes:"The largest university makerspace in New Jersey." },
   { name:"Phoenix Forge", category:"maker", region:4, st:"AZ", lat:33.4480, lng:-112.0780, city:"Phoenix, AZ", url:"https://phxforge.com", address:"535 W Van Buren St", phone:"(602) 286-8599", when:"", notes:"Downtown Phoenix community makerspace, near the Grand Avenue Arts District." },
   { name:"Tynkertopia", category:"youth", region:4, st:"AZ", lat:35.1740, lng:-111.5780, city:"Flagstaff, AZ", url:"https://www.tynkertopia.org", address:"3330 E Elder Dr", phone:"", when:"", notes:"Flagstaff's STEAM education center — robotics, coding, digital fab, 3D printing/laser for kids through young adults; free meals for visiting youth." },
+
+  // -- Nationwide makerspace deep-search (Jul 2026) — batch 8 (KS, ND, NE) --
+  { name:"GoCreate", category:"maker", region:3, st:"KS", lat:37.7290, lng:-97.2870, city:"Wichita, KS", url:"https://www.gocreate.com", address:"4000 E 17th St N (Wichita State Innovation Campus, Experiential Engineering Bldg)", phone:"(316) 978-2738", when:"", notes:"University-affiliated makerspace/studio complex." },
+  { name:"Grand Forks Makerspace", category:"maker", region:3, st:"ND", lat:47.9170, lng:-97.0590, city:"Grand Forks, ND", url:"https://www.makerspacegf.com", address:"1503 DeMers Ave", phone:"", when:"24/7 for members", notes:"North Dakota's community workshop — tools and space for any project." },
+  { name:"MakeShift Lincoln", category:"maker", region:3, st:"NE", lat:40.8210, lng:-96.6850, city:"Lincoln, NE", url:"https://makeshiftlincoln.org", address:"1135 N 22nd St (behind Turbine Flats)", phone:"", when:"", notes:"Lincoln's community makerspace/hacklab." },
 ];
