@@ -351,3 +351,76 @@ verification is still owed next session once Playwright is working again.
 the current 115 rows (most non-con resources have no topics yet — this was
 a foundation pass, not a full sweep), and populate `talks` for more cons as
 their schedules publish closer to event dates.
+
+## 2026-07-19 (same day, second pass) — Real talk lineups, date-ordered
+
+User: "target the conventions as they go in order by date and get that talk
+information in first... knowing the conventions closest to date will have
+the most information on talks events and tracks... use the most relevant
+talk and track data to coin and name filters like Blue Team and Red Team or
+SCADA."
+
+**Method:** sorted all 42 dated `con` entries by `next` ascending from
+today (2026-07-19) and worked outward from soonest. For each, WebFetched
+the con's own `url` (already in data.js — no search needed to find it) to
+check for a live schedule/agenda, following any linked schedule/program
+page found. Real WebSearch was unavailable this session (200/200 budget
+already used in an earlier phase); WebFetch against the con's own known
+URL worked as a substitute and, in practice, was the right tool anyway
+since every con already has its official URL on file.
+
+**Confirmed hypothesis, with a caveat:** closer date = more likely to have
+a published lineup, but the cutoff is sharper than "closest wins" — it's
+essentially binary per con this far out. Result across the first ~13 dated
+cons checked (Black Hat USA Aug 1 → BSides Atlanta Oct 3, plus SAINTCON Oct
+27 and Wild West Hackin' Fest Oct 7 spot-checked further out): **4 cons had
+real, scrapeable talk data; the rest are still in CFP/"schedule coming
+soon" limbo** even some quite close to their date (BSides Albuquerque/
+Orlando/Cleveland/Atlanta all Sep–Oct with CFPs still open in July; SAINTCON
+Oct 27 says "speaker lineup locked in" internally but hasn't published the
+page yet). Black Hat USA is Cloudflare-blocked from any fetch (403,
+confirmed via both WebFetch and raw curl with a browser UA) — left as
+topics-only, unchanged from the prior pass.
+
+**Rows that got real `talks` this pass:**
+- **HOPE 26** (Aug 14–16) — 40 talks from the published lineup at
+  hope.net/talks/, spanning privacy/surveillance, journalism, ham radio/
+  hardware, and AI tracks.
+- **GrrCON** (Sep 24–25) — 37 talks/keynotes from grrcon.com/presentations/.
+  Heavily AI-agent-themed this year (prompt injection, MCP, "vibe coding,"
+  AI SOC analysts) alongside the usual red/blue team and car-hacking talks.
+- **CYBR.SEC.CON** (Sep 15–16) — 71 sessions from their xcdsystem.com
+  program page, the richest source found: explicit named tracks
+  **OT.SEC.CON**, **CYBR.HAK.CON**, **AI.SEC.CON**, **EXEC.SEC.CON**,
+  **CYBR.SEC.Careers**. Speaker names weren't in the source for this one —
+  left `speaker:""` per-talk rather than guess; `track` carries the real
+  track name instead.
+- **DEF CON 34** — unchanged from the prior pass (villages); re-checked
+  defcon.org directly this pass and confirmed the named-talk Briefings
+  schedule genuinely isn't live yet (2.5 weeks out), so nothing to add
+  beyond the villages already there.
+
+Talks were auto-tagged by a keyword-over-title script (topic patterns
+extended from the original `tag_topics.py` set), not hand-picked — every
+one of the 168 new talk rows got whatever topics its title's keywords
+actually supported; titles with no clear technical-domain signal (e.g.
+pure culture/career talks) were left with an empty `topics:[]` rather than
+forced into a tag. **168 real talk entries added, 0 fabricated.**
+
+**Taxonomy: 2 new topics coined directly from this real data**, per the
+user's explicit ask to name filters from what talks/tracks actually say
+rather than a pre-guessed list — `crypto` (Cryptography / PQC — HOPE's
+"Harvest Now, Decrypt Later," CYBR.SEC.CON's post-quantum-in-OT talk) and
+`supplychain` (Supply chain security — recurring across HOPE/GrrCON/
+CYBR.SEC.CON: ATM supply chain, OT supplier risk, NPM package trust). Did
+**not** add SCADA as a separate topic from the existing `ics` tag — SCADA
+is a subset of ICS/OT and CYBR.SEC.CON's own "OT.SEC.CON" track confirms
+that framing — instead relabeled `ics`'s display name to **"ICS / SCADA /
+OT"** so the filter chip itself surfaces the term. 18 topics total now;
+verified every one has ≥1 real match so no chip in the UI is ever dead.
+
+**Explicitly not done this pass** (real constraint, not an oversight): the
+other ~38 dated cons and ~85 undated cons still have no `talks`. Most of
+those checked this pass simply have nothing public yet — this is exactly
+the kind of thing the user's monthly script should re-check as each con's
+own date approaches and its CFP closes.
