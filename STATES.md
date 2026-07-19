@@ -202,3 +202,65 @@ sampled pass (visit ~50-100 US-sounding entries rather than all 842), and
 state library-system makerspace databases (several states — NE, ID, WI —
 maintain their own, seen referenced during manual search) could be
 checked directly for a few more states not yet cross-referenced that way.
+
+## 2026-07-19: Ham Radio category — full ARRL affiliated-club import
+
+User: "we need more radio! collect all the local HAM groups and meetings."
+Asked the user two scoping questions up front given the scale: (1) all 2,887
+ARRL clubs vs a curated subset — chose all; (2) new dedicated category vs
+folding into `meetup` — chose new category, given the volume would otherwise
+swamp meetup.
+
+**Source:** ARRL's official affiliated-club directory. The public marketing
+page (`/find-a-club`) has a search form that doesn't work via plain
+POST (likely needs JS/session state), but the underlying results endpoint
+is directly hittable: `https://www.arrl.org/Clubs/search/page:N/limit:100/
+model:Group` (100/page paginates to all ~2,887 in 29 requests) and each
+club has a clean profile page at `/Groups/view/{slug}/type:club` with
+structured fields (Club Name, Call Sign, Contact, Phone, Meeting Time,
+Meeting Place, ARRL Section). Scraped all 2,880 individual profile pages
+(~7 min at 20-way curl concurrency).
+
+**Geocoding was the hard part** — profiles give free-text "meeting place"
+(e.g. "Zoom & Heights Cumberland Presbyterian Church", "On the Club repeater
+147.090", "TBA") with no coordinates. Built a multi-tier pipeline: (1) ZIP
+code found anywhere in the text → GeoNames US ZIP gazetteer (41,490 ZIPs,
+free download from download.geonames.org); (2) "City, ST" pattern found
+anywhere in the text (not just anchored at the end — clubs bury it mid-string)
+→ GeoNames city/state lookup; (3) a known city name appearing bare in the
+meeting-place text, matched against the club's ARRL-section-implied state
+(with a generic-word blocklist — "club/radio/county/valley/central/..." — to
+stop common words false-matching tiny-town names); (4) same bare-city search
+against the *club's own name* (many are literally "[City] Amateur Radio
+Club"); (5) last resort, a hand-built table of all ~70 ARRL section codes →
+state + one representative fallback coordinate (state capital or, for
+California's seven sub-state sections — LAX/SF/SDG/SJV/SB/SCV/EB/ORG/SV —
+that section's namesake city). Tiers 1–4 covered ~74%; tier 5 (generic
+placement) covers the rest — real ARRL-affiliated clubs, correctly stated,
+just imprecisely pinned within it.
+
+Excluded 28 clubs in Canadian/foreign ARRL sections (AB/BC/ON/QC/etc. — no
+US polygon). Deduped 75 internal same-name-same-state groups in ARRL's own
+database (renewal registrations create a new record instead of updating the
+old one — kept the more complete copy) and one exact duplicate of an
+existing map entry (Unallocated Space, MD — a hackerspace that's *also* an
+ARRL club, W3UAS, in the same building). 20 same-name-different-state pairs
+were kept as separate entries deliberately (e.g. "Roane County Amateur Radio
+Club" is a real, different club in both TN and WV) since the map's
+city/state fields already disambiguate them.
+
+**New "Ham Radio" category, color #8B4226** (warm brown) — chosen with the
+dataviz skill's palette validator (`scripts/validate_palette.js`), tested
+pairwise against all 7 existing categorical hues (gov's slate is the
+deliberate neutral/other slot, excluded from the hue set) at this site's
+actual dark surface (#070B12): zero CVD-separation or normal-vision-floor
+failures against any of them. The pre-existing 8-color palette already
+carried two known imperfections (red/pink and green/pink pairs below the
+normal-vision floor) — confirmed these predate this change and left them
+alone; only the new color's own pairings were in scope.
+
+**Result: 2,775 clubs added across 5 region-batched commits** (NE 547, SE
+692, MW 690, SW 314, W 532). Border-validator false-flag rate 0.1–4.2% per
+region, all traced to the same known coastal/border-precision pattern (plus
+a few section-fallback points sitting near a border) — no actual wrong-state
+assignments found on spot-check. Total map: 1154 → **3,929 entries.**
