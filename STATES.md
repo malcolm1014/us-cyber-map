@@ -107,5 +107,40 @@ caught 3 pre-existing dups from earlier passes) → TX/PA/WA(+7) → GA/NC/CO(+7
 first makerspace) → MT/RI(+3) → DC/IA(+2).** Maker category grew 145→204.
 Total map 802→862 entries. Every state touched at least once; AK/HI/DE/NM/WV
 were already comprehensively covered by earlier passes and needed no/minimal
-additions. Not exhaustive — smaller/newer spaces will keep surfacing; treat
-this as a strong baseline, not a final count.
+additions.
+
+## 2026-07-19: Phase 2 — bulk import from fablabs.io registry (user: "let's get all the makerspaces onto this map")
+
+Found `https://fablabs.io/labs.json` — the Fab Foundation's public registry of
+every Fab Lab worldwide (2,821 labs), with structured name/address/lat-lng/
+phone/links/activity_status. Filtered to `country_code=US`, excluded
+`closed`/`planned`/`corona` status, derived state from ZIP code (3-digit
+prefix ranges), deduped against the existing map (exact-name match + tight
+coordinate proximity). A looser fuzzy-token dedup pass was tried and
+**abandoned** — it produced false positives by matching on shared city names
+embedded in org names (e.g. "Fab Lab Houston" vs "DCG Houston" both contain
+"houston"). Manually reviewed close-but-not-identical candidates and
+confirmed/excluded 7 true duplicates: FUBAR Labs (NJ, better address from
+this source — could enrich existing entry later), Iowa City Fab Lab (IA),
+Johnson County Library MakerSpace (KS), Hammerspace Community Workshop (MO),
+The Hive Cambridge (MA — literally the same "Cambridge Public Library"
+address as our existing entry), plus one exact-coordinate internal duplicate
+in the source itself (SF FAB LAB / SFSD FAB LAB, WI) and one same-building
+double-listing (Global Center for Digital Innovation / Fab Lab STEM
+Chattanooga, TN — identical address). Also caught and fixed one bad ZIP in
+the source data itself that misassigned a Turlock, CA lab ("Warrior Fab Lab",
+Stanislaus State) to Mississippi — the `county` field said "California"
+plainly, so cross-checked ZIP-derived state against county field for all 128
+kept entries and found only that one mismatch.
+
+**Result: +128 net new maker entries in one commit.** maker category
+204→332, total map 862→990. Tried Nation of Makers' directory too — it's
+backed by a client-side-rendered miniextensions.com/Airtable map with no
+accessible bulk API, so that source was not usable this session. Also tried
+hackerspaces.org's MediaWiki API — needs Semantic MediaWiki `ask` queries
+that weren't worth the effort given fablabs.io's payoff; not attempted
+further. **Not literally exhaustive** — thousands of small/informal
+makerspaces exist with no web presence or registry listing; this represents
+two solid structured passes (manual per-state search + full fablabs.io US
+registry), not a hard ceiling. If the user names specific known-missing
+spaces, add those directly.
