@@ -144,3 +144,61 @@ makerspaces exist with no web presence or registry listing; this represents
 two solid structured passes (manual per-state search + full fablabs.io US
 registry), not a hard ceiling. If the user names specific known-missing
 spaces, add those directly.
+
+## 2026-07-19: Phase 3 — bulk import from Makerspace Directory (makerspacedir.com)
+
+User: "let's do a deep dive... try blogs and forums and Make magazine... force
+websites to dump their cache by querying a map index of their geo data."
+Found makerspacedir.com's sitemap (`/listing-sitemap.xml` + `listing-sitemap2.xml`,
+1,729 listing pages) — their ListingPro WordPress theme embeds
+`data-lat`/`data-lan` plus address/website/title in each listing page's HTML.
+Curl-scraped all 1,729 pages (~4 min at 15-way concurrency), parsed with
+Python/regex.
+
+**Critical quality finding: this directory is NOT curated** — despite the
+branding, roughly 80% of listings are random businesses/institutions with no
+actual makerspace (AARP Oregon state office, a WWII administration building,
+Alabama State University's general homepage, an economic development
+corporation...) apparently scraped in wholesale from a general business
+directory. Filtered to the 291 listings whose *name* explicitly contains
+maker/hacker/fablab-type terms — much higher precision, though even that
+required manual review (see below).
+
+Dedup lesson repeated from fablabs.io phase, worse this time: a coordinate
++ substring matcher over-matched purely on shared **city names** in org
+names (hacker culture loves naming things "[City] 2600" / "[City] Hackerspace"
+— e.g. flagged "Chicago Maker Space" as a dup of "DC312 + Chicago 2600" for
+sharing "chicago"). Went through all ~30 flagged pairs by hand with actual
+km distances: reinstated 13 false positives, confirmed ~15 true dups (same
+org under a fuller/different name — "LVL1 Hackerspace" = existing "LVL1",
+etc.), fixed 3 source-internal exact-address duplicates, and correctly
+distinguished genuine multi-branch orgs (McPherson County MakerSpace has
+locations in both McPherson *and* Conway, KS — kept both; same for 1st Maker
+Space LLC, MakerSpace NYC, MacInspires Makerspace, each disambiguated by
+city in the name). Excluded ~8 non-US listings (UK, Albania, Mexico,
+Switzerland, Germany, Poland, Maldives — their address had no US state).
+
+**Result: +164 in one commit** (163 maker + 1 youth — a kids' maker club).
+maker 332→495. Total map 990→1154.
+
+**Sources tried and explicitly rejected this round:**
+- Nation of Makers (nationofmakers.us) — client-rendered miniextensions.com/
+  Airtable embed, no accessible bulk data.
+- hackerspaces.org wiki — Semantic MediaWiki; standard `action=query` API
+  doesn't expose the structured data, would need `ask`-query syntax; not
+  pursued given the payoff of the two sources above.
+- Hackaday.io's hackerspace directory (842 worldwide, paginated ~38 pages)
+  — listing pages carry no address/geo data at all; would require visiting
+  all 842 individual detail pages for uncertain (and largely non-US) yield.
+  Not attempted.
+- Make: Magazine's "Most Interesting Makerspaces in America" (2015, 34
+  picks) — the actual list is a JS-rendered slideshow not present in static
+  HTML; also 10+ years old so a meaningful fraction would likely be stale.
+  Not extracted.
+- r/makerspace / r/hackerspaces — no useful indexed results found via search.
+
+If a future session wants to push further: hackaday.io could be worth a
+sampled pass (visit ~50-100 US-sounding entries rather than all 842), and
+state library-system makerspace databases (several states — NE, ID, WI —
+maintain their own, seen referenced during manual search) could be
+checked directly for a few more states not yet cross-referenced that way.
