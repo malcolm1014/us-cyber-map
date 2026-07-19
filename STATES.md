@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE done 2026-07-19. HI done 2026-07-19 — 597 entries total.
+AL/AK/AR/CT/DE/HI done 2026-07-19. IA done 2026-07-19 — 603 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -53,7 +53,7 @@ AL/AK/AR/CT/DE done 2026-07-19. HI done 2026-07-19 — 597 entries total.
 | KY | **pass 2** (2026-07-18) | Pass 2: LFPL's FOUR makerspaces (Maker Pavilion/Maker Den/Portland Pod/COLLIDER). RESOLVED: BSides Louisville — not found. TODO deep-3: Lexington/UK |
 | LA | **pass 2** (2026-07-18) | Pass 2: NOLAcon dates (May 15–17 + trainings — full NOLA security week w/ BSidesNOLA May 12). TODO deep-3: ULL, NOPL libraries, Baton Rouge |
 | ME | **pass 2** (2026-07-18) | Pass-2 deferred: 2027 BSides Maine date not yet announced; Bangor/libraries unresolved. TODO deep-3: same |
-| IA | **pass 2** (2026-07-18) | Pass 2: SecDSM (1st Thu 6pm, T12 Distillery, since 2016); Area 515 (1731 Grand Ave, Tue open house). TODO deep-3: ISU CDC dates, Cedar Rapids, BSides DSM site |
+| IA | **pass 3** (2026-07-19) | Pass 3: BSides Des Moines confirmed (bsidesdsm.org, 2026 year-2 edition Jun 13 @ FFA Center Ankeny — pin moved from DSM to Ankeny); ISEAGE's ITO CDC dated (Apr 25 2026) as new ctf entry; Cedar Rapids corridor swept — SecMidwest, Hacker Space ICR, Cedar Rapids Maker Space, OWASP Cedar Rapids; DMACC (CAE-CD community college) added. IA complete for now. |
 | ID | **pass 2** (2026-07-18) | Pass-2 attempt: Reuseum url + Boise Makers council + ISU Pocatello all unresolved (searched, not found) — ID stays as-is. TODO deep-3: same items |
 | KS | **pass 2** (2026-07-18) | Pass 2: Black & Veatch MakerSpace @ JoCo Central Resource Library. RESOLVED: CyberICT — not confirmed. TODO deep-3: Topeka |
 | CT | **pass 2** (2026-07-18) | Pass 2: BSides CT verified (bsidesct.org + year-round meetups). TODO deep-3: Yale, Stamford/Fairfield, library systems |
