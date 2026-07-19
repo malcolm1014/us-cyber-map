@@ -22,20 +22,19 @@ addresses, phones, schedules, county library systems).
 
 ## Status
 
-**🎉 PASS 1 COMPLETE — all 50 states + DC + PR swept and web-verified (2026-07-18).**
-Next phase: deep passes per the TODO columns below (Florida-level detail:
-county library systems, meeting venues/phones, every chapter org).
+**🎉 PASS 1 + PASS 2 COMPLETE NATIONWIDE (2026-07-18) — every state/DC/PR swept twice
+with web verification.** Remaining work lives in the deep-3 notes below.
 
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 2** (2026-07-18) | Pass 2: MākMō (LA County mobile fleet), Root Access Fresno (Central Valley!), San Diego CCOE (+ sandiegocyber.org calendar). RESOLVED: BSides LA — no active edition found, kept off map. TODO deep-3: DC562, MAG Lab, ISACA/ISC2 chapter pages, Sac/Fresno State CAE confirm, OC libraries (craft-level only so far) |
-| RI | **pass 1** (2026-07-18) | DC401 = resurrection w/ founder's blessing; Ocean State Maker Mill. TODO deep: QuahogCon status, Providence libraries |
-| SC | **pass 1** (2026-07-18) | BSides Greenville Aug 29 + BSides Charleston Nov 7 verified upcoming. TODO deep: CyberSC org, Columbia meetups |
-| SD | **pass 1** (2026-07-18) | Already strong (WWHF, DakotaCon, DSU) — nothing new needed. TODO deep: Sioux Falls, SDSU |
-| VT | **pass 1** (2026-07-18) | Already covered (Norwich, Champlain/Leahy, Generator). TODO deep: BSides VT existence, VTC |
-| WV | **pass 1** (2026-07-18) | SecureWV Oct 22–23 verified upcoming (304 Geeks). TODO deep: Marshall forensics, makerspaces |
-| WY | **pass 1** (2026-07-18) | Cyber Cheyenne Oct 16 verified upcoming (CyberWyoming + regional Shindigs). TODO deep: makerspaces, Casper/Gillette |
-| PR | **pass 1** (2026-07-18) | BSidesPR = oldest PR hacker con (2013), bsides.pr verified. TODO deep: UPR, Engine-4, meetups |
+| RI | **pass 2** (2026-07-18) | Pass 2: QuahogCon site active but con status unclear — off map, noted. TODO deep-3: Providence libraries |
+| SC | **pass 2** (2026-07-18) | Pass 2: CyberSC (SC Cyber Association 501c6; Secure Carolinas Conference; backs BSides Greenville) |
+| SD | **pass 2** (2026-07-18) | Pass 2: DSU Applied Research Lab Sioux Falls (~$100M); DSU note upgraded to all-3-CAE + DigForCE |
+| VT | **pass 2** (2026-07-18) | Pass 2: BSides Vermont — not found, resolved. VT complete for now |
+| WV | **pass 2** (2026-07-18) | Pass 2: Marshall (only cyber-forensics BS in WV — FTK/Cellebrite/Kali). TODO deep-3: makerspaces |
+| WY | **pass 2** (2026-07-18) | Pass 2: Innovation Wyrkshops (6 statewide, incl. LCCC = Cyber Cheyenne campus); Creation Station Casper library |
+| PR | **pass 2** (2026-07-18) | Pass 2: Engine-4 Bayamón (24k sq ft, only IoT lab on island); Obsidis Consortia verified → org restored on BSidesPR. TODO deep-3: UPR |
 | NM | **pass 2** (2026-07-18) | Pass-2 attempt: NM Tech/Santa Fe/ABQ libraries unresolved — NM stays as-is. TODO deep-3: same items |
 | NV | **pass 2** (2026-07-18) | Pass 2: bridgewire.org (Thu open house); UNLV Libraries makerspace. RESOLVED: BSides Reno — not found. TODO deep-3: Clark County libraries |
 | OK | **pass 2** (2026-07-18) | Pass 2: MLS Studios (3 branches + mobile); OU Libraries MakerSpace. RESOLVED: BSides OKC + DC405 — not found. TODO deep-3: OU cyber program detail |
