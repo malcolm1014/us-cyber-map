@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR done 2026-07-19. CT done 2026-07-19 — 584 entries total.
+AL/AK/AR/CT done 2026-07-19. DE done 2026-07-19 — 590 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -57,7 +57,7 @@ AL/AK/AR done 2026-07-19. CT done 2026-07-19 — 584 entries total.
 | ID | **pass 2** (2026-07-18) | Pass-2 attempt: Reuseum url + Boise Makers council + ISU Pocatello all unresolved (searched, not found) — ID stays as-is. TODO deep-3: same items |
 | KS | **pass 2** (2026-07-18) | Pass 2: Black & Veatch MakerSpace @ JoCo Central Resource Library. RESOLVED: CyberICT — not confirmed. TODO deep-3: Topeka |
 | CT | **pass 2** (2026-07-18) | Pass 2: BSides CT verified (bsidesct.org + year-round meetups). TODO deep-3: Yale, Stamford/Fairfield, library systems |
-| DE | **pass 2** (2026-07-18) | Pass 2: BSides Delaware CONFIRMED alive (bsidesdelaware.com; 2025 @ UDel, 2026 planning) — moved pin to Newark. TODO deep-3: Dover, DSU |
+| DE | **pass 3** (2026-07-19) | Pass 3: BSides Delaware date confirmed (2025 was Nov 14–15 @ UD FinTech building); 2600 Newark (Christiana Mall B&N) + Barrel of Makers (@ Route 9 Library) meetups; UD MakerSpace/MakerGym (Pearson Hall); Delaware State University (Dover, lapsed CAE-CD 2016–2021) + Delaware Tech CC (4 campuses) schools; DIAC (Dover, state fusion center) gov. DE complete for now. |
 | HI | **pass 2** (2026-07-18) | Pass 2: BSides Hawaii verified (bsideshawaii.org, 2025 Oct 8); HSPLS STEM Makerspaces (statewide system). TODO deep-3: 2026 edition date, neighbor islands |
 | AL | **pass 3** (2026-07-19) | Pass 3: BSides HSV url filled (bsideshuntsville.org, NAC-ISSA @ Calhoun CC, Fri trainings+Sat talks); Mobile Makerspace (805 Church St Ste D). Remaining: Montgomery (TechLab Defense Accelerator + Maxwell-Gunter cyber ecosystem — no community entry verified yet) |
 | AK | **pass 3** (2026-07-19) | Pass 3: Juneau Makerspace (3915 N Douglas Hwy, juneaumakerspace.org). RESOLVED: Loussac Library makerspace — only 2013 planning-era sources found, status unclear, kept off. Remaining: Loussac recheck |
