@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH done 2026-07-19. NJ done 2026-07-19 — 644 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH/NJ done 2026-07-19. NM done 2026-07-19 — 648 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -41,7 +41,7 @@ AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH done 2026-07-19. NJ done 2026
 | WV | **pass 2** (2026-07-18) | Pass 2: Marshall (only cyber-forensics BS in WV — FTK/Cellebrite/Kali). TODO deep-3: makerspaces |
 | WY | **pass 2** (2026-07-18) | Pass 2: Innovation Wyrkshops (6 statewide, incl. LCCC = Cyber Cheyenne campus); Creation Station Casper library |
 | PR | **pass 2** (2026-07-18) | Pass 2: Engine-4 Bayamón (24k sq ft, only IoT lab on island); Obsidis Consortia verified → org restored on BSidesPR. TODO deep-3: UPR |
-| NM | **pass 2** (2026-07-18) | Pass-2 attempt: NM Tech/Santa Fe/ABQ libraries unresolved — NM stays as-is. TODO deep-3: same items |
+| NM | **pass 3** (2026-07-19) | Pass 3: all 3 unknowns resolved — New Mexico Tech (Socorro, CAE-R+CAE-CD, hosts NMCCoE); Make Santa Fe (501c3 community workspace); ABQ's FUSE Makerspace (CNM Ingenuity) + AFRL Maker Hub (near Kirtland AFB). NM complete for now. |
 | NV | **pass 2** (2026-07-18) | Pass 2: bridgewire.org (Thu open house); UNLV Libraries makerspace. RESOLVED: BSides Reno — not found. TODO deep-3: Clark County libraries |
 | OK | **pass 2** (2026-07-18) | Pass 2: MLS Studios (3 branches + mobile); OU Libraries MakerSpace. RESOLVED: BSides OKC + DC405 — not found. TODO deep-3: OU cyber program detail |
 | NE | **pass 3** (2026-07-19) | Pass 3: DC402 url resolved (dc402.org, DJ's Dugout, 2nd Tue); Omaha Maker Group added (8410 K St, since 2010, merged w/ Made New Makerspace); UNL added as school (cyber BS/PhD, no confirmed CAE unlike UNO). NE complete for now. |
