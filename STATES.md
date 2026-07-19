@@ -27,7 +27,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 
 | State | Status | Notes |
 |---|---|---|
-| CA | **pass 2** (2026-07-18) | Pass 2: MākMō (LA County mobile fleet), Root Access Fresno (Central Valley!), San Diego CCOE (+ sandiegocyber.org calendar). RESOLVED: BSides LA — no active edition found, kept off map. TODO deep-3: DC562, MAG Lab, ISACA/ISC2 chapter pages, Sac/Fresno State CAE confirm, OC libraries (craft-level only so far) |
+| CA | **pass 3** (2026-07-18) | Pass 3: DC562 (2x/mo talks+CTF); MAG Lab Walnut; 032.la live (Null Space url fixed); Sac State CIAS (CAE-CD '28, $7M SFS); ISC2 Sacramento; Cal-CSIC fusion center. Remaining: Fresno State, OC libraries |
 | RI | **pass 2** (2026-07-18) | Pass 2: QuahogCon site active but con status unclear — off map, noted. TODO deep-3: Providence libraries |
 | SC | **pass 2** (2026-07-18) | Pass 2: CyberSC (SC Cyber Association 501c6; Secure Carolinas Conference; backs BSides Greenville) |
 | SD | **pass 2** (2026-07-18) | Pass 2: DSU Applied Research Lab Sioux Falls (~$100M); DSU note upgraded to all-3-CAE + DigForCE |
