@@ -75,7 +75,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 | WA | **pass 2** (2026-07-18) | Pass 2: PRCCDC verified (Highline-hosted, March, rotates — 2025 @ SPSCC); OWASP Seattle; KCLS makerspaces. RESOLVED: BSides Spokane + FabLab Tacoma — not found, off map. TODO deep-3: SPL proper (KCLS covers county), JBLM, Tacoma/Vancouver WA coverage |
 | VA+MD+DC | **pass 2** (2026-07-18) | Pass 2: DreamPort (USCYBERCOM/MISI hub) + AvengerCon X summer 2026 verified; FCPL Maker Labs + Loudoun library makerspace; KID Museum Bethesda. TODO deep-3: AvengerCon exact dates, 757 Makerspace Norfolk, OWASP DC/NoVA pages, MCPL/KID details, Richmond depth, GWU/Georgetown |
 | NY | **pass 2** (2026-07-18) | Pass 2: DC212 @ Fat Cat Fab Lab (every 1–2 mo, 7pm) + Fat Cat pinned; Squidwrench (Mid-Hudson, 2010); Tech Valley CoG Troy (maker+incubator); NYPL TechConnect. TODO deep-3: DC516/Long Island, Fat Cat url, BSidesNYC next date, Pace/Columbia, Syracuse/Binghamton meetups |
-| TX | **pass 2** (2026-07-18) | Pass 2: Houston BSides Sep 17 verified upcoming (6 villages); DC713 since 2008; bsidesaustin.com found; Dallas PL "Creative Spaces" (3 makerspaces @ Central) — resolves Story Center TODO. TODO deep-3: TX 2600 meetings, TexSAW/UNT, San Antonio PL, El Paso/Lubbock/RGV, county libraries |
+| TX | **pass 3** (2026-07-18) | Pass 3: all 3 big 2600s w/ venues (ATX Central Market 7pm, Dallas Wild Turkey, Houston Agora 6pm); TexSAW ctf (UTD CSG, int'l); TTU Library Makerspace (Lubbock). Remaining: San Antonio PL, UNT, El Paso/RGV |
 | FL | **deep** (external) | Lives in florida-cyber-map; anchors mirrored here |
 | All others | anchors | From Jul 2026 national sweep |
 
