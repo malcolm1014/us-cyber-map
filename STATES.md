@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA done 2026-07-19. ME done 2026-07-19 — 627 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME done 2026-07-19. MS done 2026-07-19 — 632 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -47,7 +47,7 @@ AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA done 2026-07-19. ME done 2026-07-19 — 627 ent
 | NE | **pass 2** (2026-07-18) | Pass 2: nebraskacert.org (CSF 3rd Wed) + cybersecurityomaha.com hub. TODO deep-3: DC402 url, Omaha Maker Group, UNL/Lincoln |
 | NH | **pass 2** (2026-07-18) | Pass 2: BSides NH exists; Port City Makerspace (68 Morning St, since 2012). TODO deep-3: BSides NH url/dates, UNH, Nashua |
 | NJ | **pass 2** (2026-07-18) | Pass 2: defcon201.org (3rd Fri 7–10pm @ MakerBar 38 Jackson St) + makerbar.com; Rutgers/RUSec. TODO deep-3: north-Jersey libraries |
-| MS | **pass 2** (2026-07-18) | Pass-2 attempt: BSides Jackson url + MGCCC cyber both unresolved — MS stays as-is. TODO deep-3: same items |
+| MS | **pass 3** (2026-07-19) | Pass 3: MGCCC RESOLVED (Perkinston — CAE-CD, only CC in MS with the designation, RESTORE Act tuition-free track). Jackson swept — Jackson State University (Microsoft-backed cyber-readiness) + its Innovation Center Makerspace, The Bean Path (Dr. Nashlie Sephus's tech-divide nonprofit), MSAIC state fusion center. BSides Jackson url still not found (social-only) — checked again, unresolved. MS complete for now. |
 | MT | **pass 2** (2026-07-18) | Pass 2: Missoula PL MakerSpace (2013) + CyberMontana (Legislature-funded statewide). RESOLVED: BSides Montana — not found. TODO deep-3: Billings SCRAP |
 | ND | **pass 2** (2026-07-18) | Pass 2: bsidesfargo.org + cyberconbsc.com urls landed; CyberCon = 'premier cyber + critical infrastructure con.' TODO deep-3: Fargo Makerworks status, NDIT |
 | KY | **pass 3** (2026-07-19) | Pass 3: Lexington/UK resolved — University of Kentucky (cyber certificate, no confirmed CAE unlike EKU/Murray State/KY State), Lexington Makerspace (24/7, 510 Henry Clay Blvd), Lexington Public Library learning spaces (Kloiber STEAM Lab + 3 branches); ISSA Kentuckiana added as statewide meetup. KY complete for now. |
