@@ -42,9 +42,9 @@ county library systems, meeting venues/phones, every chapter org).
 | NE | **pass 1** (2026-07-18) | Kernelcon Apr cadence + origin (DC402/NEbraskaCERT/OWASP); DC402 + NEbraskaCERT added. TODO deep: urls for both, Omaha Maker Group, UNL, Lincoln |
 | NH | **pass 1** (2026-07-18) | DC603 2nd-Sat 7pm at Gusanoz, Lebanon. TODO deep: BSides NH existence, Port City Makerspace, UNH, Nashua/Seacoast |
 | NJ | **pass 1** (2026-07-18) | BSides South Jersey inaugural @ Rowan (200+) verified; DC201 at MakerBar Hoboken; DC862; MakerBar. TODO deep: DC201/MakerBar urls, Rutgers, north-Jersey libraries |
-| MS | **pass 1** (2026-07-18) | BSides Jackson (Nov, Ridgeland); MS Cyber Initiative mapped (MSU lead + Keesler + USM); Keesler AFB. TODO deep: BSides Jackson url/2026, MGCCC, makerspaces, Jackson libraries |
-| MT | **pass 1** (2026-07-18) | UM Missoula (MsDOS group) + MSU cyber lab; Bozeman Makerspace (public Thursdays). TODO deep: BSides MT existence, CyberMontana entry?, Missoula/Billings makerspaces |
-| ND | **pass 1** (2026-07-18) | BSides Fargo @ NDSU (Oct, HTB CTF) + Cybercon Bismarck State; NDSU CAE-R institute. TODO deep: urls for both cons, Fargo makerspace, NDIT |
+| MS | **pass 2** (2026-07-18) | Pass-2 attempt: BSides Jackson url + MGCCC cyber both unresolved — MS stays as-is. TODO deep-3: same items |
+| MT | **pass 2** (2026-07-18) | Pass 2: Missoula PL MakerSpace (2013) + CyberMontana (Legislature-funded statewide). RESOLVED: BSides Montana — not found. TODO deep-3: Billings SCRAP |
+| ND | **pass 2** (2026-07-18) | Pass 2: bsidesfargo.org + cyberconbsc.com urls landed; CyberCon = 'premier cyber + critical infrastructure con.' TODO deep-3: Fargo Makerworks status, NDIT |
 | KY | **pass 2** (2026-07-18) | Pass 2: LFPL's FOUR makerspaces (Maker Pavilion/Maker Den/Portland Pod/COLLIDER). RESOLVED: BSides Louisville — not found. TODO deep-3: Lexington/UK |
 | LA | **pass 2** (2026-07-18) | Pass 2: NOLAcon dates (May 15–17 + trainings — full NOLA security week w/ BSidesNOLA May 12). TODO deep-3: ULL, NOPL libraries, Baton Rouge |
 | ME | **pass 2** (2026-07-18) | Pass-2 deferred: 2027 BSides Maine date not yet announced; Bangor/libraries unresolved. TODO deep-3: same |
