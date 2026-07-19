@@ -54,9 +54,9 @@ county library systems, meeting venues/phones, every chapter org).
 | CT | **pass 1** (2026-07-18) | CT Hackerspace (oldest in CT) + MakerspaceCT (28k sq ft, G. Fox Bldg) verified; UNewHaven added. TODO deep: BSidesCT existence, Yale, Stamford/Fairfield corridor, more library systems |
 | DE | **pass 1** (2026-07-18) | Route 9 Library & Innovation Center verified (maker flagship). TODO deep: BSides Delaware status (still unconfirmed), Dover, DSU |
 | HI | **pass 1** (2026-07-18) | DC808 exiting hibernation (honest note); HICapacity @ Manoa Innovation Center; LocoMocoSec last known 2024. TODO deep: BSides Hawaii next edition, HPL libraries, neighbor islands |
-| AL | **pass 1** (2026-07-18) | HMCPL Makerspace Studios (8 branches); BSides Birmingham still unverified (entry keeps note). TODO deep: BSides Huntsville existence, DC256, Birmingham/Mobile/Montgomery coverage |
-| AK | **pass 1** (2026-07-18) | BSides Alaska (ArcticShield, Egan Center) + DC907 (monthly at Anchorage Makerspace) verified. TODO deep: Anchorage Makerspace url/location, Loussac Library, UAF, Fairbanks/Juneau |
-| AR | **pass 1** (2026-07-18) | NWACC CAE-CD (1st AR CC, thru 2028) + UALR Cyber Gym verified. TODO deep: BSides Little Rock status, UA Fayetteville, library systems |
+| AL | **pass 2** (2026-07-18) | Pass 2: bsidesbham.org found; BSides Huntsville exists; DC256 (wardriving comps @ UAH I2C). TODO deep-3: Mobile/Montgomery, BSides HSV url |
+| AK | **pass 2** (2026-07-18) | Pass 2: Anchorage Makerspace url+address (1406 W 33rd); UAF Makerspace Network (Fairbanks). TODO deep-3: Loussac Library, Juneau |
+| AR | **pass 2** (2026-07-18) | Pass 2: UALR statewide cyber clinic network ($1M Google.org) + Cyberspace Ops center; UA Fayetteville CISR; CALS Main Library teen makerspace. RESOLVED: BSides Little Rock — status unclear, off map |
 | IN | **pass 2** (2026-07-18) | Pass 2: DC317 confirmed (DCG forums). TODO deep-3: Ruckus, Ivy Tech, Fort Wayne/Evansville/South Bend |
 | UT | **pass 2** (2026-07-18) | Pass 2: Make Salt Lake (Arts Hub, since 2009); SLCPL Creative Lab (2015). TODO deep-3: BYU/UVU, Ogden/Hill AFB |
 | MO | **pass 2** (2026-07-18) | Pass 2: SLPL Creative Experience (3 branches); MCPL (31-branch mobile maker + Woodneath + Square One); KCPL free Google Cyber Cert scholarships. TODO deep-3: WashU/SLU, Springfield |
