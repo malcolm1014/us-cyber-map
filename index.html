@@ -258,6 +258,18 @@
     color:var(--accent); padding-top:2px;
   }
   .popup .fact a{ font-size:inherit; }
+  .popup .talks{
+    border-top:1px solid var(--line); margin:2px 0 7px; padding-top:6px;
+  }
+  .popup .talks summary{
+    font-family:var(--mono); font-size:.58rem; font-weight:500; letter-spacing:.12em;
+    color:var(--accent); cursor:pointer; user-select:none;
+  }
+  .popup .talklist{ display:grid; gap:6px; margin-top:6px; }
+  .popup .talk{ font-size:.73rem; color:var(--text); line-height:1.4; }
+  .popup .talk .tt{ font-weight:600; }
+  .popup .talk .ts{ color:var(--muted); }
+  .popup .talk .tag{ padding:1px 6px; font-size:.56rem; margin:3px 4px 0 0; }
 
   /* ============ PINS ============ */
   .pin{
@@ -329,6 +341,11 @@
   </div>
 
   <div class="pad hairline">
+    <div class="label">Topics <span style="opacity:.55; font-weight:400">— what are you into?</span></div>
+    <div class="cats" id="topics"></div>
+  </div>
+
+  <div class="pad hairline">
     <div class="searchwrap">
       <input id="search" type="search" placeholder="Search by name or city…" aria-label="Search resources">
     </div>
@@ -367,6 +384,30 @@ const CATEGORIES = {
   youth:  { label:"Student STEM & cyber",       color:getCSS('--c-youth')   },
   gov:    { label:"Gov & research",             color:getCSS('--c-gov')     },
   hamradio:{ label:"Ham radio clubs",           color:getCSS('--c-hamradio')},
+};
+
+/* Cross-cutting interest tags — independent of category. Any resource (or, for
+   cons, an individual talk/village) can carry zero or more of these. Filtering
+   by topic surfaces relevant content across every category at once, e.g. an
+   "ai" filter shows an AI-focused meetup, a hackerspace doing ML work, and a
+   con's AI Village side by side. */
+const TOPICS = {
+  ai:               "AI / ML",
+  cloud:            "Cloud security",
+  osint:            "OSINT",
+  iot:              "IoT / embedded / hardware",
+  radio:            "SDR / RF",
+  redteam:          "Red team / offense",
+  blueteam:         "Blue team / defense",
+  forensics:        "Forensics / DFIR",
+  malware:          "Malware / reversing",
+  physical:         "Physical security / lockpicking",
+  socialengineering:"Social engineering",
+  privacy:          "Privacy",
+  policy:           "Policy / governance",
+  ics:              "ICS / OT / critical infra",
+  ctf:              "CTF",
+  community:        "Youth & community",
 };
 
 /* States (from STATE_GEO in regions.js) — the second drill-down tier. */
@@ -505,13 +546,31 @@ const markers = RESOURCES.map(r => {
   if (r.org)     facts.push(`<div class="fact"><span class="fk">ORG</span><span>${esc(r.org)}</span></div>`);
   if (r.phone)   facts.push(`<div class="fact"><span class="fk">TEL</span><a href="tel:${esc(String(r.phone).replace(/[^+\d]/g,''))}">${esc(r.phone)}</a></div>`);
   if (r.when)    facts.push(`<div class="fact"><span class="fk">TIME</span><span>${esc(r.when)}${isPast(r) ? ' <span class="stale">· listed dates have passed — check site</span>' : ''}</span></div>`);
+  const topicTags = (r.topics || []).map(t =>
+    `<span class="tag" style="color:var(--accent); border-color:var(--accent)">${esc(TOPICS[t] || t)}</span>`
+  ).join("");
+  const talksHtml = (r.category === "con" && r.talks && r.talks.length) ? `
+    <details class="talks">
+      <summary>TALKS &amp; VILLAGES (${r.talks.length})</summary>
+      <div class="talklist">
+        ${r.talks.map(tk => `
+          <div class="talk">
+            <div class="tt">${esc(tk.title)}</div>
+            ${tk.speaker ? `<div class="ts">${esc(tk.speaker)}</div>` : ""}
+            ${tk.track ? `<div class="ts">${esc(tk.track)}</div>` : ""}
+            ${(tk.topics || []).map(t => `<span class="tag" style="color:var(--accent); border-color:var(--accent)">${esc(TOPICS[t] || t)}</span>`).join("")}
+          </div>`).join("")}
+      </div>
+    </details>` : "";
   m.bindPopup(`
     <div class="popup">
       <h3>${esc(r.name)}</h3>
       <span class="tag" style="color:${cat.color}; border-color:${cat.color}">${cat.label}</span>
       <span class="tag" style="color:${REGIONS[r.region].color}; border-color:${REGIONS[r.region].color}">${REGIONS[r.region].name}</span>
+      ${topicTags}
       <p>${esc(r.notes)}</p>
       ${facts.length ? `<div class="facts">${facts.join("")}</div>` : ""}
+      ${talksHtml}
       ${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">Website ↗</a>` : ""}
     </div>`, { maxWidth: 320 });
   m._data = r;
@@ -520,13 +579,16 @@ const markers = RESOURCES.map(r => {
 
 /* ============ STATE + FILTERING ============ */
 const enabledCats = new Set(Object.keys(CATEGORIES));
+const enabledTopics = new Set();   // empty = no topic filter applied
 let searchTerm = "";
 
 function visible(r){
   return enabledCats.has(r.category)
     && (activeRegion === null || r.region === activeRegion)
     && (activeState === null || r.st === activeState)
-    && (searchTerm === "" || (r.name + " " + r.city + " " + (r.st || "")).toLowerCase().includes(searchTerm));
+    && (searchTerm === "" || (r.name + " " + r.city + " " + (r.st || "")).toLowerCase().includes(searchTerm))
+    && (enabledTopics.size === 0 || (r.topics || []).some(t => enabledTopics.has(t))
+        || (r.talks || []).some(tk => (tk.topics || []).some(t => enabledTopics.has(t))));
 }
 
 function refresh(){
@@ -597,6 +659,26 @@ for (const [key, c] of Object.entries(CATEGORIES)){
     refresh();
   };
   catsEl.appendChild(b);
+}
+
+const topicsEl = document.getElementById('topics');
+for (const [key, label] of Object.entries(TOPICS)){
+  const n = RESOURCES.filter(r =>
+    (r.topics || []).includes(key) || (r.talks || []).some(tk => (tk.topics || []).includes(key))
+  ).length;
+  if (!n) continue;   // no point offering an empty filter
+  const b = document.createElement('button');
+  b.className = 'chip';
+  b.setAttribute('aria-pressed', 'false');
+  b.style.setProperty('--cc', 'var(--accent)');
+  b.innerHTML = `<span class="dot"></span>${label}&nbsp;<span style="opacity:.55">${n}</span>`;
+  b.onclick = () => {
+    const on = b.getAttribute('aria-pressed') === 'true';
+    b.setAttribute('aria-pressed', String(!on));
+    on ? enabledTopics.delete(key) : enabledTopics.add(key);
+    refresh();
+  };
+  topicsEl.appendChild(b);
 }
 
 document.getElementById('search').addEventListener('input', e => {
