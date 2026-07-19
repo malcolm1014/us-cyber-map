@@ -84,7 +84,7 @@ throughout — deep-4 (further verification/expansion) can pick any state.
 | VA+MD+DC | **pass 3** (2026-07-18) | Pass 3: AvengerCon X was Jun 30–Jul 1 @ JHU APL Kossiakoff (780th MI vols) — entry corrected; 757 Makerspace Norfolk; hack.RVA (1st/3rd Thu); OWASP DC + NoVA chapters. Remaining: GWU/Georgetown, MCPL detail |
 | NY | **pass 3** (2026-07-18) | Pass 3: BSidesNYC Oct 17 @ John Jay verified upcoming (1000+, 5 tracks); fatcatfablab.org; Pace Seidenberg. RESOLVED: DC516 — not found. Remaining: Columbia, Syracuse/Binghamton meetups |
 | TX | **pass 3** (2026-07-18) | Pass 3: all 3 big 2600s w/ venues (ATX Central Market 7pm, Dallas Wild Turkey, Houston Agora 6pm); TexSAW ctf (UTD CSG, int'l); TTU Library Makerspace (Lubbock). Remaining: San Antonio PL, UNT, El Paso/RGV |
-| FL | **deep** (external) | Lives in florida-cyber-map; anchors mirrored here |
+| FL | **deep** (merged 2026-07-19) | Full 133-entry florida-cyber-map dataset merged in (was 4 anchors). linux→meetup, apex→gov category remap. florida-cyber-map stays the canonical source for future FL edits — re-merge if it changes. |
 | All others | anchors | From Jul 2026 national sweep |
 
 ## Suggested order (community size / audience)
