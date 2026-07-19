@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE done 2026-07-19. NH done 2026-07-19 — 640 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH done 2026-07-19. NJ done 2026-07-19 — 644 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -46,7 +46,7 @@ AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE done 2026-07-19. NH done 2026-07
 | OK | **pass 2** (2026-07-18) | Pass 2: MLS Studios (3 branches + mobile); OU Libraries MakerSpace. RESOLVED: BSides OKC + DC405 — not found. TODO deep-3: OU cyber program detail |
 | NE | **pass 3** (2026-07-19) | Pass 3: DC402 url resolved (dc402.org, DJ's Dugout, 2nd Tue); Omaha Maker Group added (8410 K St, since 2010, merged w/ Made New Makerspace); UNL added as school (cyber BS/PhD, no confirmed CAE unlike UNO). NE complete for now. |
 | NH | **pass 3** (2026-07-19) | Pass 3: BSides NH pin corrected to Londonderry (its actual base) — 2026 date still not published, checked. UNH added as school (NH's only NSA CAE-CD, since 2019, redesignated through 2030). Nashua resolved — MakeIt Labs (NH's first makerspace, 2010, 20k sq ft, hosts MakeItFest). NH complete for now. |
-| NJ | **pass 2** (2026-07-18) | Pass 2: defcon201.org (3rd Fri 7–10pm @ MakerBar 38 Jackson St) + makerbar.com; Rutgers/RUSec. TODO deep-3: north-Jersey libraries |
+| NJ | **pass 3** (2026-07-19) | Pass 3: north-Jersey libraries resolved — Made@NPL (Newark), Jersey City FPL Communipaw Branch makerspace, Bergen Makerspace (w/ Bergen County Tech Schools + Community College). NJCCIC/NJ ROIC (state cyber fusion center, West Trenton) added as gov. NJ complete for now. |
 | MS | **pass 3** (2026-07-19) | Pass 3: MGCCC RESOLVED (Perkinston — CAE-CD, only CC in MS with the designation, RESTORE Act tuition-free track). Jackson swept — Jackson State University (Microsoft-backed cyber-readiness) + its Innovation Center Makerspace, The Bean Path (Dr. Nashlie Sephus's tech-divide nonprofit), MSAIC state fusion center. BSides Jackson url still not found (social-only) — checked again, unresolved. MS complete for now. |
 | MT | **pass 3** (2026-07-19) | Pass 3: Billings SCRaP resolved (Share Create Reuse and Promote, since 2015, STEAM/youth focus). Montana 2600 (Missoula) + MATIC state fusion center (Fort Harrison) added. MT complete for now. |
 | ND | **pass 3** (2026-07-19) | Pass 3: Fargo Makerworks RESOLVED — closed, succeeded by MELD Workshop (fee-for-service laser shop, no memberships — not a community space, kept off map). NDIT's Cybersecurity Operations Center added as gov (founded the multi-state J-CSOC, first state-to-state cyber intel sharing in the country). No Fargo DC/2600 group found — checked. ND complete for now. |
