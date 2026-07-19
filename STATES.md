@@ -29,12 +29,12 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH/NJ/NM/NV/OK done 2026-07-19. PR done 2026-07-19 — 658 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH/NJ/NM/NV/OK/PR done 2026-07-19. RI done 2026-07-19 — 660 entries total.
 
 | State | Status | Notes |
 |---|---|---|
 | CA | **pass 3** (2026-07-18) | Pass 3: DC562 (2x/mo talks+CTF); MAG Lab Walnut; 032.la live (Null Space url fixed); Sac State CIAS (CAE-CD '28, $7M SFS); ISC2 Sacramento; Cal-CSIC fusion center. Remaining: Fresno State, OC libraries |
-| RI | **pass 2** (2026-07-18) | Pass 2: QuahogCon site active but con status unclear — off map, noted. TODO deep-3: Providence libraries |
+| RI | **pass 3** (2026-07-19) | Pass 3: Providence libraries resolved — Providence Public Library Workshop/Makerspace (laser, sewing, sound studio). RI State Fusion Center + Joint Cyber Task Force added as gov. RI complete for now. |
 | SC | **pass 2** (2026-07-18) | Pass 2: CyberSC (SC Cyber Association 501c6; Secure Carolinas Conference; backs BSides Greenville) |
 | SD | **pass 2** (2026-07-18) | Pass 2: DSU Applied Research Lab Sioux Falls (~$100M); DSU note upgraded to all-3-CAE + DigForCE |
 | VT | **pass 2** (2026-07-18) | Pass 2: BSides Vermont — not found, resolved. VT complete for now |
