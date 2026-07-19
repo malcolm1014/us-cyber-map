@@ -29,7 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA done 2026-07-19. ID done 2026-07-19 — 606 entries total.
+AL/AK/AR/CT/DE/HI/IA/ID done 2026-07-19. KS done 2026-07-19 — 609 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -55,7 +55,7 @@ AL/AK/AR/CT/DE/HI/IA done 2026-07-19. ID done 2026-07-19 — 606 entries total.
 | ME | **pass 2** (2026-07-18) | Pass-2 deferred: 2027 BSides Maine date not yet announced; Bangor/libraries unresolved. TODO deep-3: same |
 | IA | **pass 3** (2026-07-19) | Pass 3: BSides Des Moines confirmed (bsidesdsm.org, 2026 year-2 edition Jun 13 @ FFA Center Ankeny — pin moved from DSM to Ankeny); ISEAGE's ITO CDC dated (Apr 25 2026) as new ctf entry; Cedar Rapids corridor swept — SecMidwest, Hacker Space ICR, Cedar Rapids Maker Space, OWASP Cedar Rapids; DMACC (CAE-CD community college) added. IA complete for now. |
 | ID | **pass 3** (2026-07-19) | Pass 3: Reuseum url/address/phone RESOLVED (reuseum.com, 3131 W Chinden Blvd, Garden City — pin corrected off Boise proper); Idaho State University — NIATEC RESOLVED (Pocatello, one of the original 7 NSA CAE schools, first hands-on Industrial Cybersecurity Eng. Tech. degree); DC208 (DEF CON group, Coeur d'Alene + Boise sub-chapter) found; Albertsons Library MakerLab (Boise State) added. ID complete for now. |
-| KS | **pass 2** (2026-07-18) | Pass 2: Black & Veatch MakerSpace @ JoCo Central Resource Library. RESOLVED: CyberICT — not confirmed. TODO deep-3: Topeka |
+| KS | **pass 3** (2026-07-19) | Pass 3: Topeka resolved — TSCPL Level 2 Tech Center (library) + Kansas Intelligence Fusion Center (gov, joint KS AG + Adjutant General/Guard). DC316 (Wichita DEF CON group, Friends University) added. Confirmed SecKC's physical venue (Knuckleheads Garage) is on the MO side — correctly filed under MO, not duplicated here. KS complete for now. |
 | CT | **pass 2** (2026-07-18) | Pass 2: BSides CT verified (bsidesct.org + year-round meetups). TODO deep-3: Yale, Stamford/Fairfield, library systems |
 | DE | **pass 3** (2026-07-19) | Pass 3: BSides Delaware date confirmed (2025 was Nov 14–15 @ UD FinTech building); 2600 Newark (Christiana Mall B&N) + Barrel of Makers (@ Route 9 Library) meetups; UD MakerSpace/MakerGym (Pearson Hall); Delaware State University (Dover, lapsed CAE-CD 2016–2021) + Delaware Tech CC (4 campuses) schools; DIAC (Dover, state fusion center) gov. DE complete for now. |
 | HI | **pass 3** (2026-07-19) | Pass 3: neighbor-island makerspaces added — Maui Makers (Central Maui Baseyard), Kauai Makerspace, Big Island Tech Works (Hilo) — all 4 major islands now covered; CyberHawaii (statewide industry nonprofit) + ISC2 Hawaii meetups, GenCyber Hawai'i youth camps (NSA/NSF, @ UH Manoa), Hawaii State Fusion Center gov. BSides Hawaii 2026 date not yet published — checked, still TBA. |
