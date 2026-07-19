@@ -57,7 +57,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 | AK | **pass 2** (2026-07-18) | Pass 2: Anchorage Makerspace url+address (1406 W 33rd); UAF Makerspace Network (Fairbanks). TODO deep-3: Loussac Library, Juneau |
 | AR | **pass 2** (2026-07-18) | Pass 2: UALR statewide cyber clinic network ($1M Google.org) + Cyberspace Ops center; UA Fayetteville CISR; CALS Main Library teen makerspace. RESOLVED: BSides Little Rock — status unclear, off map |
 | IN | **pass 2** (2026-07-18) | Pass 2: DC317 confirmed (DCG forums). TODO deep-3: Ruckus, Ivy Tech, Fort Wayne/Evansville/South Bend |
-| UT | **pass 2** (2026-07-18) | Pass 2: Make Salt Lake (Arts Hub, since 2009); SLCPL Creative Lab (2015). TODO deep-3: BYU/UVU, Ogden/Hill AFB |
+| UT | **pass 3** (2026-07-19) | Pass 3: BYU (CAE-CD BS); UVU Center for Cybersecurity (BS + NSA-validated MS); Hill AFB 309th SWEG gov pin (DevSecOps, Startup Ogden spin-offs, WSU MARS). No Ogden makerspace found. Remaining: Weber State own entry, Logan/USU |
 | MO | **pass 2** (2026-07-18) | Pass 2: SLPL Creative Experience (3 branches); MCPL (31-branch mobile maker + Woodneath + Square One); KCPL free Google Cyber Cert scholarships. TODO deep-3: WashU/SLU, Springfield |
 | WI | **pass 2** (2026-07-18) | Pass 2: WISCON verified (Jun 11 Madison, sold out; biohacking village). TODO deep-3: Milwaukee PL, UW-Madison, Green Bay/Fox Valley |
 | OR | **pass 3** (2026-07-19) | Pass 3: DIYcave Bend (444 SE 9th St, since 2014, forge!); ^H upgraded — 7600 N Interstate, Thu open house + Sat work party 12–5. Remaining: Salem, Medford/Ashland |
