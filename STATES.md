@@ -45,9 +45,9 @@ county library systems, meeting venues/phones, every chapter org).
 | MS | **pass 1** (2026-07-18) | BSides Jackson (Nov, Ridgeland); MS Cyber Initiative mapped (MSU lead + Keesler + USM); Keesler AFB. TODO deep: BSides Jackson url/2026, MGCCC, makerspaces, Jackson libraries |
 | MT | **pass 1** (2026-07-18) | UM Missoula (MsDOS group) + MSU cyber lab; Bozeman Makerspace (public Thursdays). TODO deep: BSides MT existence, CyberMontana entry?, Missoula/Billings makerspaces |
 | ND | **pass 1** (2026-07-18) | BSides Fargo @ NDSU (Oct, HTB CTF) + Cybercon Bismarck State; NDSU CAE-R institute. TODO deep: urls for both cons, Fargo makerspace, NDIT |
-| KY | **pass 1** (2026-07-18) | DC502 founded Jul 2025 (new!). TODO deep: BSides Louisville existence, Lexington/UK, Louisville library maker |
-| LA | **pass 1** (2026-07-18) | BSidesNOLA (May 12, InterContinental, ICS focus) verified; NOLAcon site live; DCG 504 chartered. TODO deep: BSidesNOLA own url, NOLAcon dates, ULL, NOPL libraries, Baton Rouge |
-| ME | **pass 1** (2026-07-18) | BSides Maine inaugural May 30 2026 SOLD OUT (USM Hannaford Hall); Open Bench Project; UMaine Hackerspace. TODO deep: 2027 edition, Bangor/library systems |
+| KY | **pass 2** (2026-07-18) | Pass 2: LFPL's FOUR makerspaces (Maker Pavilion/Maker Den/Portland Pod/COLLIDER). RESOLVED: BSides Louisville — not found. TODO deep-3: Lexington/UK |
+| LA | **pass 2** (2026-07-18) | Pass 2: NOLAcon dates (May 15–17 + trainings — full NOLA security week w/ BSidesNOLA May 12). TODO deep-3: ULL, NOPL libraries, Baton Rouge |
+| ME | **pass 2** (2026-07-18) | Pass-2 deferred: 2027 BSides Maine date not yet announced; Bangor/libraries unresolved. TODO deep-3: same |
 | IA | **pass 2** (2026-07-18) | Pass 2: SecDSM (1st Thu 6pm, T12 Distillery, since 2016); Area 515 (1731 Grand Ave, Tue open house). TODO deep-3: ISU CDC dates, Cedar Rapids, BSides DSM site |
 | ID | **pass 2** (2026-07-18) | Pass-2 attempt: Reuseum url + Boise Makers council + ISU Pocatello all unresolved (searched, not found) — ID stays as-is. TODO deep-3: same items |
 | KS | **pass 2** (2026-07-18) | Pass 2: Black & Veatch MakerSpace @ JoCo Central Resource Library. RESOLVED: CyberICT — not confirmed. TODO deep-3: Topeka |
