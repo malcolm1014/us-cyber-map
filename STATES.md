@@ -424,3 +424,75 @@ other ~38 dated cons and ~85 undated cons still have no `talks`. Most of
 those checked this pass simply have nothing public yet — this is exactly
 the kind of thing the user's monthly script should re-check as each con's
 own date approaches and its CFP closes.
+
+## 2026-07-19 (same day, third pass) — Real class/event schedules for makerspaces
+
+User: "why dont we delve into events these libraries and makerspaces are
+offering... I want this map to be a one stop shop... A student boots this
+map [and] a notepad and plans their trips. Or con schedule for the day...
+The more information the better. Deep dive!"
+
+**Schema:** added `events:[{title,when,topics:[...]}]`, the same shape
+idea as `talks` but for every category *except* con (con already has
+`talks`). `when` is free text, not a machine-parseable date, since almost
+no makerspace/library calendar publishes single ISO dates for recurring
+programming the way a con publishes its start date. Same non-negotiable as
+every other data field in this project: only from an actually-published
+source, never invented. Documented in the data.js header as item 8.
+
+**UI:** `visible()` and the topic-chip match count both extended to check
+`r.events[].topics` alongside `r.topics` and `r.talks[].topics`. Popup
+template gained a second `<details>` block, "CLASSES & EVENTS," gated on
+`category !== "con" && events.length` (talks and events are mutually
+exclusive by category, so a resource never shows both sections).
+
+**Method:** picked ~35 candidate maker/library resources already in the
+map — deliberately the largest, best-established ones (major-city hacker/
+makerspaces, big-city library maker-program pages), reasoning that these
+are the ones actually likely to publish a real recurring schedule, mirroring
+the "flagship first" logic from the cons pass. WebFetched each resource's
+own `url` (already on file, no search needed).
+
+**Sharp yield split by resource type, worth remembering for future passes:**
+member-run hackerspaces (Noisebridge, NYC Resistor, Sudo Room, etc.) very
+often publish their actual weekly-recurring schedule right on the homepage
+— these are volunteer-run spaces where the schedule *is* the front page.
+**Library maker programs were a near-total dead end** — 8 different city
+library systems checked (NYPL TechConnect, DCPL Labs, Denver ideaLAB, SFPL
+Mix, LAPL Octavia Lab, Houston TECHLink, Orlando Melrose Center, Phoenix
+MACH1), and every single one routes actual scheduling through a separate
+gated calendar platform (LibCal or similar) that isn't exposed as static
+content the fetch tools can read — some guessed URLs also 404'd outright.
+**Don't burn budget on library systems next time** — go straight to
+member-run/nonprofit hackerspaces, which had roughly an 80% hit rate here
+versus roughly 0% for libraries.
+
+**Result: 14 resources got real `events`, 74 events total, 0 fabricated.**
+Noisebridge alone accounts for 34 (SF's oldest/largest hackerspace runs an
+extremely dense weekly calendar — everything from Circuit Hacking Monday to
+a monthly DEF CON Group meetup, DC415, to Noisebridge Cinema). Most events
+are general maker/hobby programming (woodworking, sewing, 3D printing) with
+no cybersecurity topic tag — that's expected and correct, `topics` stayed
+empty rather than forcing an irrelevant tag. A handful mapped cleanly:
+Noisebridge's Hambridge/DC415/HackGames → radio/redteam+blueteam/ctf; Null
+Space Labs' monthly Lockpicking Meetup → physical; Sudo Room's Radio
+Wednesdays → radio.
+
+Resources checked with **no usable schedule found** (homepage only
+references a "Classes & Events" or "Calendar" page without exposing actual
+titles/times in fetched content): Artisan's Asylum, TX/RX Labs, Asmbly's
+class list (kept its 4 named recurring event *types* — Maker Market/
+Showcase/Demo Day/Maker Camp — without specific dates, since those are at
+least real named programs), Hive76, HacDC (explicitly suspended recurring
+programs since COVID, nothing active), Open Works, Freeside Atlanta, Idea
+Foundry, The Crucible, MakerFX, Moonlighter FabLab, Phoenix Forge, Circuit
+Launch. OmniCorpDetroit had a TLS cert mismatch (cert only valid for
+`omnicorpdetroit.com`, not the `www.` subdomain on file) — worth fixing the
+stored URL, not a content problem.
+
+**Scope reality check:** this covered ~35 of the map's 588 maker+library
+entries (~6%) — a first pass on the highest-signal targets, not a sweep.
+The other ~550 maker/library rows, plus meetup/youth/hamradio/school/gov
+(which can also carry `events` per the schema but weren't touched this
+pass), are exactly what the user's monthly refresh script should keep
+expanding — the schema and UI are now in place for any of them.

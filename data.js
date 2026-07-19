@@ -39,6 +39,15 @@
         schedule — never fabricate a lineup for an unannounced con. This
         is the field the monthly refresh script should extend over time;
         see STATES.md for which cons have it today and why.
+     8. events: [{ title, when, topics:[...] }] — OPTIONAL, any category
+        except con (which uses talks instead). Real recurring or dated
+        programming at a space — a class, workshop, open hack night,
+        teen tech program, themed meetup topic — pulled from that
+        resource's own published calendar/events page. Same rule as
+        talks: only from an actually-published listing, never invented.
+        `when` is free text (e.g. "Every Tuesday, 6pm" or "Sep 12") since
+        most library/makerspace calendars don't give machine-parseable
+        single dates the way con `next` does.
 
    Data sweep: July 2026. This is a national map, so it carries the
    anchors — the cons, groups, spaces, schools, and hubs people actually
@@ -121,8 +130,17 @@ const RESOURCES = [
   { name:"DC215 (DEF CON Group)", category:"meetup", region:1, st:"PA", lat:39.9600, lng:-75.1600, city:"Philadelphia, PA", url:"https://dc215.org", address:"", phone:"", when:"Monthly — see site", notes:"Philly's DEF CON group — community, education, and mentoring focus." },
   { name:"Philly 2600", category:"meetup", region:1, st:"PA", lat:39.9530, lng:-75.1650, city:"Philadelphia, PA", url:"https://philly2600.net", address:"", phone:"", when:"1st Friday, 5pm", notes:"'Crack Liberty Bells & Passwords' — Philadelphia's long-running open hacker meetup." },
   { name:"DC412 (DEF CON Group)", category:"meetup", region:1, st:"PA", lat:40.4500, lng:-79.9500, city:"Pittsburgh, PA", url:"https://hackersguildpgh.com", address:"At Hackers Guild PGH", phone:"", when:"Monthly", notes:"Pittsburgh's DEF CON group, revived with a new home at Hackers Guild — talks, hands-on labs, networking." },
-  { name:"NYC Resistor", category:"maker", region:1, st:"NY", lat:40.6849, lng:-73.9831, city:"Brooklyn, NY", url:"https://www.nycresistor.com", address:"87 3rd Ave, Brooklyn", phone:"", when:"Craft Night Thursdays — see site", notes:"Storied Brooklyn hackerspace — 'We learn, share, and make things.'" },
-  { name:"Hack Manhattan", category:"maker", region:1, st:"NY", lat:40.7383, lng:-73.9976, city:"New York, NY", url:"https://hackmanhattan.com", address:"137 W 14th St, Manhattan", phone:"", when:"Open house Tuesdays — see site", notes:"Community hackerspace — electronics, 3D printing, amateur radio." },
+  { name:"NYC Resistor", category:"maker", region:1, st:"NY", lat:40.6849, lng:-73.9831, city:"Brooklyn, NY", url:"https://www.nycresistor.com", address:"87 3rd Ave, Brooklyn", phone:"", when:"Craft Night Thursdays — see site", notes:"Storied Brooklyn hackerspace — 'We learn, share, and make things.'", events:[
+    { title:"Learn to Use a Laser Cutter to Cut and Etch Your Own Designs", when:"Aug 5 & 16, 2026", topics:[] },
+    { title:"Intro to Soldering Workshop: Make an LED Tile", when:"Aug 2 (10am) & Aug 15 (1pm), 2026", topics:[] },
+    { title:"Yoga for Hackers", when:"Jul 25, 2026, noon", topics:[] },
+    { title:"Intro to Screen Printing", when:"Jul 10, 2026", topics:[] },
+    { title:"NYC Resistor Bike Day", when:"Jul 11, 2026", topics:[] },
+    { title:"Repair Cafe", when:"Aug 1, 2026, 2–5pm", topics:[] },
+  ]  },
+  { name:"Hack Manhattan", category:"maker", region:1, st:"NY", lat:40.7383, lng:-73.9976, city:"New York, NY", url:"https://hackmanhattan.com", address:"137 W 14th St, Manhattan", phone:"", when:"Open house Tuesdays — see site", notes:"Community hackerspace — electronics, 3D printing, amateur radio.", events:[
+    { title:"Open House", when:"Tuesdays & Thursdays, 7pm until late", topics:[] },
+  ]  },
   { name:"HacDC", category:"maker", region:1, st:"DC", lat:38.9339, lng:-77.0344, city:"Washington, DC", url:"https://www.hacdc.org", address:"1525 Newton St NW, Washington", phone:"", when:"", notes:"DC's original hackerspace — radio club, microcontroller nights, open meetings." },
   { name:"OWASP Washington DC", category:"meetup", region:1, st:"DC", lat:38.9050, lng:-77.0300, city:"Washington, DC", url:"https://owasp.org/www-chapter-washington-dc/", address:"", phone:"", when:"See Meetup for events", notes:"The capital's AppSec chapter." },
   { name:"Artisan's Asylum", category:"maker", region:1, st:"MA", lat:42.3550, lng:-71.1300, city:"Boston (Allston), MA", url:"https://www.artisansasylum.com", address:"96 Holton St, Allston", phone:"", when:"", notes:"52,000 sq ft across two buildings — ~600 members, 160 studios, 15 workshops; moved from Somerville in 2023." },
@@ -218,13 +236,19 @@ const RESOURCES = [
   { name:"NJCCIC (NJ ROIC)", category:"gov", region:1, st:"NJ", lat:40.2450, lng:-74.7860, city:"West Trenton, NJ", url:"https://www.cyber.nj.gov/connect/about-the-njccic", address:"", phone:"", when:"", notes:"New Jersey's cyber fusion center, housed at the state's Regional Operations & Intelligence Center — statewide cyber threat intel, advisories, and incident-response support." },
   { name:"Hive76", category:"maker", region:1, st:"PA", lat:39.9840, lng:-75.1280, city:"Philadelphia (Kensington), PA", url:"https://www.hive76.org", address:"", phone:"", when:"Open house events — see site", notes:"Philly's classic small hackerspace — electronics, laser, 3D printing, woodworking." },
   { name:"HackPGH", category:"maker", region:1, st:"PA", lat:40.4530, lng:-79.9750, city:"Pittsburgh, PA", url:"https://www.meetup.com/hackpgh/", address:"", phone:"", when:"", notes:"Pittsburgh's first and oldest makerspace — 15 years serving the city's creative/hacker community." },
-  { name:"Protohaven", category:"maker", region:1, st:"PA", lat:40.4430, lng:-79.8820, city:"Pittsburgh (Wilkinsburg), PA", url:"https://protohaven.org", address:"", phone:"", when:"", notes:"Pittsburgh's big nonprofit workshop (the TechShop successor) — blacksmithing to CNC plasma to 3D printing." },
+  { name:"Protohaven", category:"maker", region:1, st:"PA", lat:40.4430, lng:-79.8820, city:"Pittsburgh (Wilkinsburg), PA", url:"https://protohaven.org", address:"", phone:"", when:"", notes:"Pittsburgh's big nonprofit workshop (the TechShop successor) — blacksmithing to CNC plasma to 3D printing.", events:[
+    { title:"Welding 101", when:"Monthly — see site for current schedule", topics:[] },
+    { title:"Laser Puzzle 101", when:"Monthly — see site for current schedule", topics:[] },
+    { title:"Blacksmithing: Cuffs & Bracelets", when:"Monthly — see site for current schedule", topics:[] },
+  ]  },
   { name:"Maker Jawn — Free Library of Philadelphia", category:"library", region:1, st:"PA", lat:39.9597, lng:-75.1710, city:"Philadelphia, PA", url:"https://libwww.freelibrary.org/calendar/tag/makers-and-makerspaces", address:"Parkway Central + neighborhood branches", phone:"", when:"Free programs — see calendar", notes:"The Free Library's maker initiative — intergenerational tinkering, crafts, and STEM programs across branches." },
   { name:"Penn State University", category:"school", region:1, st:"PA", lat:40.7982, lng:-77.8599, city:"State College, PA", url:"https://www.psu.edu", address:"", phone:"", when:"", notes:"CAE cyber programs + one of the largest online cyber degree operations (World Campus)." },
   { name:"University of Pittsburgh", category:"school", region:1, st:"PA", lat:40.4444, lng:-79.9608, city:"Pittsburgh, PA", url:"https://www.pitt.edu", address:"", phone:"", when:"", notes:"Pitt Cyber institute — policy + technical research across the street from CMU's orbit.", topics:["policy"] },
   { name:"PlaidCTF", category:"ctf", region:1, st:"PA", lat:40.4433, lng:-79.9440, city:"Pittsburgh, PA (online)", url:"https://plaidctf.com", address:"", phone:"", when:"Annual, spring — online", org:"Plaid Parliament of Pwning (CMU)", notes:"One of the most prestigious CTFs on the circuit, run by CMU's record-setting team." },
   { name:"NextFab", category:"maker", region:1, st:"DE", lat:39.7391, lng:-75.5398, city:"Wilmington, DE", url:"https://nextfab.com", address:"", phone:"", when:"", notes:"Membership makerspace network (Philadelphia + Wilmington) — fab shops, classes." },
-  { name:"Baltimore Node", category:"maker", region:1, st:"MD", lat:39.3300, lng:-76.5700, city:"Baltimore, MD", url:"https://www.meetup.com/baltimorenode/", address:"", phone:"", when:"See Meetup for open nights", notes:"Baltimore's member-run hackerspace." },
+  { name:"Baltimore Node", category:"maker", region:1, st:"MD", lat:39.3300, lng:-76.5700, city:"Baltimore, MD", url:"https://www.meetup.com/baltimorenode/", address:"", phone:"", when:"See Meetup for open nights", notes:"Baltimore's member-run hackerspace.", events:[
+    { title:"Open Hack", when:"Thursdays, 7pm", topics:[] },
+  ]  },
   { name:"Open Works", category:"maker", region:1, st:"MD", lat:39.3070, lng:-76.6090, city:"Baltimore, MD", url:"https://www.openworksbmore.org", address:"1400 Greenmount Ave, Baltimore", phone:"", when:"", notes:"34,000 sq ft of fabrication shops — the largest makerspace on the East Coast; youth programs too." },
   { name:"DC410 (DEF CON Group)", category:"meetup", region:1, st:"MD", lat:39.2827, lng:-76.5920, city:"Baltimore, MD", url:"", address:"Venues around Harbor East / Fells Point / Federal Hill", phone:"", when:"Monthly core meetup + weekly study groups", notes:"Baltimore's DEF CON group — guest speakers, OSCP study groups, book club; find current schedule via the DCG directory." },
   { name:"CharmSec", category:"meetup", region:1, st:"MD", lat:39.2904, lng:-76.6122, city:"Baltimore, MD", url:"", address:"", phone:"", when:"Monthly — see community socials", notes:"Baltimore's informal, all-ages citysec-style infosec drinkup." },
@@ -513,7 +537,9 @@ const RESOURCES = [
   { name:"BurbSec", category:"meetup", region:3, st:"IL", lat:41.8800, lng:-87.8000, city:"Chicago suburbs, IL", url:"https://www.burbsec.com", address:"Multiple suburban chapters — see site", phone:"", when:"Monthly per chapter", notes:"Chicagoland's federation of bar meetups (BurbSec East/West/North…) — where the city's infosec crowd actually hangs out." },
   { name:"DC414 (DEF CON Group)", category:"meetup", region:3, st:"WI", lat:43.0400, lng:-87.9100, city:"Milwaukee, WI", url:"https://dc414.org", address:"", phone:"", when:"Monthly — see site", notes:"Milwaukee's DEF CON group." },
   { name:"DC312 + Chicago 2600", category:"meetup", region:3, st:"IL", lat:41.8790, lng:-87.6350, city:"Chicago, IL", url:"https://dc312.org", address:"", phone:"", when:"1st Friday, monthly — joint meeting", notes:"Chicago's DEF CON group, run in partnership with Chicago 2600." },
-  { name:"South Side Hackerspace Chicago", category:"maker", region:3, st:"IL", lat:41.8380, lng:-87.6480, city:"Chicago (Bridgeport), IL", url:"https://sshchicago.org", address:"", phone:"", when:"Open house Wednesdays, 7:30pm", notes:"Bridgeport's community hackerspace — makers, tinkerers, students, artists." },
+  { name:"South Side Hackerspace Chicago", category:"maker", region:3, st:"IL", lat:41.8380, lng:-87.6480, city:"Chicago (Bridgeport), IL", url:"https://sshchicago.org", address:"", phone:"", when:"Open house Wednesdays, 7:30pm", notes:"Bridgeport's community hackerspace — makers, tinkerers, students, artists.", events:[
+    { title:"Open House / General Body Meeting", when:"Wednesdays, 7:30pm", topics:[] },
+  ]  },
   { name:"Workshop 88", category:"maker", region:3, st:"IL", lat:41.8830, lng:-88.0670, city:"Glen Ellyn, IL", url:"https://workshop88.com", address:"481 N Main St, Rear Bldg Unit B, Glen Ellyn", phone:"", when:"Public meetings Thursdays, 7–9pm", notes:"The western suburbs' hackerspace — science, tech, mechanics, digital arts." },
   { name:"River City Labs", category:"maker", region:3, st:"IL", lat:40.7840, lng:-89.6350, city:"Peoria, IL", url:"https://rivercitylabs.space", address:"7916 N Hale Ave", phone:"(815) 662-5376", when:"Build Night/Open House Thursdays", notes:"Central Illinois's home for makers, tinkerers, and hackers — nonprofit, runs Midwest Makerfest at Ignite Peoria." },
   { name:"Rockford MakerSpace", category:"maker", region:3, st:"IL", lat:42.2711, lng:-89.0940, city:"Rockford, IL", url:"https://www.rockfordmakerspace.com", address:"", phone:"", when:"", notes:"Member-run workshop serving the Rockford area — tools, classes, and an active maker community." },
@@ -530,7 +556,12 @@ const RESOURCES = [
   { name:"HYPE Teen Center — Detroit Public Library", category:"library", region:3, st:"MI", lat:42.3590, lng:-83.0660, city:"Detroit, MI", url:"https://detroitpubliclibrary.org/services/hype", address:"Main Library", phone:"", when:"Teens 13–18", notes:"Teen-only space with a makerspace — 3D printing, screen printing, filmmaking." },
   { name:"The Secret Lab — Ann Arbor District Library", category:"library", region:3, st:"MI", lat:42.2790, lng:-83.7450, city:"Ann Arbor, MI", url:"https://aadl.org/secretlab", address:"", phone:"", when:"", notes:"Button makers + laser cutting by appointment — plus a famously weird tools collection (synths, telescopes) you can check out." },
   { name:"Ferris State University", category:"school", region:3, st:"MI", lat:43.6870, lng:-85.4830, city:"Big Rapids, MI", url:"https://www.ferris.edu", address:"", phone:"", when:"", notes:"Pioneering Information Security & Intelligence program — one of the early CAE schools." },
-  { name:"Pumping Station: One", category:"maker", region:3, st:"IL", lat:41.9312, lng:-87.7113, city:"Chicago, IL", url:"https://pumpingstationone.org", address:"3519 N Elston Ave, Chicago", phone:"", when:"Public tours Tuesdays — see site", notes:"Chicago's big nonprofit hackerspace — electronics, shops, and a security-curious crowd." },
+  { name:"Pumping Station: One", category:"maker", region:3, st:"IL", lat:41.9312, lng:-87.7113, city:"Chicago, IL", url:"https://pumpingstationone.org", address:"3519 N Elston Ave, Chicago", phone:"", when:"Public tours Tuesdays — see site", notes:"Chicago's big nonprofit hackerspace — electronics, shops, and a security-curious crowd.", events:[
+    { title:"Linux Club", when:"Thursdays, 6:30pm, Electronics Lab", topics:[] },
+    { title:"Electronics Lab (NERP or Python)", when:"Mondays, 7pm", topics:[] },
+    { title:"Beer Church", when:"Mondays, 6:15pm", topics:[] },
+    { title:"In-Person Open House", when:"Tuesdays, 8pm", topics:[] },
+  ]  },
   { name:"i3 Detroit", category:"maker", region:3, st:"MI", lat:42.4595, lng:-83.1347, city:"Ferndale, MI", url:"https://www.i3detroit.org", address:"1481 Wordsworth St, Ferndale", phone:"", when:"Open house Tuesdays — see site", notes:"One of the Midwest's largest member-run makerspaces." },
   { name:"Purdue CERIAS", category:"school", region:3, st:"IN", lat:40.4237, lng:-86.9212, city:"West Lafayette, IN", url:"https://www.cerias.purdue.edu", address:"Purdue campus", phone:"", when:"", notes:"One of the oldest and largest academic security institutes — weekly public seminars (streamed), b01lers CTF team.", topics:["ctf"] },
   { name:"Dakota State University", category:"school", region:3, st:"SD", lat:44.0120, lng:-97.1110, city:"Madison, SD", url:"https://dsu.edu", address:"", phone:"", when:"", notes:"Small school, outsized cyber reputation — holds all three NSA CAE designations (defense, operations, research); hosts DakotaCon." },
@@ -834,8 +865,46 @@ const RESOURCES = [
   { name:"ALTSpace", category:"maker", region:5, st:"WA", lat:47.6060, lng:-122.3000, city:"Seattle (Central District), WA", url:"", address:"", phone:"", when:"", notes:"Member-owned community workshop since 2011 — sewing and electronics through metalsmithing." },
   { name:"PRCCDC — Pacific Rim CCDC", category:"ctf", region:5, st:"WA", lat:47.0379, lng:-122.9007, city:"Puget Sound, WA (venue rotates)", url:"http://prccdc.com", address:"2025 ran at South Puget Sound CC, Olympia", phone:"", when:"Regionals each March", org:"Long hosted by Highline College; PNNL volunteers support", notes:"The WA/ID/OR regional of the collegiate cyber defense circuit — eight-student teams defend live networks; winner advances to nationals." },
   { name:"OWASP Los Angeles", category:"meetup", region:5, st:"CA", lat:34.0500, lng:-118.2400, city:"Los Angeles, CA", url:"https://owasp.org/chapters/", address:"", phone:"", when:"Monthly dinner meetings — see Meetup", notes:"One of the most active OWASP chapters anywhere; co-runs AppSec California." },
-  { name:"Noisebridge", category:"maker", region:5, st:"CA", lat:37.7625, lng:-122.4193, city:"San Francisco, CA", url:"https://www.noisebridge.net", address:"272 Capp St, San Francisco", phone:"", when:"Open most days — see wiki", org:"Co-founded by Mitch Altman; run by consensus", notes:"SF's anarchist hackerspace — do-ocracy, no bosses; Circuit Hacking Mondays is the classic on-ramp." },
-  { name:"Null Space Labs", category:"maker", region:5, st:"CA", lat:34.0522, lng:-118.2400, city:"Los Angeles, CA", url:"https://032.la", address:"", phone:"", when:"", notes:"'LA's premier hackerspace' — electronics-heavy, badge-making royalty." },
+  { name:"Noisebridge", category:"maker", region:5, st:"CA", lat:37.7625, lng:-122.4193, city:"San Francisco, CA", url:"https://www.noisebridge.net", address:"272 Capp St, San Francisco", phone:"", when:"Open most days — see wiki", org:"Co-founded by Mitch Altman; run by consensus", notes:"SF's anarchist hackerspace — do-ocracy, no bosses; Circuit Hacking Mondays is the classic on-ramp.", events:[
+    { title:"Woodhacking Mondays", when:"Mondays, 6–9pm", topics:[] },
+    { title:"Meetups/Infra (self-hosting)", when:"Mondays, 7pm", topics:[] },
+    { title:"Circuit Hacking Monday", when:"Mondays, 7pm", topics:["iot"] },
+    { title:"Trash Night", when:"Mondays, time varies", topics:[] },
+    { title:"Premeeting Social Story Time", when:"Tuesdays, 5pm", topics:[] },
+    { title:"Noisebridge Weekly Meeting", when:"Tuesdays, 7pm", topics:[] },
+    { title:"San Francisco Writers Workshop", when:"Tuesdays, 7pm", topics:[] },
+    { title:"Gamebridge", when:"Wednesdays, 7–10pm", topics:[] },
+    { title:"Sewing Circle", when:"Wednesdays, 6:30–10:30pm", topics:[] },
+    { title:"Hambridge (radio hacking & mesh networking)", when:"Wednesdays, 7–9pm", topics:["radio"] },
+    { title:"Tablebridge", when:"1st Thursday, 7–10pm", topics:[] },
+    { title:"HackGames (security-themed games)", when:"2nd Thursday, 5–8pm", topics:["ctf"] },
+    { title:"DC415 (DEF CON Group security meetup)", when:"2nd Thursday, 8–9:30pm", topics:["redteam","blueteam"] },
+    { title:"Ten Minutes of Game", when:"3rd Thursday, 7–8pm", topics:[] },
+    { title:"Five Minutes of Fame", when:"3rd Thursday, 7:30–9pm", topics:[] },
+    { title:"Songbridge", when:"4th Thursday, 6–8pm", topics:[] },
+    { title:"Trash Night", when:"Thursdays, time varies", topics:[] },
+    { title:"Hack on Noisebridge", when:"Fridays, 9am–5pm", topics:[] },
+    { title:"School of Melee", when:"1st & 3rd Friday, 8:30pm", topics:[] },
+    { title:"Showcase Showdown", when:"2nd & 4th Friday, 7pm", topics:[] },
+    { title:"Cyberbridge (cyberpunk fashion, art, wearable tech)", when:"1st Friday, 7–10pm", topics:[] },
+    { title:"Unitybridge (Unity engine)", when:"1st Saturday, 2–5pm", topics:[] },
+    { title:"Unrealbridge (Unreal engine)", when:"2nd Saturday, 2–5pm", topics:[] },
+    { title:"Robotics Meetup", when:"Saturdays, 12–2pm", topics:["iot"] },
+    { title:"Godot Meetup", when:"3rd Saturday, 2–6pm", topics:[] },
+    { title:"Graphicsbridge", when:"4th Saturday, 2–5pm", topics:[] },
+    { title:"Building Guitar Pedals Workshop", when:"4th Saturday, 1–3pm", topics:[] },
+    { title:"Decentralized Web", when:"4th Saturday, 4–7pm", topics:["privacy"] },
+    { title:"Spacebridge Weekly Meeting", when:"Saturdays, 4–8pm", topics:[] },
+    { title:"Noisebridge Cinema", when:"Saturdays, 8pm", topics:[] },
+    { title:"3D Printing Class", when:"Every other Sunday, 12–1:30pm", topics:[] },
+    { title:"Laser Cutter Safety Training", when:"Sundays, 2–4pm", topics:[] },
+    { title:"Fabrication 101 (woodshop safety)", when:"2nd Sunday, 2–3pm", topics:[] },
+    { title:"Handsewing Workshop", when:"Sundays, 3–6pm, on request", topics:[] },
+  ]  },
+  { name:"Null Space Labs", category:"maker", region:5, st:"CA", lat:34.0522, lng:-118.2400, city:"Los Angeles, CA", url:"https://032.la", address:"", phone:"", when:"", notes:"'LA's premier hackerspace' — electronics-heavy, badge-making royalty.", events:[
+    { title:"Tuesday Open Hours", when:"Tuesdays, 7–11pm", topics:[] },
+    { title:"Lockpicking Meetup", when:"3rd Friday, 7pm", topics:["physical"] },
+  ]  },
   { name:"MAG Laboratory", category:"maker", region:5, st:"CA", lat:34.0200, lng:-117.8650, city:"Walnut, CA", url:"https://www.maglaboratory.org", address:"", phone:"", when:"", notes:"501(c)(3) hackerspace/makerspace serving the Pomona Valley." },
   { name:"DC562 (DEF CON Group)", category:"meetup", region:5, st:"CA", lat:33.7700, lng:-118.1940, city:"Long Beach, CA", url:"", address:"Mini-hackerspace venue — contact z0rro@dc562.org", phone:"", when:"Twice monthly — one talks night, one CTF night", notes:"Long Beach's DEF CON group, formed by 562 locals." },
   { name:"Sacramento State — CIAS", category:"school", region:5, st:"CA", lat:38.5610, lng:-121.4230, city:"Sacramento, CA", url:"https://www.csus.edu/college/engineering-computer-science/center-information-assurance-security/", address:"", phone:"", when:"", notes:"Center for Information Assurance & Security — CAE-CD through 2028; $7M+ in NSF CyberCorps scholarships since 2010." },
@@ -906,7 +975,9 @@ const RESOURCES = [
   { name:"National Cybersecurity Center", category:"gov", region:5, st:"CO", lat:38.8540, lng:-104.7910, city:"Colorado Springs, CO", url:"https://cyber-center.org", address:"", phone:"", when:"", notes:"Nonprofit cyber education + policy center; part of the Springs' dense cyber cluster.", topics:["policy"] },
   { name:"Hacker Dojo", category:"maker", region:5, st:"CA", lat:37.4030, lng:-122.0810, city:"Mountain View, CA", url:"https://hackerdojo.org", address:"", phone:"", when:"", notes:"Silicon Valley's community hackerspace/coworking dojo — events most weeks." },
   { name:"Hacker Lab", category:"maker", region:5, st:"CA", lat:38.5730, lng:-121.4900, city:"Sacramento, CA", url:"", address:"", phone:"", when:"", notes:"Sacramento makerspace/coworking — verify current status before visiting." },
-  { name:"Denhac", category:"maker", region:5, st:"CO", lat:39.7100, lng:-104.9500, city:"Denver, CO", url:"https://denhac.org", address:"", phone:"", when:"Open houses — see site", notes:"Denver's hackerspace — tight with the DC303 crowd." },
+  { name:"Denhac", category:"maker", region:5, st:"CO", lat:39.7100, lng:-104.9500, city:"Denver, CO", url:"https://denhac.org", address:"", phone:"", when:"Open houses — see site", notes:"Denver's hackerspace — tight with the DC303 crowd.", events:[
+    { title:"Open House", when:"Tuesdays, 8–10pm", topics:[] },
+  ]  },
   { name:"^H PDX Hackerspace", category:"maker", region:5, st:"OR", lat:45.5860, lng:-122.6810, city:"Portland, OR", url:"https://pdxhackerspace.org", address:"7600 N Interstate Ave", phone:"", when:"Open house Thursdays; work party Sat 12–5", notes:"Portland's community hackerspace (Ctrl-H) — electronics, 3D printing, laser, woodshop; 24/7 for members." },
   { name:"DIYcave", category:"maker", region:5, st:"OR", lat:44.0480, lng:-121.2960, city:"Bend, OR", url:"https://www.diycave.com", address:"444 SE 9th St", phone:"(541) 388-2283", when:"", notes:"Central Oregon's makerspace since 2014 — wood, metal, welding, lasers, CNC, even a blacksmith forge; classes for everything." },
   { name:"HICapacity", category:"maker", region:5, st:"HI", lat:21.3080, lng:-157.8100, city:"Honolulu, HI", url:"http://hicapacity.org", address:"Manoa Innovation Center", phone:"", when:"", notes:"Honolulu's hackerspace, at the Manoa Innovation Center." },
@@ -948,7 +1019,17 @@ const RESOURCES = [
   { name:"ISSA Los Angeles", category:"meetup", region:5, st:"CA", lat:34.0500, lng:-118.2500, city:"Los Angeles, CA", url:"https://issala.org", address:"", phone:"", when:"Monthly + annual Summit", notes:"One of ISSA's most active chapters — its annual Security Summit is an LA institution." },
   { name:"San Francisco 2600", category:"meetup", region:5, st:"CA", lat:37.7900, lng:-122.4000, city:"San Francisco, CA", url:"https://www.2600.com/meetings", address:"", phone:"", when:"1st Friday, 5pm", notes:"Open hacker meetup — check 2600.com for the current SF venue." },
   { name:"CRASH Space", category:"maker", region:5, st:"CA", lat:34.0186, lng:-118.3960, city:"Culver City, CA", url:"https://blog.crashspace.org", address:"10526 Venice Blvd, Culver City", phone:"", when:"Open houses — see site", notes:"LA's westside hackerspace — electronics, workshops, art-tech crossover." },
-  { name:"Ace Makerspace", category:"maker", region:5, st:"CA", lat:37.8480, lng:-122.2750, city:"Oakland, CA", url:"https://www.acemakerspace.org", address:"6050 Lowell St, Oakland", phone:"", when:"", notes:"North Oakland's community makerspace (formerly Ace Monster Toys)." },
+  { name:"Ace Makerspace", category:"maker", region:5, st:"CA", lat:37.8480, lng:-122.2750, city:"Oakland, CA", url:"https://www.acemakerspace.org", address:"6050 Lowell St, Oakland", phone:"", when:"", notes:"North Oakland's community makerspace (formerly Ace Monster Toys).", events:[
+    { title:"Facility Tours", when:"1st & 3rd Wednesday, 2nd & 4th Saturday", topics:[] },
+    { title:"Sewing 101 Bootcamp", when:"See site for current schedule", topics:[] },
+    { title:"Wood Lathe Basics and Certification", when:"See site for current schedule", topics:[] },
+    { title:"Laser Basics and Certification", when:"See site for current schedule", topics:[] },
+    { title:"Laser Lab", when:"See site for current schedule", topics:[] },
+    { title:"Workshop Care Night", when:"See site for current schedule", topics:[] },
+    { title:"Ace Maker Social", when:"See site for current schedule", topics:[] },
+    { title:"New Member Orientation", when:"See site for current schedule", topics:[] },
+    { title:"CNC Router Basics and Certification", when:"See site for current schedule", topics:[] },
+  ]  },
   { name:"Vocademy", category:"maker", region:5, st:"CA", lat:33.9533, lng:-117.3962, city:"Riverside, CA", url:"https://vocademy.com", address:"", phone:"", when:"", notes:"Education-focused makerspace — trade-school-style classes across a dozen shop areas." },
   { name:"23b Shop", category:"maker", region:5, st:"CA", lat:33.8704, lng:-117.9242, city:"Fullerton, CA", url:"", address:"", phone:"", when:"", notes:"Orange County's storied garage hackerspace — verify current open nights before visiting." },
   { name:"UC Davis", category:"school", region:5, st:"CA", lat:38.5382, lng:-121.7617, city:"Davis, CA", url:"https://www.ucdavis.edu", address:"", phone:"", when:"", notes:"Security research + CAE designation; Sacramento-region pipeline." },
@@ -1102,7 +1183,13 @@ const RESOURCES = [
   { name:"TECH HUB South Florida (TechLauderdale)", category:"meetup", region:2, st:"FL", lat:26.123, lng:-80.143, city:"Fort Lauderdale, FL", url:"https://techhubsouthflorida.org", address:"", phone:"", when:"50+ events/yr — ITPalooza, TechTalentFest", notes:"South Florida's tech association — monthly events on cloud, AI, dev, and security.", topics:["ai"] },
 
   // -- Nationwide makerspace deep-search (Jul 2026) — California batch 1 (Bay Area + regional) --
-  { name:"Sudo Room", category:"maker", region:5, st:"CA", lat:37.8320, lng:-122.2680, city:"Oakland, CA", url:"https://sudoroom.org", address:"4799 Shattuck Ave (Omni Commons)", phone:"", when:"Member meetings last Sunday monthly", notes:"Volunteer-run hackerspace — 3D printer, public computer terminals, library; shares its Omni Commons building with Counter Culture Labs." },
+  { name:"Sudo Room", category:"maker", region:5, st:"CA", lat:37.8320, lng:-122.2680, city:"Oakland, CA", url:"https://sudoroom.org", address:"4799 Shattuck Ave (Omni Commons)", phone:"", when:"Member meetings last Sunday monthly", notes:"Volunteer-run hackerspace — 3D printer, public computer terminals, library; shares its Omni Commons building with Counter Culture Labs.", events:[
+    { title:"Women & Non-Binary Hack Night", when:"Mondays, 7–9pm", topics:[] },
+    { title:"Hardware Hack Night & Fix-it Clinic", when:"Tuesdays, 8–11:59pm", topics:["iot"] },
+    { title:"Radio Wednesdays", when:"Wednesdays, 7–9pm", topics:["radio"] },
+    { title:"Sudo Party", when:"Thursdays, 7–11:59pm", topics:[] },
+    { title:"Member Meeting", when:"Last Sunday of the month, 4–6pm", topics:[] },
+  ]  },
   { name:"Counter Culture Labs", category:"maker", region:5, st:"CA", lat:37.8320, lng:-122.2680, city:"Oakland, CA", url:"https://www.counterculturelabs.org", address:"4799 Shattuck Ave (Omni Commons)", phone:"", when:"", notes:"Community biohacker/DIY-bio lab — cradle of Bay Area citizen biotech, sharing Omni Commons with Sudo Room." },
   { name:"Double Union", category:"maker", region:5, st:"CA", lat:37.7599, lng:-122.4148, city:"San Francisco, CA", url:"https://doubleunion.org", address:"Mission District", phone:"", when:"Sliding-scale dues, $0–100/mo", notes:"Hacker/makerspace for women and nonbinary people, since 2013 — electronics, coding, sewing, 3D printing." },
   { name:"The Crucible", category:"maker", region:5, st:"CA", lat:37.7975, lng:-122.2955, city:"Oakland, CA", url:"https://www.thecrucible.org", address:"1260 7th St", phone:"", when:"", notes:"Nonprofit industrial arts school — glassblowing, blacksmithing, welding, foundry work alongside more typical maker fare." },
@@ -1126,12 +1213,19 @@ const RESOURCES = [
   { name:"The Manufactory", category:"maker", region:3, st:"OH", lat:39.2890, lng:-84.4130, city:"Cincinnati, OH", url:"https://themanufactory.us", address:"12055 Mosteller Rd", phone:"", when:"", notes:"Cincinnati's makerspace." },
   { name:"Reforge Charleston", category:"maker", region:2, st:"SC", lat:32.8340, lng:-80.0640, city:"North Charleston, SC", url:"https://reforge.io", address:"Citadel Mall, 2070 Sam Rittenberg Blvd, Ste 424", phone:"(843) 900-6253", when:"", notes:"Makerspace and learning center combining electronics, tech, and handiwork." },
   { name:"Model City Makerspace (The Inventor Center)", category:"maker", region:2, st:"TN", lat:36.5490, lng:-82.5610, city:"Kingsport, TN", url:"https://theinventorcenter.com", address:"118 Shelby St", phone:"", when:"", notes:"Collaboration between Model City Makerspace, Engage Kingsport, and the City of Kingsport." },
-  { name:"Make Nashville", category:"maker", region:2, st:"TN", lat:36.1650, lng:-86.7460, city:"Nashville, TN", url:"https://makenashville.org", address:"620B Davidson St", phone:"", when:"", notes:"Nonprofit makerspace — 12,000 sq ft of wood, metal, welding, CNC, 3D printing, ceramics, media, and electronics labs." },
+  { name:"Make Nashville", category:"maker", region:2, st:"TN", lat:36.1650, lng:-86.7460, city:"Nashville, TN", url:"https://makenashville.org", address:"620B Davidson St", phone:"", when:"", notes:"Nonprofit makerspace — 12,000 sq ft of wood, metal, welding, CNC, 3D printing, ceramics, media, and electronics labs.", events:[
+    { title:"Open House", when:"Every other Friday, 6pm", topics:[] },
+  ]  },
   { name:"Build, RVA", category:"maker", region:2, st:"VA", lat:37.5300, lng:-77.4400, city:"Richmond, VA", url:"https://www.rvabuild.com", address:"", phone:"", when:"", notes:"15,000 sq ft nonprofit makerspace and product incubator run by the Build Forward Foundation — a second Richmond space alongside hack.RVA." },
   { name:"Milwaukee Makerspace", category:"maker", region:3, st:"WI", lat:42.9950, lng:-87.9020, city:"Milwaukee, WI", url:"https://milwaukeemakerspace.org", address:"2555 S Lenox St (+ Makers Village annex, 2517 E Norwich Ave, St. Francis)", phone:"", when:"24/7 for members", notes:"Nonprofit community makerspace with a full equipment shop." },
 
   // -- Nationwide makerspace deep-search (Jul 2026) — batch 3 (TX, PA, WA) --
-  { name:"Asmbly", category:"maker", region:4, st:"TX", lat:30.3800, lng:-97.6650, city:"Austin, TX", url:"https://asmbly.org", address:"9701 Dessau Rd, Suite 304 (Park 10 complex)", phone:"", when:"", notes:"Northeast Austin's community makerspace." },
+  { name:"Asmbly", category:"maker", region:4, st:"TX", lat:30.3800, lng:-97.6650, city:"Austin, TX", url:"https://asmbly.org", address:"9701 Dessau Rd, Suite 304 (Park 10 complex)", phone:"", when:"", notes:"Northeast Austin's community makerspace.", events:[
+    { title:"Maker Market", when:"See asmbly.org/events for dates", topics:[] },
+    { title:"Maker Showcase", when:"See asmbly.org/events for dates", topics:[] },
+    { title:"Demo Day", when:"See asmbly.org/events for dates", topics:[] },
+    { title:"Maker Camp", when:"See asmbly.org/events for dates", topics:[] },
+  ]  },
   { name:"TheLab.ms", category:"maker", region:4, st:"TX", lat:32.9750, lng:-96.7000, city:"Richardson, TX", url:"https://thelab.ms", address:"681 N Plano Rd, Suite 119", phone:"", when:"", notes:"'Everyone's Makerspace' — relocated from Plano to Richardson in 2020." },
   { name:"Fort Works Makerspace", category:"maker", region:4, st:"TX", lat:32.7450, lng:-97.3350, city:"Fort Worth, TX", url:"", address:"3701 Lovell Ave", phone:"", when:"", notes:"Tarrant County's community makerspace." },
   { name:"Make Lehigh Valley", category:"maker", region:1, st:"PA", lat:40.6020, lng:-75.4700, city:"Allentown, PA", url:"http://makelehighvalley.com", address:"905 Harrison St, Suite 103 (Bridgeworks Enterprise Center)", phone:"", when:"Open Hack Night Thursdays 7–9pm", notes:"Nonprofit makerspace in a former Mack Trucks plant — power/hand tools, electronics, 60W laser, sewing, art supplies. $20/mo membership." },
@@ -1141,7 +1235,10 @@ const RESOURCES = [
 
   // -- Nationwide makerspace deep-search (Jul 2026) — batch 4 (GA, NC, CO) --
   { name:"Geekspace Gwinnett", category:"maker", region:2, st:"GA", lat:34.0520, lng:-84.0710, city:"Suwanee, GA", url:"https://geekspacegwinnett.org", address:"3690 Burnette Park Dr, Suite D", phone:"", when:"", notes:"Gwinnett County's community hackerspace/makerspace." },
-  { name:"MakerSpace Charlotte", category:"maker", region:2, st:"NC", lat:35.2160, lng:-80.7930, city:"Charlotte, NC", url:"https://www.makerspacecharlotte.org", address:"1003 Louise Ave", phone:"(704) 353-3300", when:"Mon–Fri 9am–5pm", notes:"Community makerspace — distinct from Hackerspace Charlotte, also in the city." },
+  { name:"MakerSpace Charlotte", category:"maker", region:2, st:"NC", lat:35.2160, lng:-80.7930, city:"Charlotte, NC", url:"https://www.makerspacecharlotte.org", address:"1003 Louise Ave", phone:"(704) 353-3300", when:"Mon–Fri 9am–5pm", notes:"Community makerspace — distinct from Hackerspace Charlotte, also in the city.", events:[
+    { title:"Open House", when:"Wednesdays, 7pm", topics:[] },
+    { title:"Pottery Classes", when:"See site for current schedule", topics:[] },
+  ]  },
   { name:"ShopSpace", category:"maker", region:2, st:"NC", lat:35.8020, lng:-78.6180, city:"Raleigh, NC", url:"", address:"1505 Capital Blvd, Ste 18", phone:"", when:"", notes:"Raleigh's community makerspace." },
   { name:"Mixxer Community Makerspace", category:"maker", region:2, st:"NC", lat:36.1050, lng:-80.2340, city:"Winston-Salem, NC", url:"https://www.wsmixxer.org", address:"1375 N Martin Luther King Jr Dr", phone:"", when:"", notes:"Nonprofit Triad-area makerspace — woodshop, metal shop, tech shop, flexspace." },
   { name:"Solid State Depot", category:"maker", region:4, st:"CO", lat:40.0280, lng:-105.2320, city:"Boulder, CO", url:"https://boulderhackerspace.com", address:"5765 Arapahoe Ave, Unit B", phone:"", when:"Open house Thursdays 5–6pm", notes:"100% volunteer-run Boulder hackerspace — 3D printers, CNC, woodshop, metal lathes." },
