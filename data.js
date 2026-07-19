@@ -984,4 +984,8 @@ const RESOURCES = [
   { name:"MOP Shop Makerspace", category:"maker", region:5, st:"MT", lat:46.6100, lng:-112.0700, city:"Helena, MT", url:"http://mopshopmakerspace.com", address:"3790 W US Highway 12", phone:"(406) 202-1105", when:"", notes:"'Means of Production' — Helena's co-op makerspace, geared toward adult learners." },
   { name:"FabNewport", category:"maker", region:1, st:"RI", lat:41.4870, lng:-71.3140, city:"Newport, RI", url:"https://fabnewport.org", address:"73 Pelham St", phone:"(401) 342-8180", when:"", notes:"Small-scale community fab lab — computer lab, 3D printing, laser/vinyl cutting, electronics." },
   { name:"AS220", category:"maker", region:1, st:"RI", lat:41.8250, lng:-71.4130, city:"Providence, RI", url:"https://as220.org", address:"115 Empire St (Empire Street Complex)", phone:"", when:"", notes:"Nonprofit community arts org with a fab lab, digital media lab, and darkroom alongside gallery/performance space." },
+
+  // -- Nationwide makerspace deep-search (Jul 2026) — batch 10 (DC, IA) --
+  { name:"FabLab DC", category:"maker", region:1, st:"DC", lat:38.9130, lng:-77.0110, city:"Washington, DC", url:"http://www.fablabdc.org", address:"1418 North Capitol St NW", phone:"", when:"", notes:"Hands-on fabrication/learning lab for students and teachers — a second DC-area maker resource alongside HacDC." },
+  { name:"Iowa City Fab Lab (Steam Room Fab Lab)", category:"maker", region:3, st:"IA", lat:41.6470, lng:-91.5320, city:"Iowa City, IA", url:"https://icfablab.org", address:"870 S Capitol St", phone:"(319) 382-6167", when:"", notes:"Iowa City's community makerspace/fab lab." },
 ];
