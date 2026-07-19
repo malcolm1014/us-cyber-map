@@ -29,6 +29,7 @@ with web verification.** Remaining work lives in the deep-3 notes below.
 (CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
 remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
 MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
+AL/AK/AR done 2026-07-19. CT done 2026-07-19 — 584 entries total.
 
 | State | Status | Notes |
 |---|---|---|
@@ -61,6 +62,7 @@ MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
 | AL | **pass 3** (2026-07-19) | Pass 3: BSides HSV url filled (bsideshuntsville.org, NAC-ISSA @ Calhoun CC, Fri trainings+Sat talks); Mobile Makerspace (805 Church St Ste D). Remaining: Montgomery (TechLab Defense Accelerator + Maxwell-Gunter cyber ecosystem — no community entry verified yet) |
 | AK | **pass 3** (2026-07-19) | Pass 3: Juneau Makerspace (3915 N Douglas Hwy, juneaumakerspace.org). RESOLVED: Loussac Library makerspace — only 2013 planning-era sources found, status unclear, kept off. Remaining: Loussac recheck |
 | AR | **pass 3** (2026-07-19) | Pass 3: 501 Makers @ Rock It! Lab (CALS, Cox Bldg basement, 120 River Market); Central Arkansas Hackers (@ LR Tech Park, no official site — verify-note). RESOLVED: AR Regional Innovation Hub (state s first makerspace) CLOSED, relaunch pending — kept off. Remaining: Innovation Hub relaunch recheck, NWA makerspace |
+| CT | **pass 3** (2026-07-19) | Pass 3: OWASP Hartford + ISSA Connecticut + Canton/Farmington 2600 (meetups); CCSU (CAE-CD+CO, own CTF+GenCyber camp), Sacred Heart (CT's first CAE-CD), Quinnipiac, US Coast Guard Academy (CAE Cyber Systems major) added as schools; CyberSEED (UConn) + CTF@CIT (U New Haven, 2,500+ competitors, next 2026-04-17) as new ctf entries; East Hartford PL Makerspace + Ferguson Library CreateLab (Stamford) as libraries; CT Intelligence Center (state fusion center) as gov. No DC group found for CT — checked, none active. Remaining: Yale, UConn main-campus club detail |
 | IN | **pass 3** (2026-07-19) | Pass 3: TekVenture Fort Wayne (1830 Wayne Trace — oldest/largest in IN); Ivy Tech Cybersecurity Center (CAE-2Y since 2013, 16 campuses incl. Evansville/South Bend, free CyberPatriot camps). RESOLVED: RUCKUS Indy closed — correctly absent. Remaining: Evansville/South Bend meetups (none found) |
 | UT | **pass 3** (2026-07-19) | Pass 3: BYU (CAE-CD BS); UVU Center for Cybersecurity (BS + NSA-validated MS); Hill AFB 309th SWEG gov pin (DevSecOps, Startup Ogden spin-offs, WSU MARS). No Ogden makerspace found. Remaining: Weber State own entry, Logan/USU |
 | MO | **pass 3** (2026-07-19) | Pass 3: SLU Cybersecurity Center (CAE-CD + IC-CAE — 1 of 5 nationally); WashU (cyber mgmt MS + bootcamp); Springfield Tech Council cyber community (quarterly + AITP 2nd-Tue lunch, SGF Tech Week in March). Remaining: Mizzou, DreamIT MakeIT detail |
