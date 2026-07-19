@@ -496,3 +496,103 @@ The other ~550 maker/library rows, plus meetup/youth/hamradio/school/gov
 (which can also carry `events` per the schema but weren't touched this
 pass), are exactly what the user's monthly refresh script should keep
 expanding — the schema and UI are now in place for any of them.
+
+## 2026-07-19 (same day, fourth pass) — Locksport / TOOOL chapters added
+
+User: "Can we now add Lockpick and Locksport to this map Like TOOOL groups
+and events." Kept these as `category:"meetup"` with `topics:["physical"]`
+rather than a new top-level category — a 10th category would need a new
+validated palette color, and `physical` (added in the first topics pass)
+already exists for exactly this. Each got an `events:[{title:"Monthly
+Chapter Meeting", when, topics:["physical"]}]` entry too, since a meeting
+schedule *is* the event for these groups.
+
+**Source: TOOOL's own official chapter locator, extracted directly, not
+scraped by inference.** toool.us/meetings/ renders its chapter list via a
+third-party Elfsight "Google Maps" embed with no server-rendered fallback
+— WebFetch returned nothing useful. Found the widget ID in the page's
+Elementor markup and hit Elfsight's public config API directly:
+`https://core.service.elfsight.com/p/boot/?w=<widget-id>&page=<page-url>`,
+which returns the widget's full JSON config **including every marker's
+real coordinates, address, meeting schedule text, and contact email** —
+this is the actual data source TOOOL's own map draws from, not a
+reconstruction. Worth remembering as a general technique: any site using
+an Elfsight embed (maps, tables, reviews, galleries) exposes its data this
+way once you have the widget ID from the page's `elfsight-app-<uuid>`
+class or Elementor JSON.
+
+**Result: 23 US chapters added** (24 markers found, excluded Toronto —
+Canada, out of scope). 16 are lettered official TOOOL chapters (BAY/BTR/
+BWI/CHI/DC/DSM/FXBG/HBG/JAX/KCC/LAS/NoVA ×2/ORL/PHL/TLH) with
+`chapter-XX@toool.us` contacts; 7 are independent/affiliated locksport
+groups TOOOL lists on the same map but that aren't official chapters
+(Bobcat Locksport San Marcos TX, Houston Locksport, Locksport @ denhac,
+Longhorn Lockpicking Club Austin, NSL Lockpicking Burbank CA, Oak City
+Locksport Raleigh, Seattle Locksport) — `org` field left blank for those
+since they're independently branded, not TOOOL sub-units. Nice overlap
+found: several chapters meet at hackerspaces already on the map (Chicago
+TOOOL @ Pumping Station: One, Baltimore TOOOL @ Unallocated Space, Denver
+Locksport @ denhac, LA's NSL Lockpicking @ Null Space Labs) — same
+building, different resource, kept as separate entries since they're
+distinct recurring meetups with their own schedules. **Did not invent
+organizer names** — TOOOL's public data gives chapter contact emails, not
+personal names, except one handle (Bobcat Locksport's "c00p3r"), which was
+left out of the structured data as a handle-not-a-name, consistent with the
+project's never-guess-identity rule. All 23 passed the point-in-state
+border validator cleanly. Appended as a new block at the end of
+`RESOURCES` (pattern: same as prior bulk-import batches) rather than
+interleaved into the per-region sections above.
+
+## Multi-week deep-dive campaign (started 2026-07-19)
+
+User: "We are going to spend a week running in depth searches and setting
+everything up... I want you to go back and start deep diving all the
+nodes and building the filters from the keywords. Do one group of nodes
+at a time and get as much event schedule and talk information as
+possible. Including key organizers or people leading the event."
+
+This reframes the topics/talks/events work from a one-off feature build
+into an **ongoing, category-by-category sweep of the entire 3,952-row
+map**, expected to span many sessions before the user's monthly script
+takes over maintenance. Tracking progress here so any future session can
+resume mid-campaign without re-deriving scope.
+
+**Ground rules for every category pass** (carried over from the con/maker
+passes above — repeating them here since this section is the entry point
+for future continuations):
+- Work one category at a time, largest/most-established resources first
+  within it (same "flagship first" logic used for cons and makerspaces).
+- WebFetch each resource's own `url` already on file — no re-searching
+  for the URL itself.
+- Only add `events`/`talks`/organizer names from an actually-published,
+  currently-live source. Never invent a name, date, or session title.
+  A resource with nothing publicly published gets nothing added, full
+  stop — that is itself useful signal, not a gap to paper over.
+- Organizer/leader names: only capture ones the org has already made
+  public in an official capacity (a listed chapter contact, a named
+  conference speaker, a "run by" credit on the org's own site) — never a
+  personal handle/alias presented as if it were a real name, never a
+  private individual's info pulled from a secondary source.
+- Extend the `TOPICS` taxonomy only when a genuinely new, recurring,
+  distinct theme shows up in real data (same rule that produced `crypto`
+  and `supplychain`) — don't force existing tags to fit, and don't invent
+  new ones speculatively.
+- Verify (node eval + inline-script parse) and update STATES.md after
+  every batch; commit data and any index.html/taxonomy changes separately.
+
+**Category status:**
+| Category | Count | Status |
+|---|---|---|
+| con | 127 | Talks done for DEF CON 34 (villages), HOPE 26, GrrCON, CYBR.SEC.CON (168 talks). ~38 dated + 85 undated cons still untouched. |
+| maker | 495 | Events done for 14 flagship hackerspaces (74 events, ~3% coverage). Library maker programs (separate `library` category) were a dead end — skip those, go straight to member-run spaces. |
+| meetup | 154 (+23 new locksport) | **Not yet started** — next up. TOOOL/locksport chapters added as a targeted exception (user-requested), general sweep still pending. |
+| library | 96 | Checked 8 flagship city systems for events, all gated behind uninspectable calendar platforms — deprioritize vs. other categories until a better source technique is found. |
+| school | 165 | Not started. |
+| gov | 72 | Not started. |
+| youth | 28 | Not started. |
+| ctf | 17 | Not started (mostly recurring competitions, not org/event-heavy in the same way). |
+| hamradio | 2,775 | Not started — lowest priority given scale and that ARRL data already includes meeting schedules for most. |
+
+Next session should pick up with **meetup** (task queued), since it's the
+next-largest un-swept category and most meetup groups are exactly the kind
+of member-run/volunteer org that yielded high signal in the maker pass.
