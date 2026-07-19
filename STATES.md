@@ -39,9 +39,9 @@ county library systems, meeting venues/phones, every chapter org).
 | NM | **pass 1** (2026-07-18) | BSides ABQ Sep 25–26 verified upcoming (UNM CE Center); DC505 active; CNM Cyber Center. TODO deep: NM Tech, Santa Fe, ABQ libraries |
 | NV | **pass 1** (2026-07-18) | DC775 1st-Wed at Bridgewire (SDR/ham/CTF); UNR Cyber Center + Nevada Cyber Club. TODO deep: Bridgewire url, UNLV, BSides Reno existence, Vegas libraries |
 | OK | **pass 1** (2026-07-18) | BSidesOK verified (free, ~600, Glenpool); Fab Lab Tulsa; TU = OCII home. TODO deep: BSides OKC, DC405, OU, OKC metro libraries |
-| NE | **pass 1** (2026-07-18) | Kernelcon Apr cadence + origin (DC402/NEbraskaCERT/OWASP); DC402 + NEbraskaCERT added. TODO deep: urls for both, Omaha Maker Group, UNL, Lincoln |
-| NH | **pass 1** (2026-07-18) | DC603 2nd-Sat 7pm at Gusanoz, Lebanon. TODO deep: BSides NH existence, Port City Makerspace, UNH, Nashua/Seacoast |
-| NJ | **pass 1** (2026-07-18) | BSides South Jersey inaugural @ Rowan (200+) verified; DC201 at MakerBar Hoboken; DC862; MakerBar. TODO deep: DC201/MakerBar urls, Rutgers, north-Jersey libraries |
+| NE | **pass 2** (2026-07-18) | Pass 2: nebraskacert.org (CSF 3rd Wed) + cybersecurityomaha.com hub. TODO deep-3: DC402 url, Omaha Maker Group, UNL/Lincoln |
+| NH | **pass 2** (2026-07-18) | Pass 2: BSides NH exists; Port City Makerspace (68 Morning St, since 2012). TODO deep-3: BSides NH url/dates, UNH, Nashua |
+| NJ | **pass 2** (2026-07-18) | Pass 2: defcon201.org (3rd Fri 7–10pm @ MakerBar 38 Jackson St) + makerbar.com; Rutgers/RUSec. TODO deep-3: north-Jersey libraries |
 | MS | **pass 2** (2026-07-18) | Pass-2 attempt: BSides Jackson url + MGCCC cyber both unresolved — MS stays as-is. TODO deep-3: same items |
 | MT | **pass 2** (2026-07-18) | Pass 2: Missoula PL MakerSpace (2013) + CyberMontana (Legislature-funded statewide). RESOLVED: BSides Montana — not found. TODO deep-3: Billings SCRAP |
 | ND | **pass 2** (2026-07-18) | Pass 2: bsidesfargo.org + cyberconbsc.com urls landed; CyberCon = 'premier cyber + critical infrastructure con.' TODO deep-3: Fargo Makerworks status, NDIT |
