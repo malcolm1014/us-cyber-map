@@ -48,9 +48,9 @@ county library systems, meeting venues/phones, every chapter org).
 | KY | **pass 1** (2026-07-18) | DC502 founded Jul 2025 (new!). TODO deep: BSides Louisville existence, Lexington/UK, Louisville library maker |
 | LA | **pass 1** (2026-07-18) | BSidesNOLA (May 12, InterContinental, ICS focus) verified; NOLAcon site live; DCG 504 chartered. TODO deep: BSidesNOLA own url, NOLAcon dates, ULL, NOPL libraries, Baton Rouge |
 | ME | **pass 1** (2026-07-18) | BSides Maine inaugural May 30 2026 SOLD OUT (USM Hannaford Hall); Open Bench Project; UMaine Hackerspace. TODO deep: 2027 edition, Bangor/library systems |
-| IA | **pass 1** (2026-07-18) | CornCon 12 Oct 2–3 verified upcoming (Docent Institute, RiverCenter); BSides Des Moines exists (no site found). TODO deep: SecDSM, Area 515, ISU CDC dates, Cedar Rapids |
-| ID | **pass 1** (2026-07-18) | BSides Boise (Oct-ish) + BSides Idaho Falls (EICEA 501c3) verified; Reuseum. TODO deep: Reuseum url, Boise Makers council spaces, ISU Pocatello |
-| KS | **pass 1** (2026-07-18) | BSidesKC reassigned to KS (7250 State Ave venue is Kansas side); K-State + Wichita State added. TODO deep: Johnson County Library MakerSpace, CyberICT Wichita, Topeka |
+| IA | **pass 2** (2026-07-18) | Pass 2: SecDSM (1st Thu 6pm, T12 Distillery, since 2016); Area 515 (1731 Grand Ave, Tue open house). TODO deep-3: ISU CDC dates, Cedar Rapids, BSides DSM site |
+| ID | **pass 2** (2026-07-18) | Pass-2 attempt: Reuseum url + Boise Makers council + ISU Pocatello all unresolved (searched, not found) — ID stays as-is. TODO deep-3: same items |
+| KS | **pass 2** (2026-07-18) | Pass 2: Black & Veatch MakerSpace @ JoCo Central Resource Library. RESOLVED: CyberICT — not confirmed. TODO deep-3: Topeka |
 | CT | **pass 2** (2026-07-18) | Pass 2: BSides CT verified (bsidesct.org + year-round meetups). TODO deep-3: Yale, Stamford/Fairfield, library systems |
 | DE | **pass 2** (2026-07-18) | Pass 2: BSides Delaware CONFIRMED alive (bsidesdelaware.com; 2025 @ UDel, 2026 planning) — moved pin to Newark. TODO deep-3: Dover, DSU |
 | HI | **pass 2** (2026-07-18) | Pass 2: BSides Hawaii verified (bsideshawaii.org, 2025 Oct 8); HSPLS STEM Makerspaces (statewide system). TODO deep-3: 2026 edition date, neighbor islands |
