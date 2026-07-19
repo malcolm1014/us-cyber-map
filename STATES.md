@@ -25,11 +25,12 @@ addresses, phones, schedules, county library systems).
 **🎉 PASS 1 + PASS 2 COMPLETE NATIONWIDE (2026-07-18) — every state/DC/PR swept twice
 with web verification.** Remaining work lives in the deep-3 notes below.
 
-**🏅 PASS 3 PRIORITY LIST COMPLETE (2026-07-19) — all 21 priority states/regions
-(CA→IN in the suggested order) at pass 3. 568 entries. Pass 3 continues with the
-remaining states alphabetically (AL, AK, AR, CT, DE, HI, IA, ID, KS, KY, LA, ME,
-MS, MT, ND, NE, NH, NJ, NM, NV, OK, PR, RI, SC, SD, VT, WV, WY).**
-AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH/NJ/NM/NV/OK/PR/RI/SC/SD/VT done 2026-07-19. WV done 2026-07-19 — 672 entries total.
+**🏆🏆 PASS 3 COMPLETE NATIONWIDE (2026-07-19) — all 52 states/territories now at
+pass-3 depth, one commit per state/region. 674 entries.** Priority list (CA→IN,
+21 states) done first, then the remaining 28 alphabetically (AL→WY), all in a
+single day. Every remaining TODO from pass 2 got resolved or explicitly
+rechecked-and-still-unresolved (noted per-state below). Map is production-ready
+throughout — deep-4 (further verification/expansion) can pick any state.
 
 | State | Status | Notes |
 |---|---|---|
@@ -39,7 +40,7 @@ AL/AK/AR/CT/DE/HI/IA/ID/KS/KY/LA/ME/MS/MT/ND/NE/NH/NJ/NM/NV/OK/PR/RI/SC/SD/VT do
 | SD | **pass 3** (2026-07-19) | Pass 3: The Pinning Place Studio (Sioux Falls community makerspace) + SD Fusion Center (Pierre) added. No Sioux Falls library makerspace or DEF CON group found — checked. SD complete for now. |
 | VT | **pass 3** (2026-07-19) | Pass 3: VT2600 (Williston, 1st Fri) + Vermont Intelligence Center (Waterbury) added; Norwich's note upgraded — $16.4M National Cyber Fusion Research and Development Center broke ground Apr 2025. VT complete for now. |
 | WV | **pass 3** (2026-07-19) | Pass 3: makerspaces resolved — Maker Vault (Huntington, WV's largest), Lane Innovation Hub (WVU Morgantown). 304 Geeks (SecureWV's nonprofit community) + WV Intelligence Fusion Center added. WV complete for now. |
-| WY | **pass 2** (2026-07-18) | Pass 2: Innovation Wyrkshops (6 statewide, incl. LCCC = Cyber Cheyenne campus); Creation Station Casper library |
+| WY | **pass 3** (2026-07-19) | Pass 3: CyberWyoming Alliance youth programs added (Cyber-in-a-Box, MAGIC CTF, SANS CyberStart for girls); WOHS CARE Team added as gov (Wyoming has no standalone fusion center — partners with an adjacent state). WY complete — LAST state in the pass-3 sweep. |
 | PR | **pass 3** (2026-07-19) | Pass 3: UPR resolved — the actual CAE-designated school is Polytechnic University of Puerto Rico (PUPR, San Juan/Hato Rey), first CAE in PR/Caribbean since 2009, HSI. PR Fusion Center added as gov. PR complete for now. |
 | NM | **pass 3** (2026-07-19) | Pass 3: all 3 unknowns resolved — New Mexico Tech (Socorro, CAE-R+CAE-CD, hosts NMCCoE); Make Santa Fe (501c3 community workspace); ABQ's FUSE Makerspace (CNM Ingenuity) + AFRL Maker Hub (near Kirtland AFB). NM complete for now. |
 | NV | **pass 3** (2026-07-19) | Pass 3: Clark County libraries resolved — Las Vegas-Clark County Library District makerspace program (3D/laser/AV/VR/robotics across branches). SNCTC (Las Vegas Metro PD's regional fusion center) added as gov, distinct from the state-level NTAC in Carson City. NV complete for now. |
