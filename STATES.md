@@ -723,5 +723,27 @@ re-verify this from scratch.
 
 Real, structured event/organizer data now exists for roughly 800 of the
 map's 3,952 resources when hamradio's pre-existing coverage is counted.
-**school and gov (237 combined entries) are the natural next targets** —
-neither has been touched at all yet in this campaign.
+
+### gov category — tried, mostly a poor fit for this deep-dive model
+
+Spot-checked DreamPort, NIST NCCoE, Cyber Innovation Center (NICERC), and
+the Oregon Cybersecurity Center of Excellence — the handful of `gov`
+entries that are genuinely public-facing education/outreach orgs rather
+than agency HQs or national labs. Found only stale 2025-dated event
+listings (OCCoE's whole events page is last year's camp season) or fetch
+failures (cert mismatch, 403). **More importantly, the category doesn't
+fit the "events + named organizer" model this campaign is built around**:
+most `gov` entries are institutions (NSA, national labs, fusion centers,
+military commands) that don't run public membership programming and don't
+publish individual leadership names the way a volunteer meetup does — there
+isn't really an "organizer" to find, and searching for one would be the
+wrong instinct for this category. Recommend **not** running this category
+through the same batch process next time; if it gets attention at all, it
+should be a narrower pass on just the ~10 genuinely public-facing
+education/outreach orgs within it, not all 72.
+
+**school (165 entries) remains the one substantial category not yet
+touched at all** — natural next target, and it's a closer fit to the
+successful pattern (individual institutions with cyber programs, CAE
+centers, and clubs that often do publish event calendars and named faculty
+leads).
