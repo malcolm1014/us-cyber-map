@@ -702,6 +702,52 @@ skim the search results for *named regional events* alongside the
 institution's own page — the map's biggest remaining gaps may be
 well-attended events nobody thought to look up directly.
 
+### Deliberate con gap-hunt — 6 missing conferences found
+
+Following the above lesson, ran a targeted sweep for cons the map might be
+missing rather than enriching cons it already had. **Method: search
+aggregators (allbsides.com, infosec-conferences.com) and con-name lists,
+diff against the map, then verify each candidate on its own site.**
+
+Useful finding first: **the map's BSides coverage is already better than
+the aggregators'** — 66 BSides entries vs. allbsides' 27 upcoming. So the
+gap wasn't breadth of BSides, it was specific events the earlier
+state-by-state sweeps happened to miss.
+
+**Added (all verified on their own sites, all passed the point-in-state
+validator):**
+| Con | Where | Date |
+|---|---|---|
+| National Cyber Summit | Huntsville, AL | **Sep 22-24, 2026** |
+| Hacker Halted (EC-Council) | Atlanta, GA | **Oct 8-9, 2026** (training Oct 4-7) |
+| BSides Memphis | Memphis, TN | **Oct 3, 2026** |
+| BSides Twin Cities | Minneapolis, MN | **Oct 23, 2026** |
+| BSides Boulder | Boulder, CO | annual, June (2026 ran Jun 13) |
+| BSides Fort Wayne | Fort Wayne, IN | annual, June (2026 ran Jun 6) |
+
+Four carry genuinely upcoming dates, so the Upcoming panel went 42 → 46
+entries. Con total 128 → 134.
+
+**Deliberately NOT added: HackRedCon (Louisville, KY).** It exists and is
+real, but its own site exposed no dates, venue, or description — so
+there's nothing to record without guessing. Left out rather than
+fabricated; a future pass should retry it.
+
+**Also re-confirmed a prior call:** Circle City Con came up in the con-name
+sweep and is still correctly *absent* — it was documented as dead (2024
+final edition) in an earlier phase, and nothing found here contradicts
+that.
+
+### Stale-date audit — the map already handles this correctly
+
+Checked every entry with a `next` date in the past: only **3** (CTF@CIT,
+BSides Des Moines, ITO CDC), and all three are handled by design —
+`index.html:718` filters `isPast()` entries out of the Upcoming panel, and
+`index.html:550` stamps a "listed dates have passed — check site" warning
+on the popup. No action needed. **This is exactly why r00tz Asylum was the
+real problem and these aren't**: r00tz had a *future* date that was wrong,
+which no amount of past-date handling would catch.
+
 ### r00tz Asylum — resolved, and it mattered
 
 The flag raised two sessions ago is now settled as far as public evidence
