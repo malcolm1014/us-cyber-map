@@ -446,6 +446,44 @@ noticeably lower than the first maker pass (~13/35 ≈ 37% vs. the earlier
 last time, so this is expected diminishing returns, not a technique
 failure. ~460 maker entries remain.
 
+## 2026-07-19 (same day, eighth+ pass) — More maker rounds (user: "keep pushing")
+
+**maker: 28 → 43 of 495 (9%).** ~10 more rounds of the same flagship-first
+method against the remaining ~450 candidates. Real hits: CT Hackerspace
+(4 dated Jul/Aug events), MakerspaceCT, Manchester Makerspace, hack.RVA,
+Duluth MakerSpace, Fab Lab Tulsa, Quelab (3 real July classes), ^H PDX
+Hackerspace (weekly **Infosec Night** — a real security meetup inside a
+maker entry, tagged redteam+blueteam), Root Access Hackerspace (3 future
+2026 classes), Gainesville Hackerspace, Melbourne Makerspace (full weekly
+schedule), 501 Makers/Rock It! Lab, Bridgewire, Anchorage Makerspace,
+Berea Makerspace (named blacksmithing instructor Bob Montgomery), Milwaukee
+Makerspace, **Mixxer Community Makerspace (9 real dated July 2026 classes
+— the single richest hit this round)**, Pikes Peak Makerspace, Gizmo CDA,
+Danbury Hackerspace, Santa Barbara Hackerspace, Akron MakerSpace (4 events
+incl. named wood-turning host Bob Hasenyager), Staunton Makerspace,
+**Lacey MakerSpace (7 real dated July 2026 classes)**, Spark Makerspace
+(a Thursday electronics/Arduino meetup — tagged `ai`... actually `iot`),
+Framingham MakerSpace, Inventor Forge Makerspace, Fox.Build (an "AI
+Marketing, Coding, Building" office-hours series — tagged `ai`), Annapolis
+Makerspace.
+
+**Two confirmed-status findings worth flagging directly (not just a dead
+URL — the org's own site states the fact plainly):**
+- **St. Pete Maker Space (Tampa/St. Petersburg, FL) — its own site states
+  "St. Pete Makers Has Closed" and is no longer in operation.** Added a
+  clear caveat to `notes`; left the entry in place (consistent with this
+  project's practice of flagging rather than silently deleting) but this
+  is about as confirmed as "closed" gets — a future pass could reasonably
+  remove it outright rather than just flag it.
+- **Rockwall Makerspace (TX) is temporarily closed for expansion**, with
+  an expected reopening in September 2026 per its own site — flagged in
+  notes, not closed permanently, no action beyond the caveat needed.
+
+Hit rate on this round (~13 real hits out of ~35 fetched) continues the
+diminishing-returns pattern from the prior maker round — expected, not a
+technique failure, since the highest-signal spaces keep getting picked
+first. ~450 maker entries remain untouched.
+
 **library: retested and conclusively confirmed dead-end — stop trying the
 "fetch the library's own site" approach entirely.** Tried 6 more systems
 this pass deliberately picked to be *small/independent* rather than
