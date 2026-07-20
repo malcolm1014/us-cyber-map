@@ -1680,7 +1680,11 @@ const RESOURCES = [
   { name:"Redding Makerspace", category:"maker", region:5, st:"CA", lat:40.5719, lng:-122.3547, city:"Redding, CA", url:"http://reddingmakerspace.com", address:"925 Wall St #5", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
   { name:"SLO MakerSpace", category:"maker", region:5, st:"CA", lat:35.2682, lng:-120.6696, city:"San Luis Obispo, CA", url:"http://slomakerspace.com", address:"81 Higuera St #160", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
   { name:"Southern Utah Makerspace", category:"maker", region:5, st:"UT", lat:37.1161, lng:-113.5568, city:"St. George, UT", url:"https://www.facebook.com/sutahmakers/", address:"459 N 1300 E #1", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
-  { name:"Spark Makerspace", category:"maker", region:1, st:"CT", lat:41.3550, lng:-72.0974, city:"New London, CT", url:"http://sparkmakerspace.org", address:"225 State St", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
+  { name:"Spark Makerspace", category:"maker", region:1, st:"CT", lat:41.3550, lng:-72.0974, city:"New London, CT", url:"http://sparkmakerspace.org", address:"225 State St", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info.", topics:["iot"], events:[
+    { title:"Open Sew (fiber arts)", when:"Mondays, 6-8pm", topics:[] },
+    { title:"Electronics and Technology Meetup", when:"Thursdays, 6-8pm", topics:["iot"] },
+    { title:"Facility Tour", when:"Saturdays, 1-3pm", topics:[] },
+  ]  },
   { name:"Staunton Makerspace", category:"maker", region:2, st:"VA", lat:38.1486, lng:-79.0790, city:"Staunton, VA", url:"http://stauntonmakerspace.com", address:"20 S Jefferson St", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info.", events:[
     { title:"Open House", when:"Tuesdays, 7pm", topics:[] },
   ]  },
