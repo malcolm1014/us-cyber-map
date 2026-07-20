@@ -660,6 +660,48 @@ defcon512.org is dead → repointed to its live Meetup. DC904's dc904.org is
 dead → repointed to DEF CON's own forum listing. DC317 flagged (forum
 listing last touched 2019).
 
+### WebSearch pass, continued — school 19% → 43%
+
+Kept running the two-step method across school and meetup. **school ended
+at 71/165 (43%), up from 19% when the WebSearch pass began** — meetup 47%,
+youth 29%.
+
+Centers/leaders added (all verified by fetching the real page, not the
+snippet): UTSA CIAS (Greg White), UAlbany CEHC (Robert Griffin, Ariel
+Pinto), Champlain Leahy Center, Norwich CyFER (Huw Read), JMU CFIS,
+Louisville (Roman Yampolskiy), UB CEISARE (Shambhu Upadhyaya), Dartmouth
+ISTS (V.S. Subrahmanian), Pitt Cyber (David Hickton), URI DFCSC (Victor
+Fay-Wolfe), UD CCAP (Kenneth Barner), UNC Charlotte CyberDNA (Bill Chu),
+UAH CCRE (Tommy Morris, Sharon Johnson), Augusta SCCS (Alex Schwarzmann,
+Michael Nowatkowski), UH CISRE (Chris Bronk), RITSEC (ISTS + IRSeC
+competitions, weekly Friday meetings), FSU CCREPA (Mike Burmester), UF
+FICS (Kevin Butler — **plus a genuinely upcoming FICS Florida Cybersecurity
+Conference, Oct 1-2 2026**), UCSD, Cal Poly Pomona (Srikanth Venkatesan),
+DePaul, Missouri S&T, UCCS O'Neil Center (Gretchen Bliss), CU Boulder TCP,
+UH Manoa.
+
+### Two genuinely missing resources found — searching for one thing surfaced another
+
+A useful side effect of the search-first method: **it surfaces resources
+the map never had at all**, because searching an institution's cyber
+program turns up the regional events that institution participates in.
+
+- **National Cyber Summit** (Huntsville, AL) — 17th annual, **Sep 22-24
+  2026 at the Von Braun Convention Center**, hosted by NAC-ISSA and Cyber
+  Huntsville. One of the Southeast's largest cyber conferences and it was
+  simply absent from the map. Added as a `con` with verified dates; passed
+  the point-in-state validator.
+- **Cybersecurity First Friday** (Colorado Springs) — free monthly
+  networking social, 1st Friday 4-6pm at the National Cybersecurity
+  Center, founded 2018 by Dr. Shawn P. Murray, **grown from 35 attendees
+  to several hundred**. Co-hosted with the Colorado Springs Chamber & EDC.
+  Added as a `meetup`.
+
+**Worth repeating in future passes:** when researching a university or org,
+skim the search results for *named regional events* alongside the
+institution's own page — the map's biggest remaining gaps may be
+well-attended events nobody thought to look up directly.
+
 ### r00tz Asylum — resolved, and it mattered
 
 The flag raised two sessions ago is now settled as far as public evidence
