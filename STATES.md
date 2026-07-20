@@ -738,6 +738,45 @@ sweep and is still correctly *absent* — it was documented as dead (2024
 final edition) in an earlier phase, and nothing found here contradicts
 that.
 
+### DEF CON Groups gap — 74 missing, now the largest single fix of the campaign
+
+Applied the gap-hunt method to `meetup` and hit the biggest gap found yet.
+**The map had 45 DEF CON Groups; the community DCG directory lists ~122 US
+groups. 74 were missing** — a serious hole in a category central to this
+map's purpose.
+
+**Critical source finding — do not use defcon-groups.org's data file.**
+It presents as the official directory (and defcon.org points at it), and
+its `find-group.js` fetches `./data/groups.json`. That file contains
+**3 entries of proof-of-concept sample data** — `example-dc503.org`
+emails, `discord.gg/example408`, `forum.defcon.org/node/12345` — and its
+companion `groups-meta.json` says so outright: *"Public-facing launch-style
+proof of concept sample data. Replace this file when the directory data is
+refreshed."* Importing it would have put fabricated groups on the map.
+**Re-check that file before trusting it in future; it may be real later.**
+
+The usable source is the community-maintained `DefconParrot/DefconGroups`
+repo (`DCGroups/DCG_USA.md`). **Spot-verified 3 at random before bulk
+importing — all 3 real and active** with their own sites: DC719 Colorado
+Springs (dc719.org, monthly at TRiNiTY Brewing), DC405 Oklahoma City (now
+rebranded **DCG Oklahoma City**, dcgokc.org), DC202 Washington DC
+(202.codes, founded 2018). Those three got their verified URLs and real
+details; the other 71 carry a plain provenance note saying meeting details
+weren't published and to check the group's own channels.
+
+**Geocoding:** 56 of 74 reused coordinates from an existing map entry in
+the same city+state; the remaining 18 got city-centre points. **All 74
+passed the point-in-state validator.** (The one border flag in the DCG set
+is DC808 Honolulu — pre-existing, and the known island-coastline false
+positive documented earlier in this file.)
+
+Result: **DCG coverage 45 → 119**, meetup category 178 → 252, map total
+3,957 → 4,031.
+
+**Naming note for future passes:** DEF CON Groups are migrating from
+`DCxxx` to `DCG <City>` branding (DC405 → DCG Oklahoma City). Match on the
+number, not the name, when diffing.
+
 ### Stale-date audit — the map already handles this correctly
 
 Checked every entry with a `next` date in the past: only **3** (CTF@CIT,
