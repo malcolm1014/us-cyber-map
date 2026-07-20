@@ -1,11 +1,21 @@
 # US Cyber Resource Map
 
-Interactive Leaflet map of the US hacker / cybersecurity community — the
+A free map for students and lifelong learners to find their community.
+Whether you're a kid discovering hacking for the first time, a student
+looking for a cyber program, or an adult career-changer who just wants to
+find your people, this map is a no-cost, no-signup way to find the hacker
+cons, clubs, hackerspaces, and schools nearest you — and get in the door.
+
+5,000+ resources across the US hacker / cybersecurity community — the
 anchors people actually use to get connected: hacker cons, DEF CON groups,
-2600 meetings, OWASP chapters and other meetups, hackerspaces, top cyber
-schools, library makerspace programs, student STEM/cyber pipelines, and
-government/research hubs. **Two-tier drill-down:** pick a region, then a
-state — every state and DC/PR has at least one entry.
+2600 meetings, OWASP chapters and other meetups, hackerspaces, ham radio
+clubs, top cyber schools, library makerspace programs, student STEM/cyber
+pipelines, and government/research hubs. **Two-tier drill-down:** pick a
+region, then a state — every state and DC/PR has at least one entry.
+
+No login, no tracking, no cost — just open `index.html` (or the
+[live map](https://malcolm1014.github.io/us-cyber-map/)) and start
+exploring.
 
 Built on the same zero-build architecture as the companion
 **florida-cyber-map** (which remains the deep-dive for Florida; only its
@@ -30,8 +40,8 @@ statewide anchors are repeated here).
 
 ## Categories
 
-`con` · `meetup` · `maker` · `school` · `library` (library makerspaces) ·
-`youth` (student STEM & cyber) · `gov`
+`con` · `meetup` · `ctf` · `maker` · `school` · `library` (library
+makerspaces) · `youth` (student STEM & cyber) · `gov` · `hamradio`
 
 ## Editing data
 
