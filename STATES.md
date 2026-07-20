@@ -530,6 +530,50 @@ picked up named directors and/or real events, incl. UW-Madison's "Cyber
 Badger 2026" AI/critical-infrastructure exercise (tagged ai+ics) and
 UNR's real Nov 6, 2026 AI-in-cybersecurity conference.
 
+## 2026-07-19 (same day, tenth+ pass) — "keep going" continuation
+
+Continued the same methodology across school, meetup, and maker.
+
+**school: 17 → 31 of 165 (19%).** Named directors/PIs added for ULL
+Lafayette, NC A&T Center for Cyber Defense (2 leaders + 4 real dated 2026
+events incl. a CTF), Ivy Tech (2 leaders), Mississippi Gulf Coast CC
+(2 leaders), UW-Madison (5 leaders + 2 real 2026 events, one an AI/
+critical-infra exercise), CNM, JU Cyber Range, UNR (+ a real Nov 2026 AI
+conference), Cybersecurity@FIU (3 leaders). General university homepages
+continue to be the wrong URL to fetch — every hit this round came from a
+resource whose `url` was already a specific program/center subpage, not
+the campus homepage.
+
+**meetup: 77/177 held (44%)** — diminishing returns setting in on the
+remaining ~100 (mostly ISACA/ISC2/InfraGard Florida-cluster chapters
+behind login-gated event calendars). Real adds: ISC2 Central Florida,
+InfraGard South Florida (named president), OWASP Bonita Springs, GoLUG,
+OWASP Los Angeles.
+
+**maker: 45 → 50 of 492 (10%), crossed into double digits.** Real hits:
+Model City Makerspace/The Inventor Center (8 real dated 2026 classes with
+named instructors — the richest single find this round), MACCLab
+(named-instructor sewing courses + real July 2026 dates), Makerspace
+Urbana (full weekly+monthly schedule), Hackerspace Node (Tuesday public
+night), Chimera Arts, Studio JSD (3 real July 2026 classes).
+
+**One more domain-hijack found and handled the same way as Hapeville/Steam
+Junction: Minnesota Makerspace's domain (mnmakerspace.com) now redirects
+through a chain to an unrelated Asian gaming site.** Blanked the `url`,
+flagged in notes. **Three confirmed domain-hijack cases now on record this
+session — worth treating as a recurring, not rare, failure mode**: always
+follow a redirect to its actual final content before trusting a 200/301,
+especially for smaller/older maker-space domains that may have lapsed.
+
+**Mid-session infra note:** the gdrive rclone mount briefly dropped and
+remounted during this pass (visible in rclone's log as "Unmounted rclone
+mount" followed by re-sync). One git push failed transiently as a result;
+retried successfully once the mount stabilized, and `git status` /
+`node -e` checks confirmed no data loss before or after. No content was
+lost — just a transient environment hiccup, noted here in case a future
+session sees the same symptom (parent directory listing stale/incomplete
+while the actual subdirectory contents remain fully accessible).
+
 **library: retested and conclusively confirmed dead-end — stop trying the
 "fetch the library's own site" approach entirely.** Tried 6 more systems
 this pass deliberately picked to be *small/independent* rather than
