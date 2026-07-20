@@ -1359,7 +1359,9 @@ const RESOURCES = [
     { title:"Open House", when:"Every other Friday, 6pm", topics:[] },
   ]  },
   { name:"Build, RVA", category:"maker", region:2, st:"VA", lat:37.5300, lng:-77.4400, city:"Richmond, VA", url:"https://www.rvabuild.com", address:"", phone:"", when:"", notes:"15,000 sq ft nonprofit makerspace and product incubator run by the Build Forward Foundation — a second Richmond space alongside hack.RVA." },
-  { name:"Milwaukee Makerspace", category:"maker", region:3, st:"WI", lat:42.9950, lng:-87.9020, city:"Milwaukee, WI", url:"https://milwaukeemakerspace.org", address:"2555 S Lenox St (+ Makers Village annex, 2517 E Norwich Ave, St. Francis)", phone:"", when:"24/7 for members", notes:"Nonprofit community makerspace with a full equipment shop." },
+  { name:"Milwaukee Makerspace", category:"maker", region:3, st:"WI", lat:42.9950, lng:-87.9020, city:"Milwaukee, WI", url:"https://milwaukeemakerspace.org", address:"2555 S Lenox St (+ Makers Village annex, 2517 E Norwich Ave, St. Francis)", phone:"", when:"24/7 for members", notes:"Nonprofit community makerspace with a full equipment shop.", events:[
+    { title:"Corel, Cocktails, and Charcuterie", when:"3rd Wednesday of the month", topics:[] },
+  ]  },
 
   // -- Nationwide makerspace deep-search (Jul 2026) — batch 3 (TX, PA, WA) --
   { name:"Asmbly", category:"maker", region:4, st:"TX", lat:30.3800, lng:-97.6650, city:"Austin, TX", url:"https://asmbly.org", address:"9701 Dessau Rd, Suite 304 (Park 10 complex)", phone:"", when:"", notes:"Northeast Austin's community makerspace.", events:[
@@ -1382,9 +1384,21 @@ const RESOURCES = [
     { title:"Pottery Classes", when:"See site for current schedule", topics:[] },
   ]  },
   { name:"ShopSpace", category:"maker", region:2, st:"NC", lat:35.8020, lng:-78.6180, city:"Raleigh, NC", url:"", address:"1505 Capital Blvd, Ste 18", phone:"", when:"", notes:"Raleigh's community makerspace." },
-  { name:"Mixxer Community Makerspace", category:"maker", region:2, st:"NC", lat:36.1050, lng:-80.2340, city:"Winston-Salem, NC", url:"https://www.wsmixxer.org", address:"1375 N Martin Luther King Jr Dr", phone:"", when:"", notes:"Nonprofit Triad-area makerspace — woodshop, metal shop, tech shop, flexspace." },
+  { name:"Mixxer Community Makerspace", category:"maker", region:2, st:"NC", lat:36.1050, lng:-80.2340, city:"Winston-Salem, NC", url:"https://www.wsmixxer.org", address:"1375 N Martin Luther King Jr Dr", phone:"", when:"", notes:"Nonprofit Triad-area makerspace — woodshop, metal shop, tech shop, flexspace.", events:[
+    { title:"Copper Wind Chime", when:"Jul 21, 2026, 6–8pm", topics:[] },
+    { title:"Make a Metal Rose", when:"Jul 22, 2026, 6–8pm", topics:[] },
+    { title:"3D Modeling: Intro to Blender", when:"Jul 22, 2026, 6–8pm", topics:[] },
+    { title:"TEEN – The Skill of Welding", when:"Jul 23, 2026, 6–8pm", topics:[] },
+    { title:"Creative Self Care: Guided Abstract Painting", when:"Jul 24, 2026, 5:30–7:30pm", topics:[] },
+    { title:"Adult & Kid: Intro to 3D Printing", when:"Jul 24, 2026, 6–8pm", topics:[] },
+    { title:"Intro to Woodworking: Tool Tote", when:"Jul 25, 2026, 11am–1pm", topics:[] },
+    { title:"Design and Cut: Intro to the Laser Cutter", when:"Jul 28, 2026, 5:30–8pm", topics:[] },
+    { title:"Sewing 101: The Beginning", when:"Jul 29, 2026, 5:30–7:30pm", topics:[] },
+  ]  },
   { name:"Solid State Depot", category:"maker", region:4, st:"CO", lat:40.0280, lng:-105.2320, city:"Boulder, CO", url:"https://boulderhackerspace.com", address:"5765 Arapahoe Ave, Unit B", phone:"", when:"Open house Thursdays 5–6pm", notes:"100% volunteer-run Boulder hackerspace — 3D printers, CNC, woodshop, metal lathes." },
-  { name:"Pikes Peak Makerspace", category:"maker", region:4, st:"CO", lat:38.8330, lng:-104.8100, city:"Colorado Springs, CO", url:"https://www.pikespeakmakerspace.org", address:"735 E Pikes Peak Ave", phone:"(719) 445-6253", when:"", notes:"Colorado Springs's community makerspace." },
+  { name:"Pikes Peak Makerspace", category:"maker", region:4, st:"CO", lat:38.8330, lng:-104.8100, city:"Colorado Springs, CO", url:"https://www.pikespeakmakerspace.org", address:"735 E Pikes Peak Ave", phone:"(719) 445-6253", when:"", notes:"Colorado Springs's community makerspace.", events:[
+    { title:"Facility Tour", when:"Thursdays, 6pm, by appointment", topics:[] },
+  ]  },
   { name:"Fort Collins Creator Hub", category:"maker", region:4, st:"CO", lat:40.5730, lng:-105.0280, city:"Fort Collins, CO", url:"https://www.fortcollinscreatorhub.org", address:"1304 Duff Dr #11", phone:"", when:"24/7 member access", notes:"Northern Colorado's makerspace/workshop group." },
 
   // -- Nationwide makerspace deep-search (Jul 2026) — batch 5 (MA, NY, MO, IN) --
@@ -1562,7 +1576,9 @@ const RESOURCES = [
   { name:"Clarkson University - Makerspace", category:"maker", region:1, st:"NY", lat:44.6636, lng:-74.9974, city:"Potsdam, NY", url:"http://clarkson.edu", address:"The Innovation Hub, 8 Clarkson Ave", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
   { name:"Erie Makerspace", category:"maker", region:1, st:"PA", lat:42.1205, lng:-80.0831, city:"Erie, PA", url:"http://eriemakerspace.com", address:"181 W 14th St", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
   { name:"Fort Wayne MakerSpace", category:"maker", region:3, st:"IN", lat:41.0718, lng:-85.1456, city:"Fort Wayne, IN", url:"http://fortwaynemakerspace.org", address:"1510 Fairfield Ave", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
-  { name:"Gizmo: Coeur d'Alene's Makerspace", category:"maker", region:5, st:"ID", lat:47.6753, lng:-116.7956, city:"Coeur d'Alene, ID", url:"http://gizmo-cda.org", address:"Hedlund Building, NIC, 283 N Hubbard St", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
+  { name:"Gizmo: Coeur d'Alene's Makerspace", category:"maker", region:5, st:"ID", lat:47.6753, lng:-116.7956, city:"Coeur d'Alene, ID", url:"http://gizmo-cda.org", address:"Hedlund Building, NIC, 283 N Hubbard St", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info.", events:[
+    { title:"Walk-In Tour", when:"Wednesdays 7–9pm & Saturdays 12–2pm", topics:[] },
+  ]  },
   { name:"GJmakerspace", category:"maker", region:5, st:"CO", lat:39.0418, lng:-108.5729, city:"Grand Junction, CO", url:"", address:"2591 Legacy Way", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
   { name:"Golden Corridor Maker Space", category:"maker", region:3, st:"IL", lat:42.0663, lng:-88.0824, city:"Schaumburg, IL", url:"http://goldencorridormakerlab.com", address:"165 W Central Rd", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
   { name:"Greenbelt MakerSpace", category:"maker", region:1, st:"MD", lat:39.0015, lng:-76.8761, city:"Greenbelt, MD", url:"http://make125.org", address:"125 Centerway", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
