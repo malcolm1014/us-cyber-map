@@ -794,6 +794,47 @@ denver.2600.horse, 2600nj.com, etc.), which were captured as `url`.
 "Telephone/Fax", "Comments") parse as fake meetings under the last state
 heading (WV). Filter them out; they are not real entries.
 
+## 2026-07-20 — OWASP chapter gap: 21 → 83
+
+Next national-chapter network after DEF CON Groups and 2600. **The map had
+21 OWASP chapters; OWASP has 89 in the US.**
+
+**Source technique — OWASP's site is built from GitHub repos.** Every chapter
+page is a repo named `www-chapter-<slug>` in the OWASP org, and each one's
+`index.md` front-matter carries `country:`, `title:` and often
+`meetup-group:`. So:
+1. `gh api "search/repositories?q=org:OWASP+www-chapter+in:name"` → 591 repos
+   worldwide (paginate; the search API caps at 100/page).
+2. Fetch each `index.md` raw (24-way parallel, ~2 min) and keep
+   `country: USA` → 89 US chapters.
+
+**Verify every URL before shipping — this pass proved why.** Deriving the
+page slug from the chapter *title* produced **28 dead links out of 80**,
+because titles and repo names diverge ("OWASP Long Island, NY" →
+`long-island-ny`, but the repo is `long-island`; also `hartford-ct` vs
+`hartford`, `portland-maine` vs `portland-me`). Rebuilt URLs from the actual
+repo names and re-checked: **all 76 final URLs return 200.**
+
+**Dormant-chapter handling.** 30 chapters have a repo but *no published page*
+on owasp.org. Rather than ship dead links or silently drop real communities:
+- has a live page → link the page (59)
+- no page but a real `meetup-group` → link Meetup, with a note in `notes`
+  telling the reader to confirm the chapter is still active (23)
+- neither → **dropped, not shipped** (7: Bartlesville, Eugene, Hampton Roads,
+  Marquette, Mt San Antonio College, San Jose CA, Wilmington NC)
+
+**Also excluded OWASP Detroit** — its repo is literally
+`www-chapter-detroit-archived`, both URL variants 404, and its `index.md` is
+unedited template boilerplate (`tags: example-tag`, "This is an example of a
+Project or Chapter page"). An archived chapter is not a resource.
+
+Result: **62 added, OWASP 21 → 83**, map total 4,064 → 4,126. Border
+validator unchanged at 12 flags, zero duplicates, zero malformed rows.
+
+**Remaining chapter-network gaps for a future pass** (same method should
+apply): ISSA (map has 9, ~100 US chapters), InfraGard (5 of 77 — one per FBI
+field office region), ISACA (4 of ~60), WiCyS (2 of ~50), ISC2 (5 of many).
+
 ## 2026-07-20 — FIXED: higher-resolution state boundaries (validator 75 → 12)
 
 Acted on the root cause identified below. **Replaced the state polygons and
