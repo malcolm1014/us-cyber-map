@@ -608,6 +608,74 @@ identified this session), or (b) accepting a lower hit rate and continuing
 the same fetch-the-stored-URL sweep in smaller batches over many future
 sessions, consistent with the user's original "spend a week" framing.
 
+## 2026-07-20 — WebSearch pass: the two-step method, and it works
+
+WebSearch budget reset, so the recommendation from the previous session
+("use search to find the *correct* subpage URL, don't keep re-fetching
+generic homepages") finally got tested. **It works, and by a wide margin.**
+
+**The two-step method:**
+1. `WebSearch` for `"<institution>" cybersecurity center director events` —
+   returns the actual center/institute/club subpage URL.
+2. `WebFetch` that specific page for real leadership + events.
+
+**Results in a single pass:** school **19% → 29%** (31→48 of 165), meetup
+**44% → 46%**, youth **14% → 29%** (4→8 of 28). Compare to the previous
+session's fetch-only grind, which moved school 17%→19% over far more
+calls. **Hit rate roughly 1-in-2 vs. the 1-in-6 the fetch-only approach
+had degraded to.**
+
+**Why it works:** the limiter was never the fetching, it was that ~130
+school/meetup entries had a *generic university or org homepage* stored as
+their `url`. No amount of re-fetching `illinois.edu` surfaces the
+Information Trust Institute. Search resolves the actual landing page in
+one call. **This also double-improves the map**: the stored `url` gets
+upgraded to the useful page (a user clicking "UIUC" now lands on
+iti.illinois.edu, not the university's front door), *and* the fetch of
+that better page yields real data.
+
+**Real leadership/events added this pass:** Georgia Tech (SCP), Indiana
+(CACR), Ohio State (ICDT), Virginia Tech (CCI — 5 named), Michigan (C2S2),
+UMBC (5 named + biweekly Cyber Defense Lab seminar), Northeastern (CPI),
+Auburn (McCrary Institute, Frank Cilluffo), UT Austin (ISSS student org —
+4 named officers + biweekly CTF), GMU, UW, Dakota State (CybHER), Tulsa
+(OCII), Kennesaw (ICWD), UNO (NebraskaCYBER), NC State (SCI co-directors),
+U Cincinnati (CCSP), Boise State (Institute for Pervasive Cybersecurity +
+Cyberdome CTF), U Arizona (Cyber Ops), Hack@UCF, BurbSec (8 real chapter
+cadences), DC512, AHA!, MiSec, Hak4Kidz, CyberTexas, Forge Initiative,
+Tynkertopia.
+
+**Search snippets are NOT trustworthy on their own — always fetch the real
+page.** Two concrete catches this pass: (1) search claimed Craig Jackson
+was CACR's Executive Director; the actual page says **Ranson Ricks
+(Interim)** — the snippet was stale. (2) search surfaced conflicting
+directors for Mississippi State's CCI (Drew Hamilton vs Rob Premo) and the
+directory page wouldn't load, so **no name was recorded at all** — URL
+updated only. Treat search as a URL-discovery tool, not a fact source.
+
+**Dead-domain fixes found via search:** Forge Institute moved
+forgeinstitute.org → **forge.institute** (plus 2 real future 2026 events:
+Phoenix Capital Forum Sep 14-16, Forge Summit Oct 13-14). DC512's
+defcon512.org is dead → repointed to its live Meetup. DC904's dc904.org is
+dead → repointed to DEF CON's own forum listing. DC317 flagged (forum
+listing last touched 2019).
+
+### r00tz Asylum — resolved, and it mattered
+
+The flag raised two sessions ago is now settled as far as public evidence
+goes: **r00tz.org has no content newer than 2019, and a DEF CON forum
+thread states r00tz was cancelled and may not return.** The entry had been
+carrying `next:"2026-08-06"` and `when:"During DEF CON — Aug 6–9, 2026"`,
+which put it in the map's **Upcoming panel** — i.e. the map was actively
+inviting families to plan a DEF CON 34 trip around a village that
+almost certainly isn't happening. **Removed the `next` and dated `when`
+fields** (verified it no longer appears in the upcoming feed) and replaced
+the note with an explicit APPEARS DEFUNCT warning. Entry kept rather than
+deleted because the forum thread could only be read via search snippet
+(direct fetch kept hanging), so the evidence is strong but not
+first-hand — a future session with a working fetch should confirm and then
+delete outright.
+
 **library: retested and conclusively confirmed dead-end — stop trying the
 "fetch the library's own site" approach entirely.** Tried 6 more systems
 this pass deliberately picked to be *small/independent* rather than
