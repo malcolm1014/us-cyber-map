@@ -794,6 +794,66 @@ denver.2600.horse, 2600nj.com, etc.), which were captured as `url`.
 "Telephone/Fax", "Comments") parse as fake meetings under the last state
 heading (WV). Filter them out; they are not real entries.
 
+## 2026-07-20 — Remaining chapter networks: InfraGard, ISACA, ISSA
+
+Applied the OWASP method to the rest. **+142 entries; map 4,126 → 4,268.**
+
+| Network | Before | After | Source |
+|---|---|---|---|
+| InfraGard | 5 | 76 | infragardnational.org chapter page (regional listing) |
+| ISACA | 4 | 69 | isaca.org/membership/local-chapters (static list in HTML) |
+| ISSA | 9 | 15 | issa.org `chapter-sitemap.xml` — **only 7 are public** |
+
+### The verification lesson of this round: HTTP 200 can be a lie
+
+ISACA chapter pages live at `engage.isaca.org/<slug>chapter/home` and all 65
+generated URLs returned **200**. That looked like a clean sweep — but
+engage.isaca.org runs Higher Logic, which **soft-404s**. A deliberately fake
+control slug (`zzzfakechapter`) *also* returned 200.
+
+Switched to a content check: a real chapter page mentions its own city name
+and contains "Chapter" ~60 times; the fake control contained neither. That
+caught **3 bad slugs** out of 65 — `Portland` is actually
+`portlandoregonchapter`. **Always validate a bulk import against a known-bad
+control, not just status codes.**
+
+### ISSA is not bulk-harvestable — don't retry the directory
+
+ISSA has ~141 chapters but its real directory is on **members.issa.org,
+which is Cloudflare-protected and returns 403** to any fetch. `issa.org`
+itself publishes only **7** chapter pages (confirmed via
+`chapter-sitemap.xml`, which is definitive — 8 URLs including the index).
+The `/chapter/` grid is WP Views and its pagination is AJAX-driven, so
+`?wpv_paged=N` just re-serves page 1.
+
+Those 7 *were* worth parsing: the grid markup (`post-card-title` +
+`issa-chapter-directory` table) carries each chapter's **own website and
+chapter president**, so the 6 not already mapped went in with named
+presidents. Three of their domains (charlestonissa.org, nymissa.org,
+ndissa.org) are dead — those link to their ISSA chapter page with a note.
+
+**Treat ISSA like the library/LibCal case: a documented dead end.** Adding
+the remaining ~126 would need per-chapter web searching, not harvesting.
+
+### InfraGard: deliberately uniform URLs
+
+All 71 new InfraGard entries point at InfraGard National's chapter page
+rather than guessed per-chapter domains. The five already on the map show
+there is no derivable pattern (infragardjax.org, tampabayinfragard.org,
+infragardsofl.org, northfloridainfragard.org…), and InfraGard membership is
+a vetted process through national anyway — so national *is* the actionable
+path. Tagged `topics:["ics"]`, since critical-infrastructure protection is
+the program's whole remit.
+
+*Dedupe bug worth remembering:* the first InfraGard run silently dropped
+"InfraGard Mississippi" because its city (**Jack**son) is a substring of an
+existing entry (**Jack**sonville). Substring dedupe on city names is unsafe;
+caught it by diffing expected-vs-actual counts afterwards.
+
+**Remaining networks:** WiCyS (2 mapped, ~50 affiliates) — wicys.org returned
+403 on the affiliates page, not yet cracked. ISC2 (5 mapped) — chapter list
+not yet located.
+
 ## 2026-07-20 — OWASP chapter gap: 21 → 83
 
 Next national-chapter network after DEF CON Groups and 2600. **The map had
