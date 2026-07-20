@@ -747,3 +747,32 @@ touched at all** — natural next target, and it's a closer fit to the
 successful pattern (individual institutions with cyber programs, CAE
 centers, and clubs that often do publish event calendars and named faculty
 leads).
+
+### school category — first pass (user: "school please")
+
+**Result: 17 of 165 entries (10%) now have real events and/or named
+leadership.** Real finds: named directors/PIs for NYU CCS (Ramesh Karri),
+RIT GCI (Justin Pelletier, Jonathan Weissman), NMU UPCI (Michael Sauer),
+UVU (Basil Hamdan), Colorado State (Indrakshi Ray, Charles Butler), Idaho
+State NIATEC (Sean McBride, Minhaz Zibran), UC Berkeley CLTC (Craig
+Jackson, Steven Weber — plus 2 real future 2026 summit dates), Carnegie
+Mellon CyLab (Marios Savvides, Lorrie Cranor), GCU CCE (David Richards,
+Joseph Urbaszewski), NAU SICCS (4 named faculty), CyberMontana (Laura
+Haacke + ongoing 2026 programs), NWACC (Shankar Ravi); real club data for
+Hack@UCF, UFSIT (named 2006 founders), FSU Cybersecurity Club, USF
+Whitehatters, PSC Cyber Defense Club (named advisor Chad Andrae), and
+Purdue CERIAS's weekly seminar series.
+
+**Clear yield pattern, same lesson as maker/meetup: a resource's own
+dedicated page (a club site, a named research center's page) is high-yield;
+a general university homepage is near-zero-yield.** Confirmed again on
+UTSA, Kennesaw State, and Missouri S&T — their general `.edu` homepages
+(the URL currently on file for those three) don't surface department-level
+cybersecurity program info at all; would need each school's actual
+cyber-program subpage, not the campus homepage, to get anywhere. **This is
+the main lever for extending school coverage further**: for entries whose
+`url` is just the university's general homepage, the next pass needs to
+find that program's actual subpage first (i.e., two-step: search/guess the
+right URL, then fetch it) — a different and slower motion than the
+"already has the right URL" pattern that worked everywhere else this
+session. ~148 school entries remain untouched.
