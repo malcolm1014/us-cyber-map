@@ -1075,7 +1075,9 @@ const RESOURCES = [
   { name:"Denhac", category:"maker", region:5, st:"CO", lat:39.7100, lng:-104.9500, city:"Denver, CO", url:"https://denhac.org", address:"", phone:"", when:"Open houses — see site", notes:"Denver's hackerspace — tight with the DC303 crowd.", events:[
     { title:"Open House", when:"Tuesdays, 8–10pm", topics:[] },
   ]  },
-  { name:"^H PDX Hackerspace", category:"maker", region:5, st:"OR", lat:45.5860, lng:-122.6810, city:"Portland, OR", url:"https://pdxhackerspace.org", address:"7600 N Interstate Ave", phone:"", when:"Open house Thursdays; work party Sat 12–5", notes:"Portland's community hackerspace (Ctrl-H) — electronics, 3D printing, laser, woodshop; 24/7 for members." },
+  { name:"^H PDX Hackerspace", category:"maker", region:5, st:"OR", lat:45.5860, lng:-122.6810, city:"Portland, OR", url:"https://pdxhackerspace.org", address:"7600 N Interstate Ave", phone:"", when:"Open house Thursdays; work party Sat 12–5", notes:"Portland's community hackerspace (Ctrl-H) — electronics, 3D printing, laser, woodshop; 24/7 for members.", topics:["redteam","blueteam"], events:[
+    { title:"Infosec Night", when:"Wednesdays, 7pm", topics:["redteam","blueteam"] },
+  ]  },
   { name:"DIYcave", category:"maker", region:5, st:"OR", lat:44.0480, lng:-121.2960, city:"Bend, OR", url:"https://www.diycave.com", address:"444 SE 9th St", phone:"(541) 388-2283", when:"", notes:"Central Oregon's makerspace since 2014 — wood, metal, welding, lasers, CNC, even a blacksmith forge; classes for everything." },
   { name:"HICapacity", category:"maker", region:5, st:"HI", lat:21.3080, lng:-157.8100, city:"Honolulu, HI", url:"http://hicapacity.org", address:"Manoa Innovation Center", phone:"", when:"", notes:"Honolulu's hackerspace, at the Manoa Innovation Center." },
   { name:"DC808 (DEF CON Group)", category:"meetup", region:5, st:"HI", lat:21.3069, lng:-157.8583, city:"Honolulu, HI", url:"https://www.dc808.net", address:"", phone:"", when:"See site — restarting", notes:"Hawaii's statewide DEF CON group — currently working its way out of hibernation; has co-run BSides Hawaii.", events:[
@@ -1149,7 +1151,11 @@ const RESOURCES = [
 
   // -- California deep sweep · pass 2 (Jul 2026, web-verified) --
   { name:"MākMō — LA County Library", category:"library", region:5, st:"CA", lat:33.9400, lng:-118.1300, city:"LA County (mobile fleet)", url:"https://lacountylibrary.org/makmo/", address:"Travels countywide — schools, parks, branches", phone:"", when:"By scheduled program", notes:"Fleet of librarian-staffed mobile makerspaces — 3D printing, robotics, coding — bringing STEAM past library walls." },
-  { name:"Root Access Hackerspace", category:"maker", region:5, st:"CA", lat:36.7580, lng:-119.8000, city:"Fresno, CA", url:"https://rootaccess.org", address:"1476 N Van Ness Ave (Tower District), Fresno", phone:"", when:"Free public events — see calendar", notes:"The Central Valley's 501(c)(3) hackerspace — programming groups, cybersecurity workshops, craft circles, all free and open." },
+  { name:"Root Access Hackerspace", category:"maker", region:5, st:"CA", lat:36.7580, lng:-119.8000, city:"Fresno, CA", url:"https://rootaccess.org", address:"1476 N Van Ness Ave (Tower District), Fresno", phone:"", when:"Free public events — see calendar", notes:"The Central Valley's 501(c)(3) hackerspace — programming groups, cybersecurity workshops, craft circles, all free and open.", events:[
+    { title:"Intro to Quilting", when:"Jul 19, 2026, 1–4pm", topics:[] },
+    { title:"Rope Basket Making", when:"Aug 9, 2026, 1–5pm", topics:[] },
+    { title:"Intro to Knitting", when:"Aug 12, 2026, 6:30–9pm", topics:[] },
+  ]  },
   { name:"San Diego Cyber Center of Excellence (CCOE)", category:"meetup", region:5, st:"CA", lat:32.7200, lng:-117.1500, city:"San Diego, CA", url:"https://sdccoe.org", address:"", phone:"", when:"Quarterly mixers + programs", notes:"Regional cyber nonprofit knitting together BSides/DC858-619/ISSA/ISACA/OWASP/WiCyS — sandiegocyber.org carries the whole community calendar.", topics:["community"] },
 
   // -- Florida full merge (import from florida-cyber-map, Jul 2026) --
@@ -1185,7 +1191,10 @@ const RESOURCES = [
   { name:"Jacksonville Public Library — Main", category:"library", region:2, st:"FL", lat:30.3273, lng:-81.6606, city:"Jacksonville, FL", url:"https://jaxpubliclibrary.org", address:"303 N Laura St, Jacksonville", phone:"904-255-2665", when:"Mon–Sat 9am–6pm", notes:"Free classes, maker lab programs." },
   { name:"DC904 (DEF CON Group)", category:"meetup", region:2, st:"FL", lat:30.3322, lng:-81.6557, city:"Jacksonville, FL", url:"https://dc904.org", address:"", phone:"", when:"Monthly — venue rotates, see site", notes:"Jacksonville's DEF CON group; pin marks downtown." },
   { name:"BSides Jax", category:"con", region:2, st:"FL", lat:30.2686, lng:-81.506, city:"Jacksonville, FL", url:"https://www.bsidesjax.org", address:"UNF University Center, Jacksonville", phone:"", when:"Annual, fall (Nov)", notes:"Volunteer-run infosec con — lockpick village, CTF; students free.", topics:["physical","ctf"] },
-  { name:"Gainesville Hackerspace", category:"maker", region:2, st:"FL", lat:29.686, lng:-82.337, city:"Gainesville, FL", url:"https://gainesvillehackerspace.org", address:"4101 NW 6th St, Gainesville", phone:"", when:"Open house Tue 7pm · 24/7 for members", notes:"3D printers, laser cutters, CNC, electronics workstations." },
+  { name:"Gainesville Hackerspace", category:"maker", region:2, st:"FL", lat:29.686, lng:-82.337, city:"Gainesville, FL", url:"https://gainesvillehackerspace.org", address:"4101 NW 6th St, Gainesville", phone:"", when:"Open house Tue 7pm · 24/7 for members", notes:"3D printers, laser cutters, CNC, electronics workstations.", events:[
+    { title:"Open House", when:"Tuesdays, 7pm", topics:[] },
+    { title:"Free Fixit Clinic", when:"2nd Saturday of the month, 11am–2pm", topics:[] },
+  ]  },
   { name:"OWASP Jacksonville", category:"meetup", region:2, st:"FL", lat:30.253, lng:-81.552, city:"Jacksonville, FL", url:"https://owasp.org/www-chapter-jacksonville/", address:"Star-V, 7020 AC Skinner Pkwy, Unit 180, Jacksonville", phone:"", when:"3rd Monday, 6:45pm", notes:"AppSec chapter — RSVP on Meetup.", org:"Mark King, Francois Fried (chapter leaders)", events:[
     { title:"OWASP Jax Monthly Meeting", when:"3rd Monday of the month, 6:30pm", topics:[] },
   ]  },
@@ -1219,7 +1228,12 @@ const RESOURCES = [
   { name:"Tampa Hackerspace", category:"maker", region:2, st:"FL", lat:27.958, lng:-82.515, city:"Tampa, FL", url:"https://tampahackerspace.com", address:"4931 W Nassau St, Tampa", phone:"813-438-6221", when:"Open Make Night Tue 6–8pm · 24/7 for members", notes:"Nonprofit makerspace — phone is voicemail-only; email is faster." },
   { name:"FamiLAB", category:"maker", region:2, st:"FL", lat:28.6995, lng:-81.342, city:"Longwood, FL", url:"https://familab.org", address:"400 North St, Suite 152, Longwood", phone:"", when:"", notes:"Long-running community makerspace north of Orlando." },
   { name:"MakerFX Makerspace", category:"maker", region:2, st:"FL", lat:28.435, lng:-81.428, city:"Orlando, FL", url:"https://www.makerfx.org", address:"8600 Commodity Cir #158, Orlando", phone:"407-634-6257", when:"Mon–Sat 8am–7pm", notes:"Laser, CNC, electronics; classes and open builds." },
-  { name:"Melbourne Makerspace", category:"maker", region:2, st:"FL", lat:28.1115, lng:-80.6295, city:"Melbourne, FL", url:"https://melbournemakerspace.org", address:"2205 Front St, Melbourne", phone:"", when:"24/7 member access", notes:"Community makerspace at the Front Street Civic Center." },
+  { name:"Melbourne Makerspace", category:"maker", region:2, st:"FL", lat:28.1115, lng:-80.6295, city:"Melbourne, FL", url:"https://melbournemakerspace.org", address:"2205 Front St, Melbourne", phone:"", when:"24/7 member access", notes:"Community makerspace at the Front Street Civic Center.", events:[
+    { title:"Woodworking, CNC, Arts & Crafts, Pottery Open House", when:"Mondays, 7–9pm", topics:[] },
+    { title:"Metalshop Open House", when:"Tuesdays, 7–9pm", topics:[] },
+    { title:"Laser Cutting & 3D Printing Open House", when:"Thursdays, 7–9pm", topics:[] },
+    { title:"Electronics, Programming & Wood Turning Open House", when:"Saturdays, 10am–12pm", topics:["iot"] },
+  ]  },
   { name:"Orlando Public Library — Melrose Center", category:"library", region:2, st:"FL", lat:28.5411, lng:-81.3766, city:"Orlando, FL", url:"https://melrose.ocls.org", address:"101 E Central Blvd, Orlando", phone:"407-835-7323", when:"", notes:"Free tech, audio/video, and fab labs at the main library." },
   { name:"Suncoast Linux Users Group (SLUG)", category:"meetup", region:2, st:"FL", lat:27.96, lng:-82.48, city:"Tampa Bay, FL", url:"https://www.meetup.com/Suncoast-LUG/", address:"Meetings move around Tampa Bay — see Meetup", phone:"", when:"", notes:"Tampa Bay's oldest active LUG — free meetings, open to all. (2026-07-19: meetup.com URL returned \"Group not found\" — verify current status/URL before relying on this listing.)" },
   { name:"GoLUG", category:"meetup", region:2, st:"FL", lat:28.54, lng:-81.385, city:"Orlando, FL", url:"https://www.golug.org", address:"", phone:"", when:"", notes:"Greater Orlando Linux User Group — #golug on Libera.Chat." },
