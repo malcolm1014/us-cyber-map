@@ -794,6 +794,77 @@ denver.2600.horse, 2600nj.com, etc.), which were captured as `url`.
 "Telephone/Fax", "Comments") parse as fake meetings under the last state
 heading (WV). Filter them out; they are not real entries.
 
+## 2026-07-20 — FIXED: higher-resolution state boundaries (validator 75 → 12)
+
+Acted on the root cause identified below. **Replaced the state polygons and
+fixed the bad coordinates the better polygons exposed.**
+
+**New source:** US Census cartographic boundary file, 1:20,000,000 state
+polygons (`gz_2010_us_040_00_20m.json` via eric.clst.org), replacing the old
+PublicaMundi `us-states.json`. `scripts/make-regions.js` was updated to
+generate from it and now documents the whole rationale inline.
+
+**Size management.** The Census file emits ~871KB verbatim vs the old 66KB.
+Added Douglas-Peucker simplification to the generator: **tolerance 0.005°
+(~500 m) gives 294KB with 21 flags — versus 20 flags at 871KB.** That is
+essentially all of the accuracy for a third of the weight. (Tolerances
+0.01 and 0.02 were also measured; both were *worse* on flags than 0.005
+while saving little, so 0.005 is the chosen operating point.) For context
+data.js is already ~1.6MB, so 294KB is proportionate.
+
+**One real trap caught during the swap: Alaska's antimeridian.** The Census
+data expresses the Aleutians as *positive* longitudes (up to +179.78).
+Leaflet would have drawn a band straight across the world map. The old file
+avoided this by using continuous negative longitudes (down to -188.91).
+`make-regions.js` now unwraps this automatically — any feature with points
+both beyond +150 and below -150 has its eastern points shifted by -360.
+Alaska now spans -187.54 → -129.98 with zero eastern-hemisphere points,
+matching the old file's behaviour.
+
+**Verification performed** (no browser: Playwright launches in this sandbox
+but page loads time out, same limitation logged earlier — so this was all
+computational):
+- 52 features, 5 regions derived, every feature a MultiPolygon (REGION_GEO's
+  `flatMap` depends on that), 256 rings, **zero unclosed rings, zero rings
+  under 4 points, zero invalid coordinates**
+- Bounding boxes sane for AK / HI / DC / TX / PR
+- **14/16 landmark spot-checks exact.** The two misses are explained, not
+  bugs: the Golden Gate *Bridge* midpoint is over open water (land polygons
+  correctly exclude it — SF downtown and the Presidio both pass), and El
+  Morro sits on a peninsula tip that clips at this resolution (Old San Juan,
+  San Juan centre and the actual PR pin all pass)
+- `index.html` inline script still parses; its `REGIONS` block ids (1-5)
+  still line up
+
+### Bad coordinates the better polygons exposed — 11 fixed
+
+Sharper boundaries immediately surfaced real data errors that the coarse
+polygons had been hiding:
+
+**The ARRL import's New Jersey fallback was Philadelphia.** That bulk import
+used a per-state representative coordinate for clubs it couldn't geocode;
+most are correct (OH→Columbus, TX→Dallas, CO→Denver…), but NJ's was set to
+39.9526,-75.1652 — **a point in Pennsylvania**. Nine New Jersey ham radio
+clubs were pinned in the wrong state and nobody had noticed. Each has been
+placed at its real town where the club's own `city` field named one (West
+Trenton, Toms River, Lawrenceville, Brigantine, Mays Landing, Camden), with
+Trenton as the fallback for the three that name none. Also corrected LEAP
+Academy (Camden) and ColumbusMakesIT FabLab (sat just over the GA/AL line).
+
+**Result: 75 → 12 flags.** All twelve that remain are genuine
+coastal/border-precision cases — El Paso ×3 and Laredo on the Rio Grande,
+Deer Isle, Rehoboth Beach, Newport, Tampa Bay, Stanwood, and the two Camden
+waterfront entries. **Those keep their accurate coordinates deliberately**:
+the simplified NJ boundary cuts ~1.5 km inland of the real Delaware River,
+and displacing a correctly-located pin to satisfy a known-approximate
+polygon would trade real accuracy for a green check. Same call as Arlington
+below.
+
+**Standing guidance:** a validator flag is now *informative*, not noise —
+with these boundaries it usually means either a genuine waterfront/border
+location or an actual bad coordinate worth investigating. Don't dismiss
+flags wholesale the way the old 75-flag baseline invited.
+
 ### regions.js polygon imprecision — root cause of a recurring false flag
 
 Adding Arlington VA 2600 (Fashion Centre at Pentagon City) surfaced the
