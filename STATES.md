@@ -639,3 +639,89 @@ ISSA/ISACA chapters on owasp.org (which routes ALL chapters through one
 generic `/chapters/` page, no per-chapter content — will need each
 chapter's actual own site/Meetup, not the OWASP umbrella URL currently on
 file) and more DEF CON Groups.
+
+### meetup category — batches 3–9 (same session, user: "keep going until you are done")
+
+Continued the same flagship-first WebFetch-the-own-URL method across ~9
+more batches. **Result: 72 of 177 meetup entries (41%) now carry real
+`events` and/or a real `org`** (up from 20/154 at the last checkpoint —
+note the denominator grew to 177 because the 23 locksport/TOOOL entries
+added earlier are also `category:"meetup"`).
+
+Real finds worth noting: DC207 Portland ME (Meshtastic/WiFi-recon talk
+history → `radio`+`osint` topics), DCG-SATX (neural-implant/BCI talk →
+`iot`), DC303 Denver (Android malware reversing workshop, named organizer
+Emma → `malware`), DC404 Atlanta (named-speaker OSINT talk history →
+`osint`), ISSA Los Angeles (3 genuinely-future 2026 events incl. two
+AI-security talks → `ai`), SFISSA (a real September 2026 CTF, "HTF 2026:
+Humans vs Agents" → `ctf`), NEbraskaCERT/SecDSM (named speakers + a
+`privacy` topic from "PrivacyTrollShield"), a cluster of OWASP chapters
+(NYC, Boston, Denver, Atlanta, Chicago, Seattle, NoVA, Portland, San
+Diego, Tampa, Orlando, Jacksonville, South Florida) whose homepages don't
+list dated events but do list real named chapter leaders — captured as
+`org` even without an event, since "who runs this" has standing value on
+its own for the map's stated goal (a resource with a named contact is more
+trustworthy/actionable than an anonymous listing).
+
+**Recurring failure classes, useful to remember rather than re-discover:**
+Meetup.com pages sometimes only render *past* events in the fetched
+content even when a group is active — cross-check any date against
+today's date (2026-07-19) before treating it as "upcoming"; several fetches
+this session returned real-looking dates that were already in the past
+(DC314 St. Louis "Jan 15, 2026", OWASP Chicago's own listed event "Apr 17
+2025", DC612's whole talk history, LA CTF's "Feb 6-8, 2026", BuckeyeCTF's
+"Nov 7, 2025") and were correctly discarded rather than presented as live.
+A handful of domains outright refused the fetch tool ("Unable to verify if
+domain is safe" — hit on uscyberpatriot.org, hak4kidz.com, azcyber.org;
+distinct from a timeout/DNS/cert failure) — unclear if retriable, worth
+trying again in a future session rather than assuming permanently blocked.
+
+**One non-meetup finding surfaced during the youth-category pass and
+worth flagging directly: r00tz Asylum's own homepage (r00tz.org) doesn't
+show 2026 dates and includes language about a "bitter-sweet" transition
+since their 2019 event, with no clear confirmation it's still running.**
+Added a verify-before-relying caveat to its `notes` rather than removing
+it (existing `next:"2026-08-06"` tied to DEF CON 34 was left as-is) — this
+needs a human check (or a future WebSearch once budget resets) before the
+next monthly refresh, since it's currently presented as an active DEF CON
+kids village.
+
+### ctf category — light pass (17 entries, mostly already well-documented)
+
+Most CTF entries already had real `org` data from earlier project phases.
+Added: `ics` topic for DOE CyberForce Competition (confirmed cyber-physical/
+critical-infrastructure focus directly from its own site), and NCCDC's
+real Competition Director name (Dwayne Williams) appended to its existing
+org field. Several competition sites (PlaidCTF, UIUCTF, ITO CDC/ISEAGE,
+WRCCDC) don't publish next-season dates far in advance — nothing added for
+those rather than guessing.
+
+### hamradio category — already effectively covered, no action needed
+
+Checked before spending any further fetch budget here: **2,676 of 2,775
+ARRL club entries (96%) already carry a real named contact person
+directly in `notes`** (e.g. "contact: Paul J. Moore N1VUI"), captured
+during the original ARRL bulk-import phase, and all have a real meeting
+`when`. This category doesn't need a fresh deep-dive pass — the
+organizer+schedule data this campaign is chasing was already gathered up
+front for hamradio. Worth remembering so a future session doesn't
+re-verify this from scratch.
+
+### Where this leaves the full campaign after this session
+
+| Category | Total | Real events/org | Notes |
+|---|---|---|---|
+| con | 127 | 33 orgs, talks on 4 flagship cons (168 talks) | ~123 cons still untouched |
+| meetup | 177 | 72 (41%) | ~105 remain, mostly smaller/harder-to-find groups |
+| maker | 495 | 14 events (~3%) | library-adjacent dead end noted, member-run spaces are the lever |
+| library | 96 | 0 | deprioritized — calendars not fetchable |
+| school | 165 | 0 | not started |
+| gov | 72 | 0 (1 pre-existing) | not started |
+| youth | 28 | 4 orgs | mostly national orgs, one status-uncertainty flag (r00tz) |
+| ctf | 17 | 15 orgs (mostly pre-existing) | light pass done, saturated for now |
+| hamradio | 2,775 | 2,676 (96%, from original ARRL import) | **already done, no action needed** |
+
+Real, structured event/organizer data now exists for roughly 800 of the
+map's 3,952 resources when hamradio's pre-existing coverage is counted.
+**school and gov (237 combined entries) are the natural next targets** —
+neither has been touched at all yet in this campaign.
