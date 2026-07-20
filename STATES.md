@@ -777,6 +777,42 @@ Result: **DCG coverage 45 → 119**, meetup category 178 → 252, map total
 `DCxxx` to `DCG <City>` branding (DC405 → DCG Oklahoma City). Match on the
 number, not the name, when diffing.
 
+### 2600 meetings gap — 33 missing
+
+Same gap-hunt applied to 2600 Magazine's official meeting directory
+(2600.com/meetings — the list is server-rendered, parseable by stripping
+tags and reading the `State` / `City:` structure). **The map had 21 US 2600
+meetings; the directory lists 54. 33 were missing**, each with a real venue
+string straight from 2600's own list (e.g. Los Angeles at Union Station
+near Trax, St. Louis at Arch Reactor Hackerspace, Salt Lake City at 801labs).
+Nine of them also had their own sites listed (phx2600.org, 2600.la,
+denver.2600.horse, 2600nj.com, etc.), which were captured as `url`.
+
+2600 coverage **21 → 54**. Map total 4,031 → 4,064.
+
+*Parsing note:* the page's footer lines ("TUESDAY — Off The Wall",
+"Telephone/Fax", "Comments") parse as fake meetings under the last state
+heading (WV). Filter them out; they are not real entries.
+
+### regions.js polygon imprecision — root cause of a recurring false flag
+
+Adding Arlington VA 2600 (Fashion Centre at Pentagon City) surfaced the
+underlying reason border-validator false positives keep appearing near
+state lines. **`STATE_GEO`'s DC feature is a 5-vertex bounding box**
+spanning lng -77.117 → -76.909, not DC's real diamond-minus-Potomac shape.
+It therefore swallows a wide strip of Arlington/Alexandria, and VA's own
+simplified polygon doesn't reach far enough east to compensate — so a
+*correctly placed* Pentagon City point tests as "not in VA."
+
+**Resolution: kept the accurate coordinate and did not nudge it.** Moving
+the pin far enough west to satisfy the validator would have meant ~1.2 km
+of deliberate error to work around a known-coarse polygon, on an entry
+whose street address is recorded correctly. **This is a `regions.js` data
+limitation to fix at the source (higher-resolution state boundaries), not
+something to paper over per-entry.** Same root cause as the long-documented
+coastal/island false flags (SF, Honolulu) — those are also simplified
+polygons, not bad data.
+
 ### Stale-date audit — the map already handles this correctly
 
 Checked every entry with a `next` date in the past: only **3** (CTF@CIT,
