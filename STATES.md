@@ -574,6 +574,40 @@ lost — just a transient environment hiccup, noted here in case a future
 session sees the same symptom (parent directory listing stale/incomplete
 while the actual subdirectory contents remain fully accessible).
 
+## 2026-07-19 (same day, eleventh+ pass) — Diminishing returns confirmed across the board
+
+Continued "keep pushing" with another ~40 fetches spread across maker,
+school, meetup, and a light youth/gov recheck.
+
+**Results: maker 50→52/492 (11%), school 31→32/165 (19%), meetup
+77→78/177 (44%).** Real hits this round: CREATE Makerspace (Arizona
+Science Center, recurring LaterLab hours), Columbia Gadget Works (weekly
+hack night), St. Petersburg College and Florida Cyber Alliance (named
+leaders).
+
+**Hit rate has now dropped to roughly 1-in-6 across every category**,
+down from ~4-in-8 in the first maker pass and ~1-in-2 on the first meetup
+pass. This isn't a technique problem — it's the expected shape of the
+curve: the highest-signal resources (active member-run spaces with real
+public calendars, well-staffed university centers with named PIs) get
+found and added first in every pass, so each successive round is
+necessarily picking from a pool that's already been filtered down to the
+harder cases (login-gated calendars, Nexudus/membership-platform-only
+schedules, generic university homepages with no specific program
+subpage). **youth and gov were rechecked lightly this round and yielded
+essentially nothing new** — youth's national-program sites (CyberTexas,
+CSU Cyber Camp, UF K-12 Academy) either 403'd or returned stale
+2022/2025 dates; gov remains a poor fit as documented above.
+
+**Where this leaves things for a future session:** the remaining ~400
+maker, ~130 meetup, and ~130 school entries are the long tail — real
+progress on them will need either (a) WebSearch once its budget resets,
+to find the *correct* specific subpage URL for entries currently pointing
+at a generic homepage (this was the single biggest yield-limiter
+identified this session), or (b) accepting a lower hit rate and continuing
+the same fetch-the-stored-URL sweep in smaller batches over many future
+sessions, consistent with the user's original "spend a week" framing.
+
 **library: retested and conclusively confirmed dead-end — stop trying the
 "fetch the library's own site" approach entirely.** Tried 6 more systems
 this pass deliberately picked to be *small/independent* rather than
