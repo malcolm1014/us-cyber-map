@@ -425,6 +425,45 @@ those checked this pass simply have nothing public yet — this is exactly
 the kind of thing the user's monthly script should re-check as each con's
 own date approaches and its CFP closes.
 
+## 2026-07-19 (same day, sixth+ pass) — More maker events; library conclusively a dead end
+
+User: "both" (continue deep-diving maker and library further).
+
+**maker: 14 → 28 of 495 (6%).** Same flagship-first, own-URL method,
+extended to ~35 more member-run hackerspace/makerspace candidates beyond
+the first pass's list. Real hits: CT Hackerspace (4 real Jul/Aug 2026
+dated events incl. a 2600 meetup), MakerspaceCT (real Aug 2026 welding
+class + monthly robot-combat meetup), Manchester Makerspace, hack.RVA,
+Duluth MakerSpace, Fab Lab Tulsa, Quelab (3 real July 2026 welding
+sessions), ^H PDX Hackerspace (a weekly **Infosec Night**, Wednesdays
+7pm — tagged `redteam`+`blueteam`, a genuine security-relevant recurring
+meetup hiding inside a "maker" category entry), Root Access Hackerspace
+(3 real future 2026 classes), Gainesville Hackerspace, Melbourne
+Makerspace (a full day-by-day weekly schedule), 501 Makers/Rock It! Lab,
+Bridgewire Makerspace, Anchorage Makerspace. Hit rate on this batch was
+noticeably lower than the first maker pass (~13/35 ≈ 37% vs. the earlier
+~80%) — the highest-signal, most-established spaces were picked first
+last time, so this is expected diminishing returns, not a technique
+failure. ~460 maker entries remain.
+
+**library: retested and conclusively confirmed dead-end — stop trying the
+"fetch the library's own site" approach entirely.** Tried 6 more systems
+this pass deliberately picked to be *small/independent* rather than
+big-city (Fayetteville Free Library Fab Lab — historically one of the
+first library fablabs in the US, Westport Library, Ann Arbor District
+Library's Secret Lab, Madison's Bubbler, Omaha's Do Space, Boulder's BLDG
+61) specifically to rule out "big city library = LibCal" as the only
+failure mode. **Result: 0/6, same as the 8/8 failure from the earlier
+session — 14 different library systems checked total across two sessions,
+zero yield.** Every library website either references an external/JS-
+rendered calendar with no static fallback, or returns 403. This is now a
+well-established negative finding, not bad luck — **do not spend further
+fetch budget re-trying this approach on `library` in future sessions.**
+If library coverage matters later, it would need a fundamentally different
+technique (e.g., checking whether specific library systems' LibCal
+instances expose a public API/iCal feed — untried) rather than repeating
+what's now failed 14/14 times.
+
 ## 2026-07-19 (same day, third pass) — Real class/event schedules for makerspaces
 
 User: "why dont we delve into events these libraries and makerspaces are
