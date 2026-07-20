@@ -1374,7 +1374,16 @@ const RESOURCES = [
   { name:"Twin Cities Maker (Hack Factory)", category:"maker", region:3, st:"MN", lat:44.9520, lng:-93.2270, city:"Minneapolis, MN", url:"https://tcmaker.org", address:"Seward neighborhood", phone:"", when:"Free open women's night, last Tuesday 7–10pm", notes:"~10,000 sq ft member-owned cooperative workshop since 2010 — electronics, metal, wood, laser, 3D printing; ~200 members." },
   { name:"The Manufactory", category:"maker", region:3, st:"OH", lat:39.2890, lng:-84.4130, city:"Cincinnati, OH", url:"https://themanufactory.us", address:"12055 Mosteller Rd", phone:"", when:"", notes:"Cincinnati's makerspace." },
   { name:"Reforge Charleston", category:"maker", region:2, st:"SC", lat:32.8340, lng:-80.0640, city:"North Charleston, SC", url:"https://reforge.io", address:"Citadel Mall, 2070 Sam Rittenberg Blvd, Ste 424", phone:"(843) 900-6253", when:"", notes:"Makerspace and learning center combining electronics, tech, and handiwork." },
-  { name:"Model City Makerspace (The Inventor Center)", category:"maker", region:2, st:"TN", lat:36.5490, lng:-82.5610, city:"Kingsport, TN", url:"https://theinventorcenter.com", address:"118 Shelby St", phone:"", when:"", notes:"Collaboration between Model City Makerspace, Engage Kingsport, and the City of Kingsport." },
+  { name:"Model City Makerspace (The Inventor Center)", category:"maker", region:2, st:"TN", lat:36.5490, lng:-82.5610, city:"Kingsport, TN", url:"https://theinventorcenter.com", address:"118 Shelby St", phone:"", when:"", notes:"Collaboration between Model City Makerspace, Engage Kingsport, and the City of Kingsport.", events:[
+    { title:"Wire Wrapped Gemstone Pendants — instructor Russell Lawson", when:"Aug 15/22, Sep 12/19, Oct 10/17, 2026", topics:[] },
+    { title:"Wire Sculpture Class — instructor Russell Lawson", when:"Aug 16/23, Sep 13/20, Oct 11/18, 2026", topics:[] },
+    { title:"Cricut Print Then Cut: Beginner to Confident Creator — instructor Stacie Lane", when:"Jul 26 & Sep 5, 2026", topics:[] },
+    { title:"Blender Intensive Beginners Class — instructor Byron Kindig", when:"Jul 18-25, 2026", topics:[] },
+    { title:"Tri-Cities Blender User Group Quarterly Meeting", when:"Jul 19, 2026", topics:[] },
+    { title:"Stained Glass Hot Air Balloons — instructor Joy Riggs", when:"Jul 28, 2026", topics:[] },
+    { title:"Mixed Metal Earrings Workshop — instructor Chandra Ellerson", when:"Aug 29, 2026", topics:[] },
+    { title:"Scroll Bracelet Workshop: Cold Forging Techniques", when:"Oct 24, 2026", topics:[] },
+  ]  },
   { name:"Make Nashville", category:"maker", region:2, st:"TN", lat:36.1650, lng:-86.7460, city:"Nashville, TN", url:"https://makenashville.org", address:"620B Davidson St", phone:"", when:"", notes:"Nonprofit makerspace — 12,000 sq ft of wood, metal, welding, CNC, 3D printing, ceramics, media, and electronics labs.", events:[
     { title:"Open House", when:"Every other Friday, 6pm", topics:[] },
   ]  },
