@@ -1380,3 +1380,121 @@ find that program's actual subpage first (i.e., two-step: search/guess the
 right URL, then fetch it) — a different and slower motion than the
 "already has the right URL" pattern that worked everywhere else this
 session. ~148 school entries remain untouched.
+
+---
+
+## 2026-07-20 — NSA/DHS CAE institution import (schools 165 → 412)
+
+Source: **`maps.caecommunity.org`**, the official CAE Community institution
+directory. Cracked the same way as the TOOOL Elfsight widget: the page is a
+**Drupal Leaflet** view that embeds every institution inline as a point object
+(`{"type":"point","lat":…,"lon":…,"entity_id":"12083","title":"…"}`) — **499
+unique institutions**, no pagination, no API key.
+
+Richer per-school detail comes from the **AJAX popup endpoint**:
+
+    https://maps.caecommunity.org/leaflet-ajax-popup/node/<entity_id>/leaflet_popup/und
+
+which returns street address, city/state, the CAE designation **with its
+validity years**, and a direct link to that school's actual cybersecurity
+program page (not the campus homepage — see the yield lesson below).
+
+**Diffed by coordinate proximity (<2 km), not by name.** Names diverge badly
+between sources ("University of Colorado, Colorado Springs" vs. our "UCCS"),
+so name matching alone would have produced dozens of duplicates. Result: 252
+already represented, **247 missing** → all 247 imported. 53 of them run
+CyberCorps/Cyber Service Academy programs and are tagged `topics:["community"]`.
+`region` was derived from the map's own state→region mapping so the two can't
+drift apart.
+
+### Lesson: parallel URL verification lies about dead sites
+
+The first verification sweep reported **33% of CAE URLs failing**. That was
+**request throttling, not dead sites** — William & Mary, Seminole State, and
+Central Georgia all return 200 when fetched with a browser User-Agent at lower
+concurrency. Re-ran all 238 at `-P 6` with a browser UA: only **14 genuine
+404s**, each repointed to the institution's root domain and re-verified 200.
+
+**Rule going forward: never conclude a URL is dead from a high-concurrency
+sweep. Re-check failures sequentially with a browser UA and full headers before
+editing or deleting anything.** A 403 in particular is almost always a WAF
+blocking the bot, not a missing page.
+
+### Validator
+
+12 → 13 flags. The one new flag is **Loyola University Chicago**, which sits
+genuinely on the Lake Michigan shoreline; the accurate coordinate was kept
+rather than displaced inland to satisfy the approximate polygon — consistent
+with Arlington VA, Camden NJ, and the other shoreline cases.
+
+---
+
+## 2026-07-20 — Library makerspace import (library 96 → 608)
+
+Completes the user's "libraries and schools ... specific to cyber security and
+makerspaces, or community collaborations" request. Schools were done via CAE
+(above); this is the library half.
+
+Source: **Designer Bee's Free Makerspaces map** (`designerbee.build/find-a-makerspace`).
+The page embeds the whole directory as a **schema.org JSON-LD `ItemList`** in a
+plain `<script type="application/ld+json">` — 735 `Library` objects, each with
+name, full postal address, `GeoCoordinates`, url, and a **description listing
+the actual equipment**. No API, no pagination, no JS rendering needed. (Note:
+the *first* ld+json block on the page is a breadcrumb — select the block
+containing `numberOfItems`, not the first one.)
+
+Diffed by **coordinate proximity (<1 km)**, as with CAE: 137 already on the map,
+598 missing.
+
+### Curation: 598 → 522 → 512 shipped
+
+**Filtered out 76 craft-only spaces** (sewing machine / heat press / button
+maker / embroidery / sublimation only). Kept the 522 with at least one
+digital-fabrication, electronics, or media tool — 3d printer (436), vinyl
+cutter (350), laser cutter (237), large-format printer, audio/video studio,
+soldering station (51), CNC router (36), VR studio. A free public sewing room
+is a fine thing but it isn't what this map is for.
+
+Then 10 more dropped as name-duplicates, leaving **512 shipped**. All tagged
+`topics:["community"]` (free and public — exactly the "community collaboration"
+the user asked for); the 51 with a soldering station also get `iot`.
+
+**Names were disambiguated on import.** 275 of the source names are bare
+("Creative Lab", "The Foundry", "The Go Zone") — meaningless as one pin among
+5,000 — so any name not already containing its city gets `— City, ST` appended.
+
+### URL verification — the CAE lesson repeated exactly
+
+449 distinct URLs. First sweep at `-P 6`: 59 failures. **Re-checked
+sequentially at `-P 4` with full browser headers: 24 of those 59 came back
+200.** Same throttling artifact as the CAE import, same conclusion — a parallel
+sweep's failures are a list of *suspects*, never a list of dead links.
+
+Final disposition of the remaining 35:
+- **9 repointed** to a root domain that answered 200 where the deep link 404'd.
+- **14 URLs blanked** — the source cited a *news story, Yelp page, Facebook
+  page, govdelivery bulletin, or tourism site* instead of a library page. Same
+  treatment as the hijacked-domain cases: better empty than misleading.
+- **11 left as-is** (`000`, unreachable from this sandbox — `wichitalibrary.org`
+  and friends are plainly real systems; unreachable ≠ dead).
+- 14 left as-is (403 = WAF blocking the bot, not a missing page).
+
+### Quality spot-check
+
+Fetched 6 random imported entries and grepped for makerspace vocabulary:
+10–24 hits each, all confirmed. **This source is genuinely curated** — a
+welcome contrast to makerspacedir.com, which was ~80% junk.
+
+### Validator
+
+**13 flags, unchanged from before the import — 512 new coordinates produced
+zero new flags.** The 13 remain the known genuine coastal/border cases plus
+Loyola Chicago.
+
+### Note on the earlier "library is a dead end" finding
+
+The old finding stands but was about a *different question*. Fetching a library
+system's own site for **event schedules** is still a dead end (14/14 failed —
+LibCal gates everything). Harvesting **which libraries have makerspaces at all**
+is a completely different and highly productive query. Don't let the old note
+discourage the new angle.
