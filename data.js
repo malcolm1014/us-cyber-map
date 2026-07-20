@@ -1797,8 +1797,14 @@ const RESOURCES = [
     { title:"Open House", when:"4th Tuesday of the month", topics:[] },
     { title:"Shop Tours/Orientation", when:"Mon/Wed/Fri, 10am-4pm", topics:[] },
   ]  },
-  { name:"Chimera Arts and Maker Space", category:"maker", region:5, st:"CA", lat:38.4022, lng:-122.8208, city:"Sebastopol, CA", url:"http://chimeraarts.org", address:"6791 Sebastopol Ave", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
-  { name:"Studio JSD — Jewelry Makerspace and Gallery", category:"maker", region:3, st:"MI", lat:43.0640, lng:-86.2221, city:"Grand Haven, MI", url:"http://studiojsd.com", address:"219 N 7th St #4", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
+  { name:"Chimera Arts and Maker Space", category:"maker", region:5, st:"CA", lat:38.4022, lng:-122.8208, city:"Sebastopol, CA", url:"http://chimeraarts.org", address:"6791 Sebastopol Ave", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info.", events:[
+    { title:"First Fridays (community open house)", when:"1st Friday of the month, 5-8pm", topics:[] },
+  ]  },
+  { name:"Studio JSD — Jewelry Makerspace and Gallery", category:"maker", region:3, st:"MI", lat:43.0640, lng:-86.2221, city:"Grand Haven, MI", url:"http://studiojsd.com", address:"219 N 7th St #4", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info.", events:[
+    { title:"Lapidary Class", when:"Jul 24-25, 2026", topics:[] },
+    { title:"Stone Drilling", when:"Jul 25, 2026, 2-4pm", topics:[] },
+    { title:"Intro to Chip Inlay", when:"Jul 31, 2026, 10am-1pm", topics:[] },
+  ]  },
   { name:"The Alley Makerspace", category:"maker", region:3, st:"MI", lat:47.1162, lng:-88.5405, city:"Houghton, MI", url:"http://makerspace.mtu.edu", address:"1800 Townsend Dr", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
   { name:"BiG Fab Lab", category:"maker", region:3, st:"OH", lat:41.3979, lng:-83.6466, city:"Bowling Green, OH", url:"http://bigfablab.com/", address:"1234 N Main St D", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info." },
   { name:"Makerspace Urbana", category:"maker", region:3, st:"IL", lat:40.1114, lng:-88.2068, city:"Urbana, IL", url:"http://makerspaceurbana.org", address:"IMC Basement", phone:"", when:"", notes:"Found via Makerspace Directory (makerspacedir.com); verify current status before relying on hours/contact info.", events:[
