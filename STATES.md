@@ -484,6 +484,52 @@ diminishing-returns pattern from the prior maker round — expected, not a
 technique failure, since the highest-signal spaces keep getting picked
 first. ~450 maker entries remain untouched.
 
+## 2026-07-19 (same day, ninth+ pass) — Deletions, domain-hijack flags, more maker/school/meetup
+
+User: "make deletions where needed, flag where needed, and continue to raise
+percentages."
+
+**Deletions (confirmed permanently closed, removed outright rather than
+flagged):**
+- **St. Pete Maker Space (FL)** — own site said "St. Pete Makers Has
+  Closed."
+- **Tinkersmiths Makerspace (Charlottesville, VA)** — own site said "The
+  Light Is No Longer On," names 3 successor orgs (PEV Labs, Evil Mad
+  Fabricator, BRAT) as where the community went — none added to the map
+  without independently verifying their own address/details first.
+- **SpaceLab Makerspace (Lockport, IL)** — own site announced closure in
+  April 2026.
+
+**New failure mode found and handled — domain hijacking/expiry, distinct
+from "org closed":**
+- **Hapeville Maker Space (Atlanta, GA)** — its domain
+  (hapevillemakerspace.com) has been squatted and now serves an unrelated
+  online gambling site. **Blanked the `url` field** rather than leaving a
+  live link to gambling content on the map; kept the entry itself (the
+  physical space may still exist, it just lost its domain) with a flagged
+  note.
+- **Steam Junction Makerspace (Burlington, NC)** — domain expired, now
+  redirects to a GoDaddy "domain for sale" parking page. Blanked `url`,
+  flagged as likely-defunct.
+
+**Takeaway for future passes: always inspect where a redirect/fetch
+actually lands, not just whether it succeeded.** A 200-OK response that
+lands on a parked-domain or unrelated-business page is a worse signal than
+an outright fetch failure, and the wrong response (leaving the original
+link live) would put a gambling site one click away from this map. Treat
+any fetch result whose content doesn't match the expected org as a
+required flag-or-delete decision, not a "no data found, skip" case.
+
+**Progress this round:** maker held near 45/492 (deletions offset new
+adds — net content quality went up even though the raw percentage looks
+flat); **meetup 73→77/177 (44%)** — ISC2 Central Florida, InfraGard South
+Florida (named president Eric Ackerman), OWASP Bonita Springs (named
+leaders), GoLUG; **school 17→26/165 (16%)** — UMass Amherst (real Oct 2026
+hackathon), CCSU/Mercer/SLU/New Mexico Tech/JU/UW-Madison/CNM/UNR all
+picked up named directors and/or real events, incl. UW-Madison's "Cyber
+Badger 2026" AI/critical-infrastructure exercise (tagged ai+ics) and
+UNR's real Nov 6, 2026 AI-in-cybersecurity conference.
+
 **library: retested and conclusively confirmed dead-end — stop trying the
 "fetch the library's own site" approach entirely.** Tried 6 more systems
 this pass deliberately picked to be *small/independent* rather than
