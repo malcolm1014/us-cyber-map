@@ -1498,3 +1498,43 @@ system's own site for **event schedules** is still a dead end (14/14 failed —
 LibCal gates everything). Harvesting **which libraries have makerspaces at all**
 is a completely different and highly productive query. Don't let the old note
 discourage the new angle.
+
+## 2026-07-20 — ISC2 chapters (5 → 75) + WiCyS affiliates (2 → 36)
+
+**ISC2 (+70, commit b42eeac):** The long-open "ISC2 list not located" gap is
+CLOSED. isc2.org/chapters/chapter-directory is a Next.js/Sitecore page whose
+__NEXT_DATA__ embeds a **public Algolia search key** (app YK7J6YF349, index
+`isc2_chapter_directory_prod`) — one query returns all 176 chapters worldwide,
+structured: name/city/stateProvince/status/website/contactName. 75 US (71
+Official + 4 Chartering), 5 already mapped, 70 imported. Coords: 54 reused
+same-city map coords, rest source coords or hand-resolved; **source `location`
+can be a STATE CENTROID (Oregon) — check before trusting.** Source typos fixed
+("Greater Detriot", a space inside the Permian Basin URL). URL sweep with
+known-bad control (isc2zzfakechapterzz.org correctly failed): 55/63 clean;
+isc2chapter-cdny.org is IPv6-only (real, kept — meets monthly at RPI Troy);
+isc2chapter-cny.org has a broken cert chain (real, kept); vapeninsula.com
+dead DNS (blanked); RI's isc2richapter.com is in Google's index but dead
+(kept the directory's LinkedIn instead). Quantico's source coord landed in
+the Potomac — moved to Stafford. Contact names recorded from the official
+directory; emails deliberately not. isc2chapters.isc2.org portal is
+login-gated Hivebrite — dead end, the Algolia index is the harvest path.
+
+**WiCyS (+34, commit bdb4ee8):** wicys.org no longer 403s with a browser UA.
+/initiatives/affiliate-and-industry/ links every affiliate page; grep the raw
+HTML for `wicys.org/wicys-*` (35 US regional; the rest are international or
+virtual interest groups — BISO/AI/cloud/Latina/etc, not mappable). All 35
+pages fetched + verified real; Florida already mapped. Pages carry no venue
+or officer text (generic template) → city-anchor coords with "(statewide)"/
+"(regional)" labels, topics:["community"]. Validator: 13 flags, all known
+coastal/border (Loyola's lakefront campus joined the known-benign list).
+
+**GenCyber (attempted, NOT imported):** gen-cyber.com is GONE (NXDOMAIN).
+The catalog moved to **cyber.mil/gencyber/camp-catalog** — a Salesforce LWR
+site. Reverse-engineered the whole chain: guest Apex endpoint
+`POST /webruntime/api/apex/execute` with classname `@udd/01pRw0000002ktB`
+(CyberCatalogController), method `getCyberCampCatalog`, params {} (the LWC's
+wire config is literally empty) → **returns [] — the catalog is empty
+server-side right now** (component's table header still says "2025 Camp
+Date"). Fields when populated: Title__c (university), City__c, State__c,
+StartDate__c/EndDate__c, Format__c, Type__c, Url1__c/Url2__c. Re-run the
+same call next refresh — everything is in place, the data just isn't.
