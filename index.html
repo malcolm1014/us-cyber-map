@@ -543,6 +543,14 @@ function makeIcon(color){
 const markers = RESOURCES.map(r => {
   const cat = CATEGORIES[r.category];
   const m = L.marker([r.lat, r.lng], { icon:makeIcon(cat.color) });
+  const topicLabel = t => TOPICS[t] || t;
+  r._search = [
+    r.name, r.city, r.st, r.notes, r.org, r.address,
+    cat.label, REGIONS[r.region].name,
+    ...(r.topics || []).map(topicLabel),
+    ...(r.talks || []).flatMap(tk => [tk.title, tk.speaker, tk.track, ...(tk.topics || []).map(topicLabel)]),
+    ...(r.events || []).flatMap(ev => [ev.title, ...(ev.topics || []).map(topicLabel)]),
+  ].filter(Boolean).join(" ").toLowerCase();
   const facts = [];
   if (r.address) facts.push(`<div class="fact"><span class="fk">LOC</span><span>${esc(r.address)}</span></div>`);
   if (r.org)     facts.push(`<div class="fact"><span class="fk">ORG</span><span>${esc(r.org)}</span></div>`);
@@ -600,7 +608,7 @@ function visible(r){
   return enabledCats.has(r.category)
     && (activeRegion === null || r.region === activeRegion)
     && (activeState === null || r.st === activeState)
-    && (searchTerm === "" || (r.name + " " + r.city + " " + (r.st || "")).toLowerCase().includes(searchTerm))
+    && (searchTerm === "" || r._search.includes(searchTerm))
     && (enabledTopics.size === 0 || (r.topics || []).some(t => enabledTopics.has(t))
         || (r.talks || []).some(tk => (tk.topics || []).some(t => enabledTopics.has(t)))
         || (r.events || []).some(ev => (ev.topics || []).some(t => enabledTopics.has(t))));
