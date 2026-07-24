@@ -1366,7 +1366,7 @@ const RESOURCES = [
     { title:"Electronics, Programming & Wood Turning Open House", when:"Saturdays, 10am–12pm", topics:["iot"] },
   ]  },
   { name:"Orlando Public Library — Melrose Center", category:"library", region:2, st:"FL", lat:28.5411, lng:-81.3766, city:"Orlando, FL", url:"https://melrose.ocls.org", address:"101 E Central Blvd, Orlando", phone:"407-835-7323", when:"", notes:"Free tech, audio/video, and fab labs at the main library." },
-  { name:"Suncoast Linux Users Group (SLUG)", category:"meetup", region:2, st:"FL", lat:27.96, lng:-82.48, city:"Tampa Bay, FL", url:"https://www.meetup.com/Suncoast-LUG/", address:"Meetings move around Tampa Bay — see Meetup", phone:"", when:"", notes:"Tampa Bay's oldest active LUG — free meetings, open to all. (2026-07-19: meetup.com URL returned \"Group not found\" — verify current status/URL before relying on this listing.)" },
+  { name:"Suncoast Linux Users Group (SLUG)", category:"meetup", region:2, st:"FL", lat:27.96, lng:-82.48, city:"Tampa Bay, FL", url:"https://suncoastlug.org", address:"Meetings move around Tampa Bay — see Meetup", phone:"", when:"", notes:"Tampa Bay's oldest active LUG — free meetings, open to all. (Earlier stale-URL flag confirmed a false alarm — group is real and active per 2026-07-24 search; repointed to its own site.)" },
   { name:"GoLUG", category:"meetup", region:2, st:"FL", lat:28.54, lng:-81.385, city:"Orlando, FL", url:"https://www.golug.org", address:"", phone:"", when:"", notes:"Greater Orlando Linux User Group — #golug on Libera.Chat.", events:[
     { title:"Monthly Meeting", when:"1st Wednesday of the month, 7pm ET, online via Jitsi", topics:[] },
   ]  },
