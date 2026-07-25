@@ -605,7 +605,7 @@ const RESOURCES = [
     { title:"PrivacyTrollShield: An Open-Source Scanner for Privacy Compliance", when:"Sep 3, 2026, 7pm — speaker: Aaron Tekippe (VP IT & Security, Openly), T12 Distillery, West Des Moines, IA", topics:["privacy"] },
     { title:"Halloween Meetup: Costume Contest, Scavenger Hunt, CTF & Trivia", when:"Oct 1, 2026 — T12 Distillery, West Des Moines, IA", topics:["ctf"] },
   ]  },
-  { name:"Area 515", category:"maker", region:3, st:"IA", lat:41.5860, lng:-93.6440, city:"Des Moines, IA", url:"https://www.area515.org", address:"1731 Grand Ave, Des Moines", phone:"", when:"Open house Tuesdays 7–9pm", notes:"Des Moines's nonprofit makerspace." },
+  { name:"Area 515", category:"maker", region:3, st:"IA", lat:41.5860, lng:-93.6440, city:"Des Moines, IA", url:"https://www.area515.org", address:"1731 Grand Ave, Des Moines", phone:"", when:"Open house Tuesdays 7–9pm", notes:"Des Moines's nonprofit makerspace. FLAG (2026-07-24): automated fetch of this URL redirected to a suspicious ad-tracking domain (ww80.area515.org/?subid1=...); a plain browser-UA curl loads the real domain fine (200) but the raw page is a bare JS shell — inconclusive, possibly bot-cloaking, worth a human visual check before trusting the URL further." },
 
   // -- Iowa pass 3 (Jul 2026) --
   { name:"SecMidwest", category:"meetup", region:3, st:"IA", lat:41.9772, lng:-91.6656, city:"Cedar Rapids, IA", url:"https://www.meetup.com/secmidwest/", address:"True North Learning Center, 500 1st St SE", phone:"", when:"Monthly, 6–8pm", notes:"501(c)(3) nonprofit cybersecurity meetup — peer-led talks, pizza, networking for the Cedar Rapids corridor.", org:"Thad Lux", events:[
