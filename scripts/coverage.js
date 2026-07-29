@@ -33,6 +33,7 @@ function isEnriched(r) {
   return Boolean(r.org)
     || (r.events && r.events.length > 0)
     || (r.talks && r.talks.length > 0)
+    || (r.certs && r.certs.length > 0)
     || NAMED_CONTACT_RE.test(r.notes || '');
 }
 
@@ -44,7 +45,7 @@ for (const r of RESOURCES) {
   if (isEnriched(r)) cats[r.category].enriched++;
 }
 
-const order = ['school', 'meetup', 'youth', 'maker', 'con', 'ctf', 'library', 'gov', 'hamradio'];
+const order = ['school', 'meetup', 'youth', 'maker', 'con', 'ctf', 'library', 'gov', 'hamradio', 'testing'];
 console.log('Category'.padEnd(10), 'Enriched'.padEnd(12), 'Pct');
 for (const c of order) {
   if (!cats[c]) continue;

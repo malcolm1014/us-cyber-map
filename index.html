@@ -59,6 +59,7 @@
     --c-youth:   #c98500;
     --c-gov:     #8195AB;  /* neutral "other" slot — deliberately outside the hue palette */
     --c-hamradio:#8B4226;  /* added Jul 2026 — validated against all 7 hues above (dataviz skill validator), 0 CVD/normal-vision fails */
+    --c-testing: #B33F9E;  /* added Jul 2026 — validated against all 8 hues above (dataviz skill validator), introduces no new CVD/normal-vision/lightness failures beyond the 2 pre-existing pairs */
 
     --sans: 'Space Grotesk', system-ui, sans-serif;
     --mono: 'IBM Plex Mono', ui-monospace, monospace;
@@ -196,6 +197,15 @@
   #search::placeholder{ color:var(--muted); }
   #search:focus{ outline:none; border-color:var(--accent); }
 
+  /* Certification dropdown */
+  #certSelect{
+    width:100%; padding:9px 32px 9px 12px; border-radius:10px;
+    background:var(--glass-2) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="%237C8AA0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat right 10px center;
+    border:1px solid var(--line); color:var(--text);
+    font-family:var(--sans); font-size:.82rem; appearance:none; cursor:pointer;
+  }
+  #certSelect:focus{ outline:none; border-color:var(--accent); }
+
   /* Scrollable panel body — one scrollbar for every section under the header */
   #panelbody{
     flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain;
@@ -314,7 +324,7 @@
 <aside id="panel">
   <header class="pad hairline">
     <h1><span class="prompt">❯</span>US Cyber Resource Map</h1>
-    <p class="sub">A free map for students and lifelong learners to find their community — hacker cons, DEF CON groups, 2600 meetings, hackerspaces, ham radio clubs, cyber schools, library makerspaces, and student STEM programs — by region, state, and category.</p>
+    <p class="sub">A free map for students and lifelong learners to find their community — hacker cons, DEF CON groups, 2600 meetings, hackerspaces, ham radio clubs, cyber schools, library makerspaces, certification testing sites, and student STEM programs — by region, state, and category.</p>
     <div class="status"><b id="statusText">ALL SECTORS</b> · <span id="visCount"></span> NODES<span class="cursor"></span></div>
   </header>
 
@@ -343,6 +353,11 @@
   <div class="pad hairline">
     <div class="label">Topics <span style="opacity:.55; font-weight:400">— what are you into?</span></div>
     <div class="cats" id="topics"></div>
+  </div>
+
+  <div class="pad hairline">
+    <div class="label">Certification <span style="opacity:.55; font-weight:400">— studying for one?</span></div>
+    <select id="certSelect" aria-label="Filter by certification"></select>
   </div>
 
   <div class="pad hairline">
@@ -384,8 +399,73 @@ const CATEGORIES = {
   youth:  { label:"Student STEM & cyber",       color:getCSS('--c-youth')   },
   gov:    { label:"Gov & research",             color:getCSS('--c-gov')     },
   hamradio:{ label:"Ham radio clubs",           color:getCSS('--c-hamradio')},
+  testing:{ label:"Certification testing",      color:getCSS('--c-testing') },
   gadgets:{ label:"Gadgets & hardware",         color:getCSS('--c-maker')   },
 };
+
+/* Certifications a resource is confirmed to offer prep for or proctor exams
+   for — independent of category, mirrors TOPICS' shape. Kept deliberately
+   flat (no vendor grouping in the data) since the UI groups by vendor via
+   <optgroup> at render time; see CERT_GROUPS below. */
+const CERTS = {
+  // CompTIA
+  aplus:        "CompTIA A+",
+  networkplus:  "CompTIA Network+",
+  securityplus: "CompTIA Security+",
+  pentestplus:  "CompTIA PenTest+",
+  cysaplus:     "CompTIA CySA+",
+  caspplus:     "CompTIA CASP+ / SecurityX",
+  // (ISC)²
+  cc:           "(ISC)² Certified in Cybersecurity (CC)",
+  sscp:         "(ISC)² SSCP",
+  cissp:        "(ISC)² CISSP",
+  ccsp:         "(ISC)² CCSP",
+  // ISACA
+  cisa:         "ISACA CISA",
+  cism:         "ISACA CISM",
+  crisc:        "ISACA CRISC",
+  cdpse:        "ISACA CDPSE",
+  // EC-Council
+  ceh:          "EC-Council CEH",
+  chfi:         "EC-Council CHFI",
+  ecsa:         "EC-Council ECSA",
+  // Offensive Security
+  oscp:         "OffSec OSCP",
+  oswe:         "OffSec OSWE",
+  osep:         "OffSec OSEP",
+  // GIAC / SANS
+  gsec:         "GIAC GSEC",
+  gcih:         "GIAC GCIH",
+  gpen:         "GIAC GPEN",
+  gcfa:         "GIAC GCFA",
+  gcfe:         "GIAC GCFE",
+  gwapt:        "GIAC GWAPT",
+  // Cisco
+  ccnasec:      "Cisco CCNA (Security track)",
+  ccnpsec:      "Cisco CCNP Security",
+  // Cloud
+  awssecurity:  "AWS Certified Security – Specialty",
+  azsecurity:   "Microsoft Azure Security Engineer (SC-200/SC-100)",
+  gcpsecurity:  "Google Cloud Professional Cloud Security Engineer",
+  ccsk:         "CSA Certificate of Cloud Security Knowledge (CCSK)",
+  // Other
+  cmmccp:       "CMMC Certified Professional (CCP)",
+  ence:         "EnCase Certified Examiner (EnCE)",
+};
+
+/* Vendor groupings for CERTS, purely for <optgroup> labels in the dropdown —
+   keys must partition CERTS exactly (checked at render time, see below). */
+const CERT_GROUPS = [
+  { label:"CompTIA",             keys:["aplus","networkplus","securityplus","pentestplus","cysaplus","caspplus"] },
+  { label:"(ISC)²",              keys:["cc","sscp","cissp","ccsp"] },
+  { label:"ISACA",               keys:["cisa","cism","crisc","cdpse"] },
+  { label:"EC-Council",          keys:["ceh","chfi","ecsa"] },
+  { label:"Offensive Security",  keys:["oscp","oswe","osep"] },
+  { label:"GIAC / SANS",         keys:["gsec","gcih","gpen","gcfa","gcfe","gwapt"] },
+  { label:"Cisco",               keys:["ccnasec","ccnpsec"] },
+  { label:"Cloud",               keys:["awssecurity","azsecurity","gcpsecurity","ccsk"] },
+  { label:"Other",               keys:["cmmccp","ence"] },
+];
 
 /* Cross-cutting interest tags — independent of category. Any resource (or, for
    cons, an individual talk/village) can carry zero or more of these. Filtering
@@ -551,6 +631,7 @@ const markers = RESOURCES.map(r => {
     r.name, r.city, r.st, r.notes, r.org, r.address,
     cat.label, REGIONS[r.region].name,
     ...(r.topics || []).map(topicLabel),
+    ...(r.certs || []).map(c => CERTS[c] || c),
     ...(r.talks || []).flatMap(tk => [tk.title, tk.speaker, tk.track, ...(tk.topics || []).map(topicLabel)]),
     ...(r.events || []).flatMap(ev => [ev.title, ...(ev.topics || []).map(topicLabel)]),
   ].filter(Boolean).join(" ").toLowerCase();
@@ -561,6 +642,9 @@ const markers = RESOURCES.map(r => {
   if (r.when)    facts.push(`<div class="fact"><span class="fk">TIME</span><span>${esc(r.when)}${isPast(r) ? ' <span class="stale">· listed dates have passed — check site</span>' : ''}</span></div>`);
   const topicTags = (r.topics || []).map(t =>
     `<span class="tag" style="color:var(--accent); border-color:var(--accent)">${esc(TOPICS[t] || t)}</span>`
+  ).join("");
+  const certTags = (r.certs || []).map(c =>
+    `<span class="tag" style="color:${CATEGORIES.testing.color}; border-color:${CATEGORIES.testing.color}">${esc(CERTS[c] || c)}</span>`
   ).join("");
   const talksHtml = (r.category === "con" && r.talks && r.talks.length) ? `
     <details class="talks">
@@ -592,7 +676,7 @@ const markers = RESOURCES.map(r => {
       <h3>${esc(r.name)}</h3>
       <span class="tag" style="color:${cat.color}; border-color:${cat.color}">${cat.label}</span>
       <span class="tag" style="color:${REGIONS[r.region].color}; border-color:${REGIONS[r.region].color}">${REGIONS[r.region].name}</span>
-      ${topicTags}
+      ${topicTags}${certTags}
       <p>${esc(r.notes)}</p>
       ${facts.length ? `<div class="facts">${facts.join("")}</div>` : ""}
       ${talksHtml}${eventsHtml}
@@ -605,6 +689,7 @@ const markers = RESOURCES.map(r => {
 /* ============ STATE + FILTERING ============ */
 const enabledCats = new Set(Object.keys(CATEGORIES));
 const enabledTopics = new Set();   // empty = no topic filter applied
+let activeCert = "";               // "" = no certification filter applied
 let searchTerm = "";
 
 function visible(r){
@@ -612,6 +697,7 @@ function visible(r){
     && (activeRegion === null || r.region === activeRegion)
     && (activeState === null || r.st === activeState)
     && (searchTerm === "" || r._search.includes(searchTerm))
+    && (activeCert === "" || (r.certs || []).includes(activeCert))
     && (enabledTopics.size === 0 || (r.topics || []).some(t => enabledTopics.has(t))
         || (r.talks || []).some(tk => (tk.topics || []).some(t => enabledTopics.has(t)))
         || (r.events || []).some(ev => (ev.topics || []).some(t => enabledTopics.has(t))));
@@ -707,6 +793,27 @@ for (const [key, label] of Object.entries(TOPICS)){
   };
   topicsEl.appendChild(b);
 }
+
+const certSelect = document.getElementById('certSelect');
+const certOpt0 = document.createElement('option');
+certOpt0.value = ""; certOpt0.textContent = "All certifications";
+certSelect.appendChild(certOpt0);
+for (const { label: groupLabel, keys } of CERT_GROUPS){
+  const group = document.createElement('optgroup');
+  group.label = groupLabel;
+  let any = false;
+  for (const key of keys){
+    const n = RESOURCES.filter(r => (r.certs || []).includes(key)).length;
+    if (!n) continue;   // no point offering an empty filter
+    any = true;
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = `${CERTS[key]} (${n})`;
+    group.appendChild(opt);
+  }
+  if (any) certSelect.appendChild(group);
+}
+certSelect.onchange = () => { activeCert = certSelect.value; refresh(); };
 
 document.getElementById('search').addEventListener('input', e => {
   searchTerm = e.target.value.trim().toLowerCase();
