@@ -90,7 +90,7 @@ for (const [cat, list] of Object.entries(byCat)) {
 }
 
 // --- 4. Thin entries: no org, no events/talks, no named-contact pattern in notes ---
-const NAMED_CONTACT_RE = /contact:\s*[A-Z]|director|president|founder|founded\s+(?:in\s+)?(?:\d{4}\s+)?by\s+[A-Z]|co-founded\s+.*\s+by\s+[A-Z]|coordinator|instructor|organizer|Board:/i;
+const NAMED_CONTACT_RE = /contact:\s*["']?[a-z]|director|president|founder|founded\s+(?:in\s+)?(?:[a-z]+\s+)?(?:\d{4}\s+)?by\s+[a-z]|co-founded\s+.*\s+by\s+[a-z]|coordinator|instructor|organizer|Board:/i;
 function isEnriched(r) {
   return Boolean(r.org) || (r.events && r.events.length > 0) || (r.talks && r.talks.length > 0)
     || (r.certs && r.certs.length > 0) || NAMED_CONTACT_RE.test(r.notes || '');
