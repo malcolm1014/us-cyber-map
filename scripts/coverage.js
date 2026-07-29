@@ -27,7 +27,7 @@ function loadVars(relPath, ...names) {
 
 const { RESOURCES } = loadVars('data.js', 'RESOURCES');
 
-const NAMED_CONTACT_RE = /contact:\s*[A-Z]|director|president|founder|founded\s+(?:in\s+\d{4}\s+)?by\s+[A-Z]|co-founded\s+.*\s+by\s+[A-Z]|coordinator|instructor|organizer|Board:/i;
+const NAMED_CONTACT_RE = /contact:\s*[A-Z]|director|president|founder|founded\s+(?:in\s+)?(?:\d{4}\s+)?by\s+[A-Z]|co-founded\s+.*\s+by\s+[A-Z]|coordinator|instructor|organizer|Board:/i;
 
 function isEnriched(r) {
   return Boolean(r.org)
