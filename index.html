@@ -205,6 +205,23 @@
     font-family:var(--sans); font-size:.82rem; appearance:none; cursor:pointer;
   }
   #certSelect:focus{ outline:none; border-color:var(--accent); }
+  #certNotes{
+    margin-top:8px; padding:9px 11px; border-radius:10px;
+    background:var(--glass-2); border:1px solid var(--line);
+    display:grid; gap:5px;
+  }
+  #certNotes .cn-vendor{
+    font-family:var(--mono); font-size:.62rem; font-weight:500; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--c-testing);
+  }
+  #certNotes .cn-row{
+    display:grid; grid-template-columns:52px 1fr; gap:8px;
+    font-size:.73rem; color:var(--text); line-height:1.45;
+  }
+  #certNotes .cn-k{
+    font-family:var(--mono); font-size:.58rem; font-weight:500; letter-spacing:.1em;
+    color:var(--muted); padding-top:2px;
+  }
 
   /* Scrollable panel body — one scrollbar for every section under the header */
   #panelbody{
@@ -358,6 +375,7 @@
   <div class="pad hairline">
     <div class="label">Certification <span style="opacity:.55; font-weight:400">— studying for one?</span></div>
     <select id="certSelect" aria-label="Filter by certification"></select>
+    <div id="certNotes" style="display:none"></div>
   </div>
 
   <div class="pad hairline">
@@ -428,7 +446,7 @@ const CERTS = {
   // EC-Council
   ceh:          "EC-Council CEH",
   chfi:         "EC-Council CHFI",
-  ecsa:         "EC-Council ECSA",
+  cpent:        "EC-Council CPENT",
   // Offensive Security
   oscp:         "OffSec OSCP",
   oswe:         "OffSec OSWE",
@@ -441,7 +459,7 @@ const CERTS = {
   gcfe:         "GIAC GCFE",
   gwapt:        "GIAC GWAPT",
   // Cisco
-  ccnasec:      "Cisco CCNA (Security track)",
+  ccna:         "Cisco CCNA",
   ccnpsec:      "Cisco CCNP Security",
   // Cloud
   awssecurity:  "AWS Certified Security – Specialty",
@@ -459,13 +477,59 @@ const CERT_GROUPS = [
   { label:"CompTIA",             keys:["aplus","networkplus","securityplus","pentestplus","cysaplus","caspplus"] },
   { label:"(ISC)²",              keys:["cc","sscp","cissp","ccsp"] },
   { label:"ISACA",               keys:["cisa","cism","crisc","cdpse"] },
-  { label:"EC-Council",          keys:["ceh","chfi","ecsa"] },
+  { label:"EC-Council",          keys:["ceh","chfi","cpent"] },
   { label:"Offensive Security",  keys:["oscp","oswe","osep"] },
   { label:"GIAC / SANS",         keys:["gsec","gcih","gpen","gcfa","gcfe","gwapt"] },
-  { label:"Cisco",               keys:["ccnasec","ccnpsec"] },
+  { label:"Cisco",               keys:["ccna","ccnpsec"] },
   { label:"Cloud",               keys:["awssecurity","azsecurity","gcpsecurity","ccsk"] },
   { label:"Other",               keys:["cmmccp","ence"] },
 ];
+
+/* Cliff-notes reference facts for each certification — vendor, target level,
+   what it covers, prerequisites, exam format, list price, and renewal terms.
+   Sourced from each vendor's own certification page as of Jul 2026 (GIAC,
+   ISC2, ISACA, EC-Council, OffSec, Cisco, AWS, Microsoft, Google Cloud, CSA)
+   except where noted; costs are approximate ("~") since vendors adjust
+   pricing periodically — verify on the vendor's own site before paying.
+   Shown in the panel when a specific certification is selected in the
+   dropdown, for both practical (which cert should I pursue?) and research
+   (documenting the credentialing landscape) use. */
+const CERT_INFO = {
+  aplus:        { vendor:"CompTIA", level:"Entry-level", covers:"PC/mobile hardware, OS, troubleshooting, IT support fundamentals", prereqs:"None", format:"2 exams (Core 1 & 2), ~90 questions & 90 min each", cost:"~$253/exam (~$506 total)", renewal:"3 yrs — retake or 20 CEUs + $75" },
+  networkplus:  { vendor:"CompTIA", level:"Entry-level", covers:"Network infrastructure, protocols, troubleshooting", prereqs:"None (A+ + 9–12mo experience recommended)", format:"Up to 90 questions, 90 min", cost:"~$358–399", renewal:"3 yrs — 30 CEUs + $75" },
+  securityplus: { vendor:"CompTIA", level:"Entry-level", covers:"Core security concepts, risk, cryptography, network security", prereqs:"None (Network+ + 2yr experience recommended)", format:"Up to 90 questions, 90 min, pass 750/900", cost:"~$404–439", renewal:"3 yrs — 50 CEUs + $75 (or a higher CompTIA cert renews it)" },
+  pentestplus:  { vendor:"CompTIA", level:"Intermediate (offense)", covers:"Pen test planning/scoping, vuln scanning, exploitation, reporting", prereqs:"Network+ & Security+ recommended, ~3–4 yrs experience", format:"Up to 90 questions, 165 min, pass 750/900", cost:"~$404–439", renewal:"3 yrs — 60 CEUs + $50/yr" },
+  cysaplus:     { vendor:"CompTIA", level:"Intermediate (defense)", covers:"Threat detection, SOC analysis, incident response", prereqs:"Network+ & Security+ recommended, ~4 yrs experience", format:"Up to 85 questions, 165 min, pass 750/900", cost:"~$404–439", renewal:"3 yrs — 60 CEUs + $50/yr" },
+  caspplus:     { vendor:"CompTIA", level:"Advanced (SecurityX)", covers:"Security architecture, engineering, governance at enterprise scale", prereqs:"~10 yrs IT experience incl. 5 yrs hands-on security", format:"Up to 90 questions, 165 min, pass/fail (no scaled score)", cost:"~$470–509", renewal:"3 yrs — 75 CEUs + $50/yr (renews everything below it)" },
+  cc:           { vendor:"(ISC)²", level:"Entry-level", covers:"Core security concepts and best practices", prereqs:"None", format:"100 questions, 2 hrs", cost:"$199", renewal:"3 yrs — 45 CPEs + $50/yr AMF" },
+  sscp:         { vendor:"(ISC)²", level:"Early-career (0–3 yrs)", covers:"Hands-on operational security: monitoring, admin, defense", prereqs:"1 yr relevant work experience", format:"125 questions, 3 hrs", cost:"$249", renewal:"3 yrs — 60 CPEs + ~$135/yr AMF" },
+  cissp:        { vendor:"(ISC)²", level:"Advanced (4–5+ yrs)", covers:"Security strategy, architecture, risk management, leadership across 8 domains", prereqs:"5 yrs experience in 2+ domains (4 yrs with a qualifying degree)", format:"100–150 adaptive (CAT) questions, 3 hrs", cost:"~$699–749", renewal:"3 yrs — 120 CPEs + ~$125/yr AMF" },
+  ccsp:         { vendor:"(ISC)²", level:"Advanced (4–5+ yrs)", covers:"Cloud architecture, design, and operations security", prereqs:"5 yrs experience (3 yrs security, 1 yr in a CCSP domain) — active CISSP waives it entirely", format:"125 questions, 3 hrs", cost:"$599", renewal:"3 yrs — 90 CPEs (60+ domain-specific) + ~$135/yr AMF" },
+  cisa:         { vendor:"ISACA", level:"Advanced (auditing)", covers:"IS auditing process, IT governance, systems acquisition, ops resilience, asset protection", prereqs:"5 yrs relevant experience (partial waivers for education)", format:"150 questions, 4 hrs", cost:"$575 members / $760 non-members", renewal:"3 yrs — 120 CPEs (20/yr min) + $45–85/yr AMF" },
+  cism:         { vendor:"ISACA", level:"Advanced (management)", covers:"Security governance, risk management, program management, incident management", prereqs:"5 yrs relevant experience (partial waivers available)", format:"150 questions, 4 hrs", cost:"$575 members / $760 non-members", renewal:"3 yrs — 120 CPEs (20/yr min) + $45–85/yr AMF" },
+  crisc:        { vendor:"ISACA", level:"Advanced (risk)", covers:"IT risk identification, assessment, response, and control monitoring", prereqs:"3 yrs relevant experience across 2+ domains", format:"150 questions, 4 hrs", cost:"$575 members / $760 non-members", renewal:"3 yrs — 120 CPEs (20/yr min) + $45–85/yr AMF" },
+  cdpse:        { vendor:"ISACA", level:"Advanced (privacy engineering)", covers:"Privacy governance, risk & compliance, data lifecycle, privacy engineering", prereqs:"5 yrs relevant experience (partial waivers available)", format:"Computer-based, similar format to other ISACA exams", cost:"$575 members / $760 non-members", renewal:"3 yrs — 120 CPEs (20/yr min) + $45–85/yr AMF" },
+  ceh:          { vendor:"EC-Council", level:"Intermediate (offense)", covers:"Ethical hacking methodology across 20 modules — recon, exploitation, malware, web/wireless/cloud attacks", prereqs:"None formal for the self-study path; official training available", format:"Knowledge exam: 125 Q, 4 hrs. Optional CEH Practical: 20 challenges, 6 hrs", cost:"~$1,199 (knowledge exam voucher)", renewal:"3 yrs — 120 ECE credits (40/yr) + $80/yr" },
+  chfi:         { vendor:"EC-Council", level:"Intermediate (forensics)", covers:"Digital forensics investigation across OS, network, mobile, cloud, and dark web", prereqs:"Basic IT/security/forensics knowledge", format:"150 questions, 4 hrs, pass 60–85%", cost:"~$550", renewal:"3 yrs — 120 ECE credits + $80/yr" },
+  cpent:        { vendor:"EC-Council", level:"Advanced (offense)", covers:"Full-scope penetration testing incl. Active Directory, IoT, binary exploitation, evasion, reporting", prereqs:"~2 yrs infosec experience or CEH (not strictly required)", format:"100% practical — two 12-hr sessions or one 24-hr session, remote proctored", cost:"~$999–1,199 (exam voucher)", renewal:"3 yrs — 120 ECE credits + $250/yr (covers CPENT/LPT)" },
+  oscp:         { vendor:"OffSec", level:"Advanced (offense)", covers:"Hands-on penetration testing — enumeration, exploitation, privilege escalation, Active Directory attacks", prereqs:"None formal; solid TCP/IP, Linux/Windows admin, and basic scripting recommended", format:"24-hr proctored practical exam (3 standalone machines + 1 AD set) + report", cost:"~$1,499–1,749 (PEN-200 course + exam bundle)", renewal:"No CPE renewal — lifetime cert (OSCP+ is the current exam version)" },
+  oswe:         { vendor:"OffSec", level:"Advanced (web offense)", covers:"Advanced web application exploitation and source-code analysis", prereqs:"Comfort with a scripting language, Linux, and web attack fundamentals; PEN-200 knowledge assumed", format:"48-hr proctored practical exam + report", cost:"Course (WEB-300) + exam bundle, similar tier to OSCP", renewal:"No CPE renewal — lifetime cert" },
+  osep:         { vendor:"OffSec", level:"Advanced (evasion)", covers:"Advanced evasion/bypass techniques against modern defenses, Active Directory attacks", prereqs:"OSCP or equivalent knowledge recommended", format:"48-hr proctored practical exam + report", cost:"Course (PEN-300) + exam bundle, similar tier to OSCP", renewal:"No CPE renewal — lifetime cert" },
+  gsec:         { vendor:"GIAC (SANS)", level:"Entry–Intermediate", covers:"Broad security essentials — network security, crypto, Windows/Linux hardening, cloud basics", prereqs:"None formal", format:"106 questions (CyberLive), 4 hrs, pass 72%", cost:"~$999 standalone exam (often bundled with SANS training, $5k+)", renewal:"4 yrs — 36 CPEs" },
+  gcih:         { vendor:"GIAC (SANS)", level:"Intermediate (defense)", covers:"Incident handling, hacker tools/techniques, computer crime investigation", prereqs:"None formal", format:"106 questions (CyberLive), 4 hrs, pass 69%", cost:"~$999 standalone exam", renewal:"4 yrs — 36 CPEs" },
+  gpen:         { vendor:"GIAC (SANS)", level:"Intermediate–Advanced (offense)", covers:"Pen test planning/scoping, scanning, exploitation, Active Directory/Kerberos attacks", prereqs:"None formal", format:"82 questions (CyberLive), 3 hrs, pass 73%", cost:"~$999 standalone exam", renewal:"4 yrs — 36 CPEs" },
+  gcfa:         { vendor:"GIAC (SANS)", level:"Advanced (forensics/IR)", covers:"Advanced incident response, memory forensics, timeline analysis, APT investigation", prereqs:"None formal", format:"82 questions, 3 hrs, pass 71%", cost:"~$999 standalone exam", renewal:"4 yrs — 36 CPEs" },
+  gcfe:         { vendor:"GIAC (SANS)", level:"Intermediate (forensics)", covers:"Windows forensics — registry, USB, browser, and email artifact analysis", prereqs:"None formal", format:"82 questions, 3 hrs, pass 70%", cost:"~$999 standalone exam", renewal:"4 yrs — 36 CPEs" },
+  gwapt:        { vendor:"GIAC (SANS)", level:"Intermediate–Advanced (web offense)", covers:"Web app pen testing — auth attacks, SQLi, XSS/CSRF, session management", prereqs:"None formal", format:"82 questions (CyberLive), 3 hrs, pass 71%", cost:"~$999 standalone exam", renewal:"4 yrs — 36 CPEs" },
+  ccna:         { vendor:"Cisco", level:"Entry-level (unified)", covers:"General networking fundamentals — security is 1 of 6 domains (~15% weight); Cisco retired the separate \"CCNA Security\" track", prereqs:"None", format:"100–120 questions, 120 min", cost:"$300 (single unified 200-301 exam)", renewal:"3 yrs — retake, a higher cert, or CE credits" },
+  ccnpsec:      { vendor:"Cisco", level:"Professional (security-specific)", covers:"Security infrastructure — network/cloud/content/endpoint security, secure access", prereqs:"None formally required; a valid CCNA is commonly recommended", format:"Core exam (350-701 SCOR) + 1 concentration exam of your choice", cost:"~$400 core + ~$300 concentration (~$700 total)", renewal:"3 yrs — retake, a higher cert, or CE credits" },
+  awssecurity:  { vendor:"AWS", level:"Advanced (Specialty)", covers:"Securing AWS workloads — data protection, IAM, incident response, logging/monitoring", prereqs:"None formal; 5 yrs IT security + 2 yrs securing AWS workloads recommended", format:"65 questions, 170 min", cost:"$300", renewal:"3 yrs — retake or a qualifying recertification" },
+  azsecurity:   { vendor:"Microsoft", level:"Intermediate (Associate, SC-200)", covers:"SOC operations — threat hunting and incident response via Sentinel/Defender/Entra", prereqs:"None formal; familiarity with M365/Azure and security ops assumed", format:"~40–60 questions, 100 min", cost:"~$165", renewal:"Renews annually via a free online assessment" },
+  gcpsecurity:  { vendor:"Google Cloud", level:"Advanced (Professional)", covers:"GCP access control, network/data protection, compliance, security operations", prereqs:"None formal; 3+ yrs industry experience incl. 1 yr on GCP recommended", format:"50–60 questions, 2 hrs", cost:"$200", renewal:"2 yrs — retake" },
+  ccsk:         { vendor:"Cloud Security Alliance", level:"Foundational (vendor-neutral)", covers:"Cloud computing architecture, governance, IAM, workload/data security across 12 domains", prereqs:"None", format:"60 questions, open-book, 120 min, pass 80%", cost:"$445 (includes 2 attempts, valid 2 yrs)", renewal:"No CPEs — retake to stay current with new versions" },
+  cmmccp:       { vendor:"Cyber-AB (transitioning to ISACA/CAICO, Apr 2026)", level:"Entry-level (DoD/gov contracting)", covers:"CMMC assessment process, scoping, and model requirements", prereqs:"2 yrs cyber/IT/assessment experience, or a related degree plus experience", format:"Computer-based exam via Cyber-AB/ISACA", cost:"$200 registration + training costs vary by provider", renewal:"Transitioning under ISACA's new CAICO administration — verify the current cycle" },
+  ence:         { vendor:"OpenText", level:"Intermediate (forensics)", covers:"EnCase-based digital forensics investigation methodology", prereqs:"64 hrs authorized forensic training, OR 12 months forensic work experience", format:"Delivered via Certiverse; application-based admission", cost:"$500", renewal:"Periodic recertification via OpenText/Certiverse — verify the current cycle" },
+};
 
 /* Cross-cutting interest tags — independent of category. Any resource (or, for
    cons, an individual talk/village) can carry zero or more of these. Filtering
@@ -813,7 +877,21 @@ for (const { label: groupLabel, keys } of CERT_GROUPS){
   }
   if (any) certSelect.appendChild(group);
 }
-certSelect.onchange = () => { activeCert = certSelect.value; refresh(); };
+const certNotesEl = document.getElementById('certNotes');
+function renderCertNotes(){
+  const info = CERT_INFO[activeCert];
+  if (!info){ certNotesEl.style.display = 'none'; certNotesEl.innerHTML = ''; return; }
+  const row = (k, v) => `<div class="cn-row"><span class="cn-k">${esc(k)}</span><span>${esc(v)}</span></div>`;
+  certNotesEl.innerHTML = `
+    <div class="cn-vendor">${esc(info.vendor)} · ${esc(info.level)}</div>
+    ${row('COVERS', info.covers)}
+    ${row('PREREQS', info.prereqs)}
+    ${row('FORMAT', info.format)}
+    ${row('COST', info.cost)}
+    ${row('RENEWAL', info.renewal)}`;
+  certNotesEl.style.display = '';
+}
+certSelect.onchange = () => { activeCert = certSelect.value; renderCertNotes(); refresh(); };
 
 document.getElementById('search').addEventListener('input', e => {
   searchTerm = e.target.value.trim().toLowerCase();
