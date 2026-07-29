@@ -51,8 +51,8 @@ function checkOne(url) {
 }
 
 async function main() {
-  const filterCat = process.argv[2];
-  const targets = RESOURCES.filter(r => r.url && (!filterCat || r.category === filterCat));
+  const filterCats = process.argv[2] ? process.argv[2].split(',') : null;
+  const targets = RESOURCES.filter(r => r.url && (!filterCats || filterCats.includes(r.category)));
   console.log(`Checking ${targets.length} URLs at concurrency ${CONCURRENCY}...\n`);
 
   const results = [];
