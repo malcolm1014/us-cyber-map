@@ -200,11 +200,23 @@
   /* Certification dropdown */
   #certSelect{
     width:100%; padding:9px 32px 9px 12px; border-radius:10px;
-    background:var(--glass-2) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="%237C8AA0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat right 10px center;
+    background:var(--glass-2) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="%238CA0B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat right 10px center;
     border:1px solid var(--line); color:var(--text);
     font-family:var(--sans); font-size:.82rem; appearance:none; cursor:pointer;
+    transition:background .18s ease, border-color .18s ease;
   }
+  #certSelect:hover{ background-color:rgba(255,255,255,.08); }
   #certSelect:focus{ outline:none; border-color:var(--accent); }
+  /* The dropdown's own option list is drawn by the OS/browser outside the page's
+     translucent glass layers, so it needs a solid (non-transparent) dark background —
+     var(--glass-2) would otherwise render against the OS's default white. */
+  #certSelect option, #certSelect optgroup{
+    background:var(--bg); color:var(--text); font-family:var(--sans);
+  }
+  #certSelect optgroup{ color:var(--muted); font-weight:600; font-style:normal; }
+  #certSelect option:checked, #certSelect option:hover{
+    background:var(--accent); color:var(--bg);
+  }
   #certNotes{
     margin-top:8px; padding:9px 11px; border-radius:10px;
     background:var(--glass-2); border:1px solid var(--line);
