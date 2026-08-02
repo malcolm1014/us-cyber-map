@@ -45,7 +45,7 @@ for (const r of RESOURCES) {
   if (isEnriched(r)) cats[r.category].enriched++;
 }
 
-const order = ['school', 'meetup', 'youth', 'maker', 'con', 'ctf', 'library', 'gov', 'hamradio', 'testing'];
+const order = ['school', 'meetup', 'youth', 'maker', 'con', 'ctf', 'library', 'gov', 'hamradio', 'testing', 'accelerator'];
 console.log('Category'.padEnd(10), 'Enriched'.padEnd(12), 'Pct');
 for (const c of order) {
   if (!cats[c]) continue;

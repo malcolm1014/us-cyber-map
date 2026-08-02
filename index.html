@@ -60,6 +60,7 @@
     --c-gov:     #8195AB;  /* neutral "other" slot — deliberately outside the hue palette */
     --c-hamradio:#8B4226;  /* added Jul 2026 — validated against all 7 hues above (dataviz skill validator), 0 CVD/normal-vision fails */
     --c-testing: #B33F9E;  /* added Jul 2026 — validated against all 8 hues above (dataviz skill validator), introduces no new CVD/normal-vision/lightness failures beyond the 2 pre-existing pairs */
+    --c-accelerator:#7A9E3A;  /* added Aug 2026 — validated against all 9 hues above (dataviz skill validator, --pairs all), introduces no new CVD/normal-vision/lightness failures beyond the same 2 pre-existing pairs */
 
     --sans: 'Space Grotesk', system-ui, sans-serif;
     --mono: 'IBM Plex Mono', ui-monospace, monospace;
@@ -430,6 +431,7 @@ const CATEGORIES = {
   gov:    { label:"Gov & research",             color:getCSS('--c-gov')     },
   hamradio:{ label:"Ham radio clubs",           color:getCSS('--c-hamradio')},
   testing:{ label:"Certification testing",      color:getCSS('--c-testing') },
+  accelerator:{ label:"Accelerators & startups", color:getCSS('--c-accelerator') },
   gadgets:{ label:"Gadgets & hardware",         color:getCSS('--c-maker')   },
 };
 

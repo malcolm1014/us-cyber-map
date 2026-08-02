@@ -41,7 +41,9 @@ statewide anchors are repeated here).
 ## Categories
 
 `con` · `meetup` · `ctf` · `maker` · `school` · `library` (library
-makerspaces) · `youth` (student STEM & cyber) · `gov` · `hamradio`
+makerspaces) · `youth` (student STEM & cyber) · `gov` · `hamradio` ·
+`testing` (certification testing) · `accelerator` (startup accelerators,
+incubators & VC/pitch programs)
 
 ## Editing data
 
