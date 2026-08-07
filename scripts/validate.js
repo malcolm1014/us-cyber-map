@@ -43,7 +43,7 @@ function inState(lng, lat, code) {
 }
 
 const VALID_CATEGORIES = new Set([
-  'con', 'meetup', 'ctf', 'maker', 'school', 'library', 'youth', 'gov', 'hamradio', 'testing', 'accelerator',
+  'con', 'meetup', 'ctf', 'maker', 'school', 'library', 'youth', 'gov', 'hamradio', 'testing', 'accelerator', 'gadgets',
 ]);
 
 let geoFlags = 0, badState = 0, badCategory = 0, missingFields = 0, dupeCoords = 0;
