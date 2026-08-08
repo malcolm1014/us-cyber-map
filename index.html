@@ -155,9 +155,9 @@
   .chip{
     display:inline-flex; align-items:center; gap:7px; cursor:pointer;
     font-family:var(--sans); font-size:.72rem; font-weight:500; color:var(--text);
-    background:var(--glass-2); border:1px solid var(--line); border-radius:999px;
+    background:var(--glass-2); border:1.5px solid var(--cc); border-radius:999px;
     padding:5px 12px 5px 9px;
-    transition:opacity .18s ease, background .18s ease;
+    transition:opacity .18s ease, background .18s ease, border-color .18s ease;
   }
   .chip .dot{ width:8px; height:8px; border-radius:50%; background:var(--cc); flex:none; transition:background .18s ease; }
   .chip:hover{ background:rgba(255,255,255,.08); }
@@ -266,8 +266,8 @@
   .item{
     display:grid; grid-template-columns:8px 1fr; gap:11px; align-items:start;
     width:100%; text-align:left; cursor:pointer; color:var(--text);
-    background:none; border:none; font-family:var(--sans);
-    padding:9px 18px;
+    background:none; border:none; border-left:3px solid var(--cc); font-family:var(--sans);
+    padding:9px 18px 9px 15px;
     transition:background .15s ease;
   }
   .item .dot{ width:8px; height:8px; border-radius:50%; margin-top:5px; }
@@ -285,14 +285,14 @@
   /* ============ POPUPS ============ */
   .leaflet-popup-content-wrapper{
     background:rgba(15,21,32,.94); color:var(--text);
-    border:1px solid var(--line); border-radius:13px;
+    border:1.5px solid var(--cc, var(--line)); border-radius:13px;
     backdrop-filter:blur(12px); box-shadow:0 16px 44px rgba(0,0,0,.55);
   }
-  .leaflet-popup-tip{ background:rgba(15,21,32,.94); border:1px solid var(--line); }
+  .leaflet-popup-tip{ background:rgba(15,21,32,.94); border:1.5px solid var(--cc, var(--line)); }
   .popup h3{ font-family:var(--sans); font-size:.9rem; font-weight:700; margin-bottom:5px; }
   .popup .tag{
     display:inline-block; font-family:var(--mono); font-size:.6rem; letter-spacing:.03em;
-    padding:2px 8px; border-radius:99px; border:1px solid; margin:0 4px 7px 0;
+    padding:2px 8px; border-radius:99px; border:1.5px solid; margin:0 4px 7px 0;
   }
   .popup p{ font-size:.78rem; color:var(--muted); line-height:1.5; margin-bottom:7px; }
   .popup a{ color:var(--accent); font-size:.78rem; text-decoration:none; }
@@ -778,6 +778,16 @@ const markers = RESOURCES.map(r => {
   return m;
 });
 
+/* Color each popup's border to match its resource's category on open —
+   Leaflet builds the wrapper/tip outside our HTML, so this can't be inline style in bindPopup. */
+map.on('popupopen', e => {
+  const data = e.popup._data || (e.popup._source && e.popup._source._data);
+  if (!data) return;
+  const el = e.popup._container;
+  if (!el) return;
+  el.style.setProperty('--cc', CATEGORIES[data.category].color);
+});
+
 /* ============ STATE + FILTERING ============ */
 const enabledCats = new Set(Object.keys(CATEGORIES));
 const enabledTopics = new Set();   // empty = no topic filter applied
@@ -808,6 +818,7 @@ function refresh(){
     const dist = userLoc ? Math.round(milesTo(userLoc, r)) + " mi · " : "";
     const el = document.createElement('button');
     el.className = 'item';
+    el.style.setProperty('--cc', cat.color);
     el.innerHTML = `<span class="dot" style="background:${cat.color}"></span>
                     <span><span class="t">${esc(r.name)}</span>
                     <span class="m" style="display:block">${dist}${esc(r.city)} · ${cat.label}</span></span>`;
@@ -932,8 +943,10 @@ function revealMarker(m){
     clusters.zoomToShowLayer(m, () => m.openPopup());
   } else {
     map.flyTo([m._data.lat, m._data.lng], 12, {duration:.8});
-    L.popup({ maxWidth:320 }).setLatLng([m._data.lat, m._data.lng])
-      .setContent(m.getPopup().getContent()).openOn(map);
+    const p = L.popup({ maxWidth:320 }).setLatLng([m._data.lat, m._data.lng])
+      .setContent(m.getPopup().getContent());
+    p._data = m._data;
+    p.openOn(map);
   }
 }
 
