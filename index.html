@@ -41,6 +41,7 @@
     --text:    #E8EEF7;
     --muted:   #8CA0B8;
     --accent:  #3EE08F;   /* phosphor */
+    --gold:    #FFC53D;   /* ongoing-con "live now" accent — distinct from the amber .stale warning */
 
     /* Region colors (the 5 sectors) */
     --r1: #8B7CF6;  /* Northeast — violet */
@@ -176,6 +177,8 @@
   .uprow:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   .uprow .d{ font-family:var(--mono); font-size:.62rem; color:var(--accent); white-space:nowrap; }
   .uprow .n{ font-size:.75rem; font-weight:500; line-height:1.35; }
+  .uprow.live .d{ color:var(--gold); font-weight:700; }
+  .uprow.live .live-dot{ color:var(--gold); }
 
   /* Near-me button + user dot */
   #nearme{
@@ -275,6 +278,7 @@
   .item:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
   .item .t{ font-size:.8rem; font-weight:500; line-height:1.35; }
   .item .m{ font-family:var(--mono); font-size:.62rem; color:var(--muted); margin-top:2px; }
+  .item .live-label{ color:var(--gold); font-weight:700; }
   #empty{ padding:16px 18px; color:var(--muted); font-size:.8rem; display:none; }
 
   footer{
@@ -294,6 +298,11 @@
     display:inline-block; font-family:var(--mono); font-size:.6rem; letter-spacing:.03em;
     padding:2px 8px; border-radius:99px; border:1.5px solid; margin:0 4px 7px 0;
   }
+  .popup .tag.live-tag{
+    color:var(--gold); border-color:var(--gold); font-weight:700;
+    animation:liveblink 1.6s ease-in-out infinite;
+  }
+  @keyframes liveblink{ 50%{ opacity:.5; } }
   .popup p{ font-size:.78rem; color:var(--muted); line-height:1.5; margin-bottom:7px; }
   .popup a{ color:var(--accent); font-size:.78rem; text-decoration:none; }
   .popup a:hover{ text-decoration:underline; }
@@ -332,6 +341,12 @@
     transition:transform .15s ease;
   }
   .pin:hover{ transform:scale(1.35); }
+  /* Ongoing con — gold + pulsing ring, --pc is set to var(--gold) for these */
+  .pin.ongoing{ animation:pinpulse 1.8s ease-in-out infinite; }
+  @keyframes pinpulse{
+    0%,100%{ box-shadow:0 0 0 3px rgba(7,11,18,.5), 0 0 12px 1px var(--pc); }
+    50%{ box-shadow:0 0 0 8px rgba(255,197,61,.25), 0 0 18px 4px var(--pc); }
+  }
 
   /* Cluster bubbles — neutral glass, count in mono */
   .cluster{
@@ -356,6 +371,7 @@
   @media (prefers-reduced-motion: reduce){
     .cursor{ animation:none; }
     .pin, .sector, .chip, .item{ transition:none; }
+    .pin.ongoing, .popup .tag.live-tag{ animation:none; }
   }
 </style>
 </head>
@@ -595,8 +611,21 @@ for (const f of STATE_GEO.features)
 function getCSS(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
 function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function parseISO(s){ return new Date(s + "T12:00:00"); }
+function ymd(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
 const TODAY = new Date(); TODAY.setHours(0,0,0,0);
-function isPast(r){ return r.next && parseISO(r.next) < TODAY; }
+const TODAY_YMD = ymd(TODAY);
+/* `next` is only a con's START date — `when` usually spells out the real end day
+   ("Aug 6–9, 2026"). Parse that range so isPast/isOngoing reflect the whole event,
+   not just day one; otherwise a multi-day con vanishes from Upcoming and gets
+   flagged "dates have passed" the moment it begins. */
+function conEndYMD(r){
+  if (!r.next) return null;
+  if (!r.when) return r.next;
+  const m = r.when.split(",")[0].match(/(\d{1,2})\s*[–-]\s*(\d{1,2})/);
+  return m ? r.next.slice(0, 8) + String(parseInt(m[2], 10)).padStart(2, "0") : r.next;
+}
+function isPast(r){ return r.next && conEndYMD(r) < TODAY_YMD; }
+function isOngoing(r){ return r.category === "con" && r.next && r.next <= TODAY_YMD && TODAY_YMD <= conEndYMD(r); }
 function milesTo(a, b){
   const R = 3958.8, toR = d => d * Math.PI / 180;
   const dLat = toR(b.lat - a.lat), dLng = toR(b.lng - a.lng);
@@ -709,15 +738,16 @@ const clusters = L.markerClusterGroup({
 map.addLayer(clusters);
 
 /* Markers */
-function makeIcon(color){
+function makeIcon(color, ongoing){
   return L.divIcon({
     className:'', iconSize:[17,17], iconAnchor:[8,8], popupAnchor:[0,-10],
-    html:`<div class="pin" style="--pc:${color}"></div>`
+    html:`<div class="pin${ongoing ? ' ongoing' : ''}" style="--pc:${ongoing ? 'var(--gold)' : color}"></div>`
   });
 }
 const markers = RESOURCES.map(r => {
   const cat = CATEGORIES[r.category];
-  const m = L.marker([r.lat, r.lng], { icon:makeIcon(cat.color) });
+  const live = isOngoing(r);
+  const m = L.marker([r.lat, r.lng], { icon:makeIcon(cat.color, live) });
   const topicLabel = t => TOPICS[t] || t;
   r._search = [
     r.name, r.city, r.st, r.notes, r.org, r.address,
@@ -766,6 +796,7 @@ const markers = RESOURCES.map(r => {
   m.bindPopup(`
     <div class="popup">
       <h3>${esc(r.name)}</h3>
+      ${live ? `<span class="tag live-tag">● LIVE NOW</span>` : ""}
       <span class="tag" style="color:${cat.color}; border-color:${cat.color}">${cat.label}</span>
       <span class="tag" style="color:${REGIONS[r.region].color}; border-color:${REGIONS[r.region].color}">${REGIONS[r.region].name}</span>
       ${topicTags}${certTags}
@@ -815,13 +846,15 @@ function refresh(){
     milesTo(userLoc, a._data) - milesTo(userLoc, b._data));
   shown.forEach(m => {
     const r = m._data, cat = CATEGORIES[r.category];
+    const live = isOngoing(r);
+    const dotColor = live ? 'var(--gold)' : cat.color;
     const dist = userLoc ? Math.round(milesTo(userLoc, r)) + " mi · " : "";
     const el = document.createElement('button');
     el.className = 'item';
-    el.style.setProperty('--cc', cat.color);
-    el.innerHTML = `<span class="dot" style="background:${cat.color}"></span>
+    el.style.setProperty('--cc', dotColor);
+    el.innerHTML = `<span class="dot" style="background:${dotColor}"></span>
                     <span><span class="t">${esc(r.name)}</span>
-                    <span class="m" style="display:block">${dist}${esc(r.city)} · ${cat.label}</span></span>`;
+                    <span class="m" style="display:block">${live ? '<span class="live-label">● LIVE NOW</span> · ' : ''}${dist}${esc(r.city)} · ${cat.label}</span></span>`;
     el.onclick = () => revealMarker(m);
     list.appendChild(el);
   });
@@ -958,12 +991,13 @@ if (upcoming.length){
   document.getElementById('upwrap').style.display = '';
   const upEl = document.getElementById('upcoming');
   upcoming.forEach(r => {
+    const live = isOngoing(r);
     const d = parseISO(r.next);
     const yr = d.getFullYear() !== TODAY.getFullYear() ? " ’" + String(d.getFullYear()).slice(2) : "";
     const el = document.createElement('button');
-    el.className = 'uprow';
-    el.innerHTML = `<span class="d">${d.toLocaleDateString('en-US', {month:'short', day:'numeric'})}${yr}</span>
-                    <span class="n">${esc(r.name)}</span>`;
+    el.className = 'uprow' + (live ? ' live' : '');
+    el.innerHTML = `<span class="d">${live ? 'NOW' : d.toLocaleDateString('en-US', {month:'short', day:'numeric'}) + yr}</span>
+                    <span class="n">${live ? '<span class="live-dot">● </span>' : ''}${esc(r.name)}</span>`;
     el.onclick = () => { const m = markers.find(x => x._data === r); if (m) revealMarker(m); };
     upEl.appendChild(el);
   });
