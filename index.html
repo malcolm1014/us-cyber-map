@@ -601,6 +601,7 @@ const TOPICS = {
   community:        "Youth & community",
   research:         "Research / R&D",
   hiring:           "Hiring / careers",
+  cfp:              "Call For Papers (CFP) open",
 };
 
 /* States (from STATE_GEO in regions.js) — the second drill-down tier. */
@@ -626,6 +627,10 @@ function conEndYMD(r){
 }
 function isPast(r){ return r.next && conEndYMD(r) < TODAY_YMD; }
 function isOngoing(r){ return r.category === "con" && r.next && r.next <= TODAY_YMD && TODAY_YMD <= conEndYMD(r); }
+/* A CFP counts as open if there's a link and either no known deadline or the
+   deadline hasn't passed yet — most sources only confirm "CFP is open", not
+   a hard date, so cfpDeadline is frequently absent. */
+function isCfpOpen(r){ return !!r.cfpUrl && (!r.cfpDeadline || r.cfpDeadline >= TODAY_YMD); }
 function milesTo(a, b){
   const R = 3958.8, toR = d => d * Math.PI / 180;
   const dLat = toR(b.lat - a.lat), dLng = toR(b.lng - a.lng);
@@ -762,6 +767,7 @@ const markers = RESOURCES.map(r => {
   if (r.org)     facts.push(`<div class="fact"><span class="fk">ORG</span><span>${esc(r.org)}</span></div>`);
   if (r.phone)   facts.push(`<div class="fact"><span class="fk">TEL</span><a href="tel:${esc(String(r.phone).replace(/[^+\d]/g,''))}">${esc(r.phone)}</a></div>`);
   if (r.when)    facts.push(`<div class="fact"><span class="fk">TIME</span><span>${esc(r.when)}${isPast(r) ? ' <span class="stale">· listed dates have passed — check site</span>' : ''}</span></div>`);
+  if (r.cfpUrl)  facts.push(`<div class="fact"><span class="fk">CFP</span><span><a href="${esc(r.cfpUrl)}" target="_blank" rel="noopener">Call for papers ↗</a>${r.cfpDeadline ? ` · deadline ${esc(r.cfpDeadline)}` : ''}${!isCfpOpen(r) ? ' <span class="stale">· may be closed — check site</span>' : ''}</span></div>`);
   const topicTags = (r.topics || []).map(t =>
     `<span class="tag" style="color:var(--accent); border-color:var(--accent)">${esc(TOPICS[t] || t)}</span>`
   ).join("");
@@ -797,6 +803,7 @@ const markers = RESOURCES.map(r => {
     <div class="popup">
       <h3>${esc(r.name)}</h3>
       ${live ? `<span class="tag live-tag">● LIVE NOW</span>` : ""}
+      ${isCfpOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">📄 CFP OPEN</span>` : ""}
       <span class="tag" style="color:${cat.color}; border-color:${cat.color}">${cat.label}</span>
       <span class="tag" style="color:${REGIONS[r.region].color}; border-color:${REGIONS[r.region].color}">${REGIONS[r.region].name}</span>
       ${topicTags}${certTags}
