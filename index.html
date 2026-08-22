@@ -602,6 +602,8 @@ const TOPICS = {
   research:         "Research / R&D",
   hiring:           "Hiring / careers",
   cfp:              "Call For Papers (CFP) open",
+  cft:              "Call For Trainers (CFT) open",
+  cfv:              "Call For Volunteers (CFV) open",
 };
 
 /* States (from STATE_GEO in regions.js) — the second drill-down tier. */
@@ -631,6 +633,8 @@ function isOngoing(r){ return r.category === "con" && r.next && r.next <= TODAY_
    deadline hasn't passed yet — most sources only confirm "CFP is open", not
    a hard date, so cfpDeadline is frequently absent. */
 function isCfpOpen(r){ return !!r.cfpUrl && (!r.cfpDeadline || r.cfpDeadline >= TODAY_YMD); }
+function isCftOpen(r){ return !!r.cftUrl && (!r.cftDeadline || r.cftDeadline >= TODAY_YMD); }
+function isCfvOpen(r){ return !!r.cfvUrl && (!r.cfvDeadline || r.cfvDeadline >= TODAY_YMD); }
 function milesTo(a, b){
   const R = 3958.8, toR = d => d * Math.PI / 180;
   const dLat = toR(b.lat - a.lat), dLng = toR(b.lng - a.lng);
@@ -768,6 +772,8 @@ const markers = RESOURCES.map(r => {
   if (r.phone)   facts.push(`<div class="fact"><span class="fk">TEL</span><a href="tel:${esc(String(r.phone).replace(/[^+\d]/g,''))}">${esc(r.phone)}</a></div>`);
   if (r.when)    facts.push(`<div class="fact"><span class="fk">TIME</span><span>${esc(r.when)}${isPast(r) ? ' <span class="stale">· listed dates have passed — check site</span>' : ''}</span></div>`);
   if (r.cfpUrl)  facts.push(`<div class="fact"><span class="fk">CFP</span><span><a href="${esc(r.cfpUrl)}" target="_blank" rel="noopener">Call for papers ↗</a>${r.cfpDeadline ? ` · deadline ${esc(r.cfpDeadline)}` : ''}${!isCfpOpen(r) ? ' <span class="stale">· may be closed — check site</span>' : ''}</span></div>`);
+  if (r.cftUrl)  facts.push(`<div class="fact"><span class="fk">CFT</span><span><a href="${esc(r.cftUrl)}" target="_blank" rel="noopener">Call for trainers ↗</a>${r.cftDeadline ? ` · deadline ${esc(r.cftDeadline)}` : ''}${!isCftOpen(r) ? ' <span class="stale">· may be closed — check site</span>' : ''}</span></div>`);
+  if (r.cfvUrl)  facts.push(`<div class="fact"><span class="fk">CFV</span><span><a href="${esc(r.cfvUrl)}" target="_blank" rel="noopener">Call for volunteers ↗</a>${r.cfvDeadline ? ` · deadline ${esc(r.cfvDeadline)}` : ''}${!isCfvOpen(r) ? ' <span class="stale">· may be closed — check site</span>' : ''}</span></div>`);
   const topicTags = (r.topics || []).map(t =>
     `<span class="tag" style="color:var(--accent); border-color:var(--accent)">${esc(TOPICS[t] || t)}</span>`
   ).join("");
@@ -804,6 +810,8 @@ const markers = RESOURCES.map(r => {
       <h3>${esc(r.name)}</h3>
       ${live ? `<span class="tag live-tag">● LIVE NOW</span>` : ""}
       ${isCfpOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">📄 CFP OPEN</span>` : ""}
+      ${isCftOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">🎓 CFT OPEN</span>` : ""}
+      ${isCfvOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">🙋 CFV OPEN</span>` : ""}
       <span class="tag" style="color:${cat.color}; border-color:${cat.color}">${cat.label}</span>
       <span class="tag" style="color:${REGIONS[r.region].color}; border-color:${REGIONS[r.region].color}">${REGIONS[r.region].name}</span>
       ${topicTags}${certTags}
