@@ -812,6 +812,7 @@ const markers = RESOURCES.map(r => {
       ${isCfpOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">📄 CFP OPEN</span>` : ""}
       ${isCftOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">🎓 CFT OPEN</span>` : ""}
       ${isCfvOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">🙋 CFV OPEN</span>` : ""}
+      ${r.spaceApiUrl ? `<span class="tag spaceapi-status" style="display:none"></span>` : ""}
       <span class="tag" style="color:${cat.color}; border-color:${cat.color}">${cat.label}</span>
       <span class="tag" style="color:${REGIONS[r.region].color}; border-color:${REGIONS[r.region].color}">${REGIONS[r.region].name}</span>
       ${topicTags}${certTags}
@@ -832,6 +833,38 @@ map.on('popupopen', e => {
   const el = e.popup._container;
   if (!el) return;
   el.style.setProperty('--cc', CATEGORIES[data.category].color);
+
+  /* Live "open now" status for spaces that publish a SpaceAPI endpoint
+     (https://spaceapi.io) — fetched on demand when the popup opens, not
+     on page load, since most of these are small self-hosted JSON files
+     with no uptime guarantee. Fails silently (CORS block, timeout, dead
+     endpoint) by just leaving the badge hidden — never shows an error. */
+  if (data.spaceApiUrl) {
+    const statusEl = el.querySelector('.spaceapi-status');
+    if (statusEl) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      fetch(data.spaceApiUrl, { signal: controller.signal })
+        .then(res => res.json())
+        .then(json => {
+          clearTimeout(timeoutId);
+          const open = json && json.state && typeof json.state.open === 'boolean' ? json.state.open : null;
+          if (open === true) {
+            statusEl.textContent = '🟢 OPEN NOW';
+            statusEl.style.color = 'var(--gold)';
+            statusEl.style.borderColor = 'var(--gold)';
+            statusEl.style.fontWeight = '700';
+            statusEl.style.display = '';
+          } else if (open === false) {
+            statusEl.textContent = '⚪ CLOSED NOW';
+            statusEl.style.color = 'var(--muted)';
+            statusEl.style.borderColor = 'var(--muted)';
+            statusEl.style.display = '';
+          }
+        })
+        .catch(() => clearTimeout(timeoutId));
+    }
+  }
 });
 
 /* ============ STATE + FILTERING ============ */
