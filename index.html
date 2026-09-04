@@ -433,7 +433,7 @@
 
   </div><!-- /panelbody -->
 
-  <footer>data sweep jul 2026 · locations approximate — verify before you go · florida has its own deep-dive map · © OpenStreetMap · CARTO</footer>
+  <footer>data sweep jul 2026 · locations approximate — verify before you go · florida has its own deep-dive map · © Esri</footer>
 </aside>
 
 <!-- Resource rows live in data.js; state-accurate region borders in regions.js. -->
@@ -645,8 +645,16 @@ function milesTo(a, b){
 /* ============ MAP SETUP ============ */
 const map = L.map('map', { zoomControl:false }).setView([38.5, -96.5], 5);
 L.control.zoom({ position:'topright' }).addTo(map);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  attribution:'© OpenStreetMap contributors © CARTO', maxZoom:18
+/* CARTO's free dark_all basemap now requires an API key (as of 2026) and
+   serves "API KEY REQUIRED" watermark tiles without one. Esri's Dark Gray
+   Canvas is still free and keyless for reasonable use — two stacked
+   layers, base color underneath and light-colored labels on top, since
+   Esri ships them as separate services for this basemap. */
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  attribution:'© Esri', maxZoom:16
+}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+  attribution:'© Esri', maxZoom:16
 }).addTo(map);
 
 /* Region polygons — county-accurate MultiPolygons from regions.js */
