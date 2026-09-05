@@ -180,16 +180,16 @@
   .uprow.live .d{ color:var(--gold); font-weight:700; }
   .uprow.live .live-dot{ color:var(--gold); }
 
-  /* Near-me button + user dot */
-  #nearme{
-    margin-top:8px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;
+  /* Near-me / Open-now toggle buttons + user dot */
+  #nearme, #opennow{
+    margin-top:8px; margin-right:6px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;
     font-family:var(--mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase;
     color:var(--muted); background:var(--glass-2); border:1px solid var(--line);
     border-radius:999px; padding:5px 12px; transition:color .15s ease, border-color .15s ease;
   }
-  #nearme:hover{ color:var(--text); }
-  #nearme[aria-pressed="true"]{ color:var(--accent); border-color:var(--accent); }
-  #nearme:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  #nearme:hover, #opennow:hover{ color:var(--text); }
+  #nearme[aria-pressed="true"], #opennow[aria-pressed="true"]{ color:var(--accent); border-color:var(--accent); }
+  #nearme:focus-visible, #opennow:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   .you{
     width:14px; height:14px; border-radius:50%; background:var(--accent);
     border:2px solid rgba(233,241,252,.95);
@@ -348,15 +348,22 @@
     50%{ box-shadow:0 0 0 8px rgba(255,197,61,.25), 0 0 18px 4px var(--pc); }
   }
 
-  /* Cluster bubbles — neutral glass, count in mono */
+  /* Cluster bubbles — neutral glass, count in mono, category-breakdown ring
+     (--ring is a conic-gradient set per-cluster in iconCreateFunction) */
   .cluster{
+    position:relative;
     display:flex; align-items:center; justify-content:center;
     border-radius:50%;
     background:rgba(12,17,26,.85); backdrop-filter:blur(8px);
-    border:1.5px solid var(--accent);
     color:var(--text); font-family:var(--mono); font-size:.72rem; font-weight:500;
-    box-shadow:0 0 0 4px rgba(62,224,143,.14), 0 4px 14px rgba(0,0,0,.45);
+    box-shadow:0 4px 14px rgba(0,0,0,.45);
     transition:transform .15s ease;
+  }
+  .cluster::before{
+    content:""; position:absolute; inset:-3px; border-radius:50%;
+    background:var(--ring, var(--accent));
+    -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+            mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
   }
   .cluster:hover{ transform:scale(1.12); }
 
@@ -385,7 +392,7 @@
   <header class="pad hairline">
     <h1><span class="prompt">❯</span>US Cyber Resource Map</h1>
     <p class="sub">A free map for students and lifelong learners to find their community — hacker cons, DEF CON groups, 2600 meetings, hackerspaces, ham radio clubs, cyber schools, library makerspaces, certification testing sites, and student STEM programs — by region, state, and category.</p>
-    <div class="status"><b id="statusText">ALL SECTORS</b> · <span id="visCount"></span> NODES<span class="cursor"></span></div>
+    <div class="status" aria-live="polite" aria-atomic="true"><b id="statusText">ALL SECTORS</b> · <span id="visCount"></span> NODES<span class="cursor" aria-hidden="true"></span></div>
   </header>
 
   <div id="panelbody">
@@ -426,6 +433,7 @@
       <input id="search" type="search" placeholder="Search by name or city…" aria-label="Search resources">
     </div>
     <button id="nearme" aria-pressed="false" title="Sort the list by distance from your location">◎ Near me</button>
+    <button id="opennow" aria-pressed="false" title="Only show spaces currently reporting open (via SpaceAPI)">⏱ Open now</button>
   </div>
 
   <div id="list"></div>
@@ -643,19 +651,40 @@ function milesTo(a, b){
 }
 
 /* ============ MAP SETUP ============ */
-const map = L.map('map', { zoomControl:false }).setView([38.5, -96.5], 5);
+const map = L.map('map', { zoomControl:false, preferCanvas:true }).setView([38.5, -96.5], 5);
 L.control.zoom({ position:'topright' }).addTo(map);
-/* CARTO's free dark_all basemap now requires an API key (as of 2026) and
-   serves "API KEY REQUIRED" watermark tiles without one. Esri's Dark Gray
-   Canvas is still free and keyless for reasonable use — two stacked
-   layers, base color underneath and light-colored labels on top, since
-   Esri ships them as separate services for this basemap. */
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-  attribution:'© Esri', maxZoom:16
+/* CARTO's free dark_all basemap started requiring an API key (2026) and
+   serves "API KEY REQUIRED" watermark tiles without one — as a plain 200 OK
+   PNG, which never fires Leaflet's tileerror event. That failure mode is
+   real and can't be auto-detected for ANY provider without decoding pixel
+   data (which most tile CDNs don't expose cross-origin) — so this is a
+   defense against the failure mode we CAN detect (a provider going down /
+   erroring outright), not the CARTO-style silent one. If tiles ever look
+   wrong again, that still needs a manual visual check.
+   Esri's Dark Gray Canvas is free/keyless for reasonable use — two stacked
+   layers (base color + labels, shipped as separate services), with a
+   fallback to plain OpenStreetMap tiles if Esri starts erroring outright. */
+const esriBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  attribution:'© Esri', maxZoom:16, maxNativeZoom:16
 }).addTo(map);
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
-  attribution:'© Esri', maxZoom:16
+const esriRef = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+  attribution:'© Esri', maxZoom:16, maxNativeZoom:16
 }).addTo(map);
+let esriTileErrors = 0, fellBackToOsm = false;
+function fallBackToOsmTiles(){
+  if (fellBackToOsm) return;
+  fellBackToOsm = true;
+  map.removeLayer(esriBase); map.removeLayer(esriRef);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:'© OpenStreetMap contributors', maxZoom:19
+  }).addTo(map);
+  console.warn('[map] Esri basemap tiles failed repeatedly — switched to OpenStreetMap fallback.');
+}
+/* A handful of dropped requests is normal (flaky connection, one bad tile);
+   a run of failures means the provider itself is down. */
+[esriBase, esriRef].forEach(layer => layer.on('tileerror', () => {
+  if (++esriTileErrors > 8) fallBackToOsmTiles();
+}));
 
 /* Region polygons — county-accurate MultiPolygons from regions.js */
 const regionLayers = {};
@@ -713,6 +742,7 @@ function selectState(code){
   } else if (activeRegion !== null){
     map.flyToBounds(regionLayers[activeRegion].getBounds().pad(0.05), {duration:.8});
   }
+  syncUrl();
   refresh();
 }
 function renderStateChips(){
@@ -737,22 +767,64 @@ function renderStateChips(){
     });
 }
 
-/* Marker clustering — declusters fully by zoom 12 */
+/* Marker clustering — declusters fully by zoom 12. chunkedLoading batches
+   the initial addLayers() (and every refresh() re-filter) across animation
+   frames instead of one synchronous pass, so filtering never locks the tab
+   even at this dataset's size. */
 const clusters = L.markerClusterGroup({
   maxClusterRadius: 42,
   showCoverageOnHover: false,
   spiderfyOnMaxZoom: true,
   disableClusteringAtZoom: 12,
+  chunkedLoading: true,
   iconCreateFunction: c => {
-    const n = c.getChildCount();
+    const children = c.getAllChildMarkers();
+    const n = children.length;
     const size = n < 10 ? 34 : n < 25 ? 40 : 46;
+    /* Category-breakdown ring: a conic-gradient of each category's color,
+       sized by its share of this cluster, drawn via the .cluster::before
+       pseudo-element (see CSS) — so you can see what's inside a cluster
+       before you click it, not just how many. */
+    const counts = {};
+    for (const m of children) counts[m._data.category] = (counts[m._data.category] || 0) + 1;
+    let acc = 0;
+    const ring = Object.entries(counts).map(([key, count]) => {
+      const start = acc; acc += (count / n) * 100;
+      return `${CATEGORIES[key].color} ${start}% ${acc}%`;
+    }).join(', ');
     return L.divIcon({
       className:'', iconSize:[size, size],
-      html:`<div class="cluster" style="width:${size}px;height:${size}px">${n}</div>`
+      html:`<div class="cluster" style="width:${size}px;height:${size}px;--ring:conic-gradient(${ring})">${n}</div>`
     });
   }
 });
 map.addLayer(clusters);
+
+/* Markers that share exact coordinates with siblings (~1,860 entries across
+   385 addresses — orgs at the same building, campus, or shared address) get
+   a tiny deterministic spiral offset for PLACEMENT ONLY. Real coordinates
+   (r.lat/r.lng) are left untouched everywhere else — distance sort, data
+   exports, validate.js — only the visual pin position (r._jlat/_jlng) moves,
+   so every entry stays independently clickable once clustering un-clusters
+   at zoom 12+ instead of stacking invisibly under its topmost sibling. */
+{
+  const coordGroups = {};
+  for (const r of RESOURCES){
+    const k = r.lat.toFixed(5) + ',' + r.lng.toFixed(5);
+    (coordGroups[k] = coordGroups[k] || []).push(r);
+  }
+  const GOLDEN_DEG = 137.50776;   // phyllotaxis spiral angle — spreads any group size with no overlap
+  const BASE_DEG = 0.00009;       // ~10m at mid-US latitudes
+  for (const group of Object.values(coordGroups)){
+    group.forEach((r, i) => {
+      if (i === 0){ r._jlat = r.lat; r._jlng = r.lng; return; }
+      const radius = BASE_DEG * Math.sqrt(i);
+      const angle = i * GOLDEN_DEG * Math.PI / 180;
+      r._jlat = r.lat + radius * Math.cos(angle);
+      r._jlng = r.lng + radius * Math.sin(angle) / Math.cos(r.lat * Math.PI / 180);
+    });
+  }
+}
 
 /* Markers */
 function makeIcon(color, ongoing){
@@ -764,7 +836,14 @@ function makeIcon(color, ongoing){
 const markers = RESOURCES.map(r => {
   const cat = CATEGORIES[r.category];
   const live = isOngoing(r);
-  const m = L.marker([r.lat, r.lng], { icon:makeIcon(cat.color, live) });
+  const m = L.marker([r._jlat, r._jlng], { icon:makeIcon(cat.color, live), alt:r.name, keyboard:true });
+  /* Leaflet's divIcon markers carry no built-in text for assistive tech —
+     tag each with a real label once its DOM element exists (on every add,
+     including re-adds after un-spiderfying). */
+  m.on('add', () => {
+    const el = m.getElement();
+    if (el){ el.setAttribute('aria-label', r.name); el.setAttribute('role', 'button'); }
+  });
   const topicLabel = t => TOPICS[t] || t;
   r._search = [
     r.name, r.city, r.st, r.notes, r.org, r.address,
@@ -775,6 +854,12 @@ const markers = RESOURCES.map(r => {
     ...(r.events || []).flatMap(ev => [ev.title, ...(ev.topics || []).map(topicLabel)]),
   ].filter(Boolean).join(" ").toLowerCase();
   const facts = [];
+  if (r.verified){
+    const days = Math.floor((TODAY - parseISO(r.verified)) / 86400000);
+    const age = days < 31 ? `${Math.max(days,0)}d ago` : days < 365 ? `${Math.round(days/30)}mo ago` : `${Math.round(days/365)}yr ago`;
+    const staleCls = days > 365 ? ' class="stale"' : '';
+    facts.push(`<div class="fact"><span class="fk">VERIF</span><span${staleCls}>Verified ${age}</span></div>`);
+  }
   if (r.address) facts.push(`<div class="fact"><span class="fk">LOC</span><span>${esc(r.address)}</span></div>`);
   if (r.org)     facts.push(`<div class="fact"><span class="fk">ORG</span><span>${esc(r.org)}</span></div>`);
   if (r.phone)   facts.push(`<div class="fact"><span class="fk">TEL</span><a href="tel:${esc(String(r.phone).replace(/[^+\d]/g,''))}">${esc(r.phone)}</a></div>`);
@@ -813,6 +898,11 @@ const markers = RESOURCES.map(r => {
           </div>`).join("")}
       </div>
     </details>` : "";
+  const reportUrl = "https://github.com/malcolm1014/us-cyber-map/issues/new?" + new URLSearchParams({
+    title: `Incorrect info: ${r.name}`,
+    body: `Entry: ${r.name}\nCity: ${r.city}\nCategory: ${cat.label}\nURL: ${r.url || "n/a"}\n\nWhat's wrong:\n`,
+    labels: "data-correction"
+  }).toString();
   m.bindPopup(`
     <div class="popup">
       <h3>${esc(r.name)}</h3>
@@ -828,6 +918,7 @@ const markers = RESOURCES.map(r => {
       ${facts.length ? `<div class="facts">${facts.join("")}</div>` : ""}
       ${talksHtml}${eventsHtml}
       ${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">Website ↗</a>` : ""}
+      <div style="margin-top:8px"><a href="${esc(reportUrl)}" target="_blank" rel="noopener" style="font-size:.68rem; opacity:.6">⚑ Report incorrect info</a></div>
     </div>`, { maxWidth: 320 });
   m._data = r;
   return m;
@@ -880,6 +971,29 @@ const enabledCats = new Set(Object.keys(CATEGORIES));
 const enabledTopics = new Set();   // empty = no topic filter applied
 let activeCert = "";               // "" = no certification filter applied
 let searchTerm = "";
+let openNowFilter = false;
+
+/* SpaceAPI "open now" status, keyed by resource object (not id — none of
+   these entries carry a stable id field). Prefetched once for every entry
+   that publishes a spaceApiUrl so the "Open now" filter has something to
+   check without waiting on a fetch per popup; the existing popupopen
+   handler below still does its own live fetch on click for freshness. */
+const spaceApiStatus = new Map();
+async function prefetchSpaceApiStatuses(){
+  const withApi = RESOURCES.filter(r => r.spaceApiUrl);
+  await Promise.allSettled(withApi.map(async r => {
+    try {
+      const controller = new AbortController();
+      const t = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch(r.spaceApiUrl, { signal: controller.signal });
+      clearTimeout(t);
+      const json = await res.json();
+      const open = json && json.state && typeof json.state.open === "boolean" ? json.state.open : null;
+      if (open !== null) spaceApiStatus.set(r, open);
+    } catch (e) { /* leave unknown — CORS block, timeout, dead endpoint */ }
+  }));
+  if (openNowFilter) refresh();
+}
 
 function visible(r){
   return enabledCats.has(r.category)
@@ -887,6 +1001,7 @@ function visible(r){
     && (activeState === null || r.st === activeState)
     && (searchTerm === "" || r._search.includes(searchTerm))
     && (activeCert === "" || (r.certs || []).includes(activeCert))
+    && (!openNowFilter || spaceApiStatus.get(r) === true)
     && (enabledTopics.size === 0 || (r.topics || []).some(t => enabledTopics.has(t))
         || (r.talks || []).some(tk => (tk.topics || []).some(t => enabledTopics.has(t)))
         || (r.events || []).some(ev => (ev.topics || []).some(t => enabledTopics.has(t))));
@@ -935,6 +1050,7 @@ function selectRegion(id){
   } else {
     map.flyTo([38.5, -96.5], 5, {duration:.8});
   }
+  syncUrl();
   refresh();
 }
 
@@ -949,6 +1065,7 @@ for (const [id, r] of Object.entries(REGIONS)){
   sectorsEl.appendChild(b);
 }
 
+const catsChipEls = {};
 const catsEl = document.getElementById('cats');
 for (const [key, c] of Object.entries(CATEGORIES)){
   const b = document.createElement('button');
@@ -960,11 +1077,14 @@ for (const [key, c] of Object.entries(CATEGORIES)){
     const on = b.getAttribute('aria-pressed') === 'true';
     b.setAttribute('aria-pressed', String(!on));
     on ? enabledCats.delete(key) : enabledCats.add(key);
+    syncUrl();
     refresh();
   };
   catsEl.appendChild(b);
+  catsChipEls[key] = b;
 }
 
+const topicsChipEls = {};
 const topicsEl = document.getElementById('topics');
 for (const [key, label] of Object.entries(TOPICS)){
   const n = RESOURCES.filter(r =>
@@ -981,9 +1101,11 @@ for (const [key, label] of Object.entries(TOPICS)){
     const on = b.getAttribute('aria-pressed') === 'true';
     b.setAttribute('aria-pressed', String(!on));
     on ? enabledTopics.delete(key) : enabledTopics.add(key);
+    syncUrl();
     refresh();
   };
   topicsEl.appendChild(b);
+  topicsChipEls[key] = b;
 }
 
 const certSelect = document.getElementById('certSelect');
@@ -1019,20 +1141,74 @@ function renderCertNotes(){
     ${row('RENEWAL', info.renewal)}`;
   certNotesEl.style.display = '';
 }
-certSelect.onchange = () => { activeCert = certSelect.value; renderCertNotes(); refresh(); };
+certSelect.onchange = () => { activeCert = certSelect.value; renderCertNotes(); syncUrl(); refresh(); };
 
-document.getElementById('search').addEventListener('input', e => {
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('input', e => {
   searchTerm = e.target.value.trim().toLowerCase();
+  syncUrl();
   refresh();
 });
+
+/* ============ SHAREABLE URL STATE ============ */
+/* Every filter mirrors into the URL query string (via replaceState — no new
+   history entries, no reload) so a filtered view can be copied and shared
+   as-is. Restored from location.search on load, before the first refresh(). */
+function syncUrl(){
+  const p = new URLSearchParams();
+  if (activeRegion !== null) p.set('r', activeRegion);
+  if (activeState !== null) p.set('s', activeState);
+  const off = Object.keys(CATEGORIES).filter(k => !enabledCats.has(k));
+  if (off.length) p.set('off', off.join(','));
+  if (enabledTopics.size) p.set('t', [...enabledTopics].join(','));
+  if (activeCert) p.set('cert', activeCert);
+  if (searchTerm) p.set('q', searchTerm);
+  if (openNowFilter) p.set('open', '1');
+  const qs = p.toString();
+  history.replaceState(null, '', qs ? '?' + qs : location.pathname);
+}
+function applyUrlState(){
+  const p = new URLSearchParams(location.search);
+  if (p.has('q')){
+    searchTerm = p.get('q').toLowerCase();
+    searchInput.value = p.get('q');
+  }
+  if (p.has('off')){
+    for (const key of p.get('off').split(',')){
+      if (!CATEGORIES[key]) continue;
+      enabledCats.delete(key);
+      catsChipEls[key]?.setAttribute('aria-pressed', 'false');
+    }
+  }
+  if (p.has('t')){
+    for (const key of p.get('t').split(',')){
+      if (!TOPICS[key]) continue;
+      enabledTopics.add(key);
+      topicsChipEls[key]?.setAttribute('aria-pressed', 'true');
+    }
+  }
+  if (p.has('cert') && CERTS[p.get('cert')]){
+    activeCert = p.get('cert');
+    certSelect.value = activeCert;
+    renderCertNotes();
+  }
+  if (p.get('open') === '1'){
+    openNowFilter = true;
+    openNowBtn.setAttribute('aria-pressed', 'true');
+  }
+  const r = Number(p.get('r'));
+  if (REGIONS[r]) selectRegion(r);
+  const s = p.get('s');
+  if (s && STATES[s] && activeRegion !== null) selectState(s);
+}
 
 /* Reveal a marker even if it's clustered (or filtered out) */
 function revealMarker(m){
   if (clusters.hasLayer(m)){
     clusters.zoomToShowLayer(m, () => m.openPopup());
   } else {
-    map.flyTo([m._data.lat, m._data.lng], 12, {duration:.8});
-    const p = L.popup({ maxWidth:320 }).setLatLng([m._data.lat, m._data.lng])
+    map.flyTo([m._data._jlat, m._data._jlng], 12, {duration:.8});
+    const p = L.popup({ maxWidth:320 }).setLatLng([m._data._jlat, m._data._jlng])
       .setContent(m.getPopup().getContent());
     p._data = m._data;
     p.openOn(map);
@@ -1059,35 +1235,73 @@ if (upcoming.length){
   });
 }
 
+/* ============ OPEN NOW (SpaceAPI live-status filter) ============ */
+const openNowBtn = document.getElementById('opennow');
+openNowBtn.onclick = () => {
+  openNowFilter = !openNowFilter;
+  openNowBtn.setAttribute('aria-pressed', String(openNowFilter));
+  syncUrl();
+  refresh();
+};
+prefetchSpaceApiStatuses();
+
 /* ============ NEAR ME (geolocation → distance sort) ============ */
 let userLoc = null, userMarker = null;
 const nearBtn = document.getElementById('nearme');
+function setUserLoc(lat, lng){
+  userLoc = { lat, lng };
+  nearBtn.setAttribute('aria-pressed', 'true');
+  nearBtn.textContent = "◎ Near me — on";
+  if (userMarker) map.removeLayer(userMarker);
+  userMarker = L.marker([lat, lng], {
+    icon: L.divIcon({ className:'', iconSize:[18,18], iconAnchor:[9,9], html:'<div class="you"></div>' }),
+    interactive: false
+  }).addTo(map);
+  map.flyTo([lat, lng], 9, {duration:.8});
+  refresh();
+}
+/* Manual fallback for denied/unavailable geolocation — no geocoding service
+   needed (keeps this a no-API-key site): just let the user click the map
+   to set their own reference point. */
+function enableManualLocationPick(){
+  nearBtn.textContent = "◎ click the map…";
+  map.getContainer().style.cursor = 'crosshair';
+  const onPick = e => {
+    map.getContainer().style.cursor = '';
+    setUserLoc(e.latlng.lat, e.latlng.lng);
+  };
+  map.once('click', onPick);
+}
 nearBtn.onclick = () => {
   if (userLoc){
     userLoc = null;
     nearBtn.setAttribute('aria-pressed', 'false');
+    nearBtn.textContent = "◎ Near me";
     if (userMarker){ map.removeLayer(userMarker); userMarker = null; }
     refresh();
     return;
   }
-  if (!navigator.geolocation){ nearBtn.textContent = "◎ location unavailable"; return; }
+  if (!navigator.geolocation){ enableManualLocationPick(); return; }
   nearBtn.textContent = "◎ locating…";
-  navigator.geolocation.getCurrentPosition(pos => {
-    userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-    nearBtn.setAttribute('aria-pressed', 'true');
-    nearBtn.textContent = "◎ Near me — on";
-    userMarker = L.marker([userLoc.lat, userLoc.lng], {
-      icon: L.divIcon({ className:'', iconSize:[18,18], iconAnchor:[9,9], html:'<div class="you"></div>' }),
-      interactive: false
-    }).addTo(map);
-    map.flyTo([userLoc.lat, userLoc.lng], 9, {duration:.8});
-    refresh();
-  }, () => {
-    nearBtn.textContent = "◎ location blocked";
-    setTimeout(() => { nearBtn.textContent = "◎ Near me"; }, 2500);
-  }, { timeout: 10000 });
+  navigator.geolocation.getCurrentPosition(
+    pos => setUserLoc(pos.coords.latitude, pos.coords.longitude),
+    err => {
+      /* GeolocationPositionError codes: 1 permission denied, 2 position
+         unavailable, 3 timeout. Denial gets the click-to-set fallback
+         immediately rather than just a dead-end error message. */
+      const messages = { 1:"◎ location denied", 2:"◎ location unavailable", 3:"◎ location timed out" };
+      nearBtn.textContent = messages[err.code] || "◎ location error";
+      if (err.code === 1){
+        setTimeout(enableManualLocationPick, 1200);
+      } else {
+        setTimeout(() => { if (!userLoc) nearBtn.textContent = "◎ Near me"; }, 2500);
+      }
+    },
+    { timeout: 10000, maximumAge: 300000 }
+  );
 };
 
+applyUrlState();
 refresh();
 </script>
 </body>
