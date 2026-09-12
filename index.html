@@ -65,6 +65,7 @@
 
     --sans: 'Space Grotesk', system-ui, sans-serif;
     --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --tabbar-h: 58px;
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
   html,body{ height:100%; }
@@ -95,7 +96,12 @@
   }
   #credit-badge a{ color:var(--accent); text-decoration:none; }
   #credit-badge a:hover{ text-decoration:underline; }
-  @media (max-width:760px){ #credit-badge{ right:8px; top:70px; } }
+  @media (max-width:760px){
+    #credit-badge{ right:8px; top:auto; bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 10px); }
+    /* The List tab is a full-screen panel with its own footer — only show
+       this badge over the Map tab, where nothing else occupies that corner. */
+    body.mobile-list-active #credit-badge{ display:none; }
+  }
 
   /* ============ FLOATING PANEL ============ */
   #panel{
@@ -367,13 +373,110 @@
   }
   .cluster:hover{ transform:scale(1.12); }
 
-  /* ============ MOBILE ============ */
+  /* ============ MOBILE TAB BAR (Map / List) ============
+     Replaces the old always-open 54vh bottom sheet, which permanently ate
+     the bottom half of the screen and buried the resource list under six
+     stacked filter sections (Upcoming/Sectors/States/Categories/Topics/
+     Certification) before a single result was visible. Ported from the
+     path-to-freedom-map sibling site, where this exact pattern (full-bleed
+     map by default, full-screen List tab behind a bottom tab bar) already
+     shipped and was confirmed working on-device. */
+  #mobileTabs{ display:none; }
+  @media (max-width:760px){
+    #mobileTabs{
+      display:flex; position:fixed; left:0; right:0; bottom:0; z-index:1300;
+      height:var(--tabbar-h); padding-bottom:env(safe-area-inset-bottom);
+      background:var(--glass); backdrop-filter:blur(18px) saturate(1.25);
+      -webkit-backdrop-filter:blur(18px) saturate(1.25);
+      border-top:1px solid var(--line);
+    }
+    #mobileTabs button{
+      flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:2px; background:none; border:none; cursor:pointer;
+      font-family:var(--sans); font-size:.68rem; font-weight:500;
+      color:var(--muted); transition:color .15s ease;
+    }
+    #mobileTabs button .ico{ font-size:1.15rem; line-height:1; }
+    #mobileTabs button[aria-pressed="true"]{ color:var(--accent); }
+    #mobileTabs button:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+  }
+
+  /* ============ MOBILE PANEL (full-screen List tab, hidden on Map tab) ============ */
   @media (max-width:760px){
     #panel{
-      top:auto; left:0; right:0; bottom:0; width:100%;
-      max-height:54vh; border-radius:16px 16px 0 0; border-bottom:none;
+      display:none;
+      top:0; left:0; right:0; width:100%;
+      bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+      max-height:none; border-radius:0; border:none;
     }
+    body.mobile-list-active #panel{ display:flex; }
     header .sub{ display:none; }
+    /* Full-screen means the header now sits flush against the real top of
+       the viewport — on a notched phone that's the status bar / camera
+       cutout, so give it room instead of tucking the title underneath. */
+    header.pad{ padding-top:max(14px, env(safe-area-inset-top)); }
+  }
+
+  /* ============ LOCATION BANNER (soft-prompt over the Map tab, mobile only) ============ */
+  #locBanner{ display:none; }
+  @media (max-width:760px){
+    #locBanner.visible{
+      display:flex; flex-direction:column; gap:10px;
+      position:fixed; left:12px; right:12px; z-index:1250;
+      top:calc(env(safe-area-inset-top) + 80px);
+      background:var(--glass); backdrop-filter:blur(18px) saturate(1.25);
+      -webkit-backdrop-filter:blur(18px) saturate(1.25);
+      border:1px solid var(--line); border-radius:14px;
+      box-shadow:0 16px 44px rgba(0,0,0,.5);
+      padding:14px 16px;
+    }
+    body.mobile-list-active #locBanner.visible{ display:none; }
+    #locBanner .lb-text{ font-size:.82rem; line-height:1.45; color:var(--text); }
+    #locBanner .lb-actions{ display:flex; gap:8px; }
+    #locBanner button{
+      font-family:var(--sans); font-size:.78rem; font-weight:500; cursor:pointer;
+      border-radius:10px; padding:10px 14px; border:1px solid var(--line);
+    }
+    #locBanner .lb-primary{ background:var(--accent); color:var(--bg); border-color:var(--accent); flex:1; font-weight:700; }
+    #locBanner .lb-dismiss{ background:var(--glass-2); color:var(--muted); }
+  }
+
+  /* ============ OUTDOOR READABILITY + BIGGER TOUCH TARGETS (mobile) ============
+     Same rationale as the sibling site: this map's realistic mobile
+     userbase includes people checking it outdoors (at a con, walking to a
+     hackerspace) on whatever phone they have — bigger type, higher-contrast
+     muted text/borders than the desktop-tuned defaults, and larger tap
+     targets throughout (list rows, chips, search, pins). Chip rows
+     (categories/topics/states all share .cats) switch from wrapping to a
+     single horizontally-scrollable row — this map has up to ~22 topic
+     chips, which wrapped would push the search box and results several
+     screens down before anyone could see them. */
+  @media (max-width:760px){
+    html{ font-size:110%; }
+    body{
+      --muted: #AEC0D6;
+      --line: rgba(174,192,214,.32);
+    }
+    .sectors{ gap:10px; }
+    .sector{ padding:12px 13px; }
+    .sector .name{ font-size:.82rem; }
+    .item{ padding:13px 18px 13px 15px; }
+    .item .t{ font-size:.86rem; }
+    .item .m{ font-size:.68rem; }
+    .cats{ flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:4px; scrollbar-width:thin; }
+    .chip{ padding:9px 14px 9px 11px; font-size:.78rem; flex:none; white-space:nowrap; }
+    .chip .dot{ width:10px; height:10px; }
+    #search{ padding:12px 12px 12px 34px; font-size:.88rem; }
+    #certSelect{ padding:12px 32px 12px 12px; font-size:.88rem; }
+    #nearme, #opennow{ padding:9px 14px; font-size:.72rem; }
+    .pin{ width:17px; height:17px; border-width:2.5px; }
+    /* Popups are opened with a fixed maxWidth sized for desktop (see
+       bindPopup/revealMarker below) — on a 320-375px phone that overruns
+       the screen edges. Cap it to the viewport, and let very long popups
+       (a con with 40 talks) scroll internally instead of running off the
+       bottom of the screen. */
+    .leaflet-popup-content-wrapper, .leaflet-popup{ max-width:calc(100vw - 24px) !important; }
+    .leaflet-popup-content{ max-height:60vh; overflow-y:auto; }
   }
   @media (prefers-reduced-motion: reduce){
     .cursor{ animation:none; }
@@ -443,6 +546,22 @@
 
   <footer>data sweep jul 2026 · locations approximate — verify before you go · florida has its own deep-dive map · © Esri</footer>
 </aside>
+
+<!-- Mobile-only bottom nav: map stays full-bleed under the List tab's
+     full-screen panel; JS toggles body.mobile-list-active. Hidden entirely
+     above 760px via the #mobileTabs media rule, so desktop is unaffected. -->
+<nav id="mobileTabs" role="tablist" aria-label="View">
+  <button id="tabMap" role="tab" aria-pressed="true" aria-controls="map"><span class="ico">◈</span>Map</button>
+  <button id="tabList" role="tab" aria-pressed="false" aria-controls="panel"><span class="ico">☰</span>List</button>
+</nav>
+
+<div id="locBanner" role="region" aria-label="Use your location">
+  <div class="lb-text">Find hacker cons, meetups, and spaces closest to you right now?</div>
+  <div class="lb-actions">
+    <button id="lbYes" class="lb-primary">◎ Use my location</button>
+    <button id="lbNo" class="lb-dismiss">Not now</button>
+  </div>
+</div>
 
 <!-- Resource rows live in data.js; state-accurate region borders in regions.js. -->
 <script src="regions.js"></script>
@@ -649,6 +768,7 @@ function milesTo(a, b){
   const s = Math.sin(dLat/2)**2 + Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLng/2)**2;
   return 2 * R * Math.asin(Math.sqrt(s));
 }
+function isMobile(){ return window.matchMedia('(max-width:760px)').matches; }
 
 /* ============ MAP SETUP ============ */
 const map = L.map('map', { zoomControl:false, preferCanvas:true }).setView([38.5, -96.5], 5);
@@ -919,7 +1039,7 @@ const markers = RESOURCES.map(r => {
       ${talksHtml}${eventsHtml}
       ${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">Website ↗</a>` : ""}
       <div style="margin-top:8px"><a href="${esc(reportUrl)}" target="_blank" rel="noopener" style="font-size:.68rem; opacity:.6">⚑ Report incorrect info</a></div>
-    </div>`, { maxWidth: 320 });
+    </div>`, { maxWidth: 320, maxHeight: 420 });
   m._data = r;
   return m;
 });
@@ -1150,6 +1270,31 @@ searchInput.addEventListener('input', e => {
   refresh();
 });
 
+/* ============ MOBILE MAP/LIST TABS ============ */
+const tabMapBtn = document.getElementById('tabMap');
+const tabListBtn = document.getElementById('tabList');
+function setMobileView(view){
+  const isList = view === 'list';
+  document.body.classList.toggle('mobile-list-active', isList);
+  tabMapBtn.setAttribute('aria-pressed', String(!isList));
+  tabListBtn.setAttribute('aria-pressed', String(isList));
+}
+/* Any time filtering changes what's shown without the map's pan/zoom moving
+   to match (a region/state pick, category chips, a search that resolves
+   while on the List tab), switching to the Map tab is the moment someone
+   actually looks at the map and would see it empty. Only flies when NONE
+   of the currently-visible markers are already on screen, so a normal tab
+   switch with a reasonable view already in place is untouched. */
+function fitMapIfResultsOffscreen(){
+  const shown = markers.filter(m => visible(m._data));
+  if (!shown.length) return; // empty state is already communicated via #empty
+  const bounds = map.getBounds();
+  if (shown.some(m => bounds.contains(m.getLatLng()))) return;
+  map.flyToBounds(L.latLngBounds(shown.map(m => m.getLatLng())), { duration:.6, padding:[40,40], maxZoom:12 });
+}
+tabMapBtn.addEventListener('click', () => { setMobileView('map'); fitMapIfResultsOffscreen(); });
+tabListBtn.addEventListener('click', () => setMobileView('list'));
+
 /* ============ SHAREABLE URL STATE ============ */
 /* Every filter mirrors into the URL query string (via replaceState — no new
    history entries, no reload) so a filtered view can be copied and shared
@@ -1204,11 +1349,12 @@ function applyUrlState(){
 
 /* Reveal a marker even if it's clustered (or filtered out) */
 function revealMarker(m){
+  if (isMobile()) setMobileView('map'); // jump back to the map so the pin/popup is actually visible
   if (clusters.hasLayer(m)){
     clusters.zoomToShowLayer(m, () => m.openPopup());
   } else {
     map.flyTo([m._data._jlat, m._data._jlng], 12, {duration:.8});
-    const p = L.popup({ maxWidth:320 }).setLatLng([m._data._jlat, m._data._jlng])
+    const p = L.popup({ maxWidth:320, maxHeight:420 }).setLatLng([m._data._jlat, m._data._jlng])
       .setContent(m.getPopup().getContent());
     p._data = m._data;
     p.openOn(map);
@@ -1259,11 +1405,17 @@ function setUserLoc(lat, lng){
   }).addTo(map);
   map.flyTo([lat, lng], 9, {duration:.8});
   refresh();
+  // A location was just established (button, banner, or manual pick) —
+  // jump straight to the sorted-by-distance list instead of leaving the
+  // result on a tab that's about to be hidden behind the Map view.
+  if (isMobile()) setMobileView('list');
 }
 /* Manual fallback for denied/unavailable geolocation — no geocoding service
    needed (keeps this a no-API-key site): just let the user click the map
-   to set their own reference point. */
+   to set their own reference point. Requires the Map tab to actually be
+   visible to click on, so switch to it first on mobile. */
 function enableManualLocationPick(){
+  if (isMobile()) setMobileView('map');
   nearBtn.textContent = "◎ click the map…";
   map.getContainer().style.cursor = 'crosshair';
   const onPick = e => {
@@ -1300,6 +1452,51 @@ nearBtn.onclick = () => {
     { timeout: 10000, maximumAge: 300000 }
   );
 };
+
+/* ============ LOCATION BANNER (soft-prompt over the Map tab, mobile only) ============
+   Offers the same "Near me" capability up front instead of waiting for
+   someone to find the small control buried in the List tab. Asks once,
+   then remembers the actual choice — "yes" silently re-locates on every
+   later visit with no re-prompt; "not now" stays quiet permanently. */
+const LB_CHOICE_KEY = 'uscm_locChoice';
+const locBannerEl = document.getElementById('locBanner');
+function getLocChoice(){
+  try { return localStorage.getItem(LB_CHOICE_KEY); } catch(e){ return null; }
+}
+function setLocChoice(choice){
+  try { localStorage.setItem(LB_CHOICE_KEY, choice); } catch(e){ /* private mode, etc — fine, just won't be remembered */ }
+}
+function hideLocBanner(){ locBannerEl.classList.remove('visible'); }
+(function initLocBanner(){
+  if (!isMobile() || !navigator.geolocation) return;
+  const choice = getLocChoice();
+  if (choice === 'yes'){
+    navigator.geolocation.getCurrentPosition(
+      pos => setUserLoc(pos.coords.latitude, pos.coords.longitude),
+      () => { /* permission blocked this visit — stay quiet, "Near me" is still in the list */ },
+      { timeout: 10000, maximumAge: 300000 }
+    );
+    return;
+  }
+  if (choice === 'no') return;
+  locBannerEl.classList.add('visible');
+})();
+document.getElementById('lbYes').addEventListener('click', () => {
+  const btn = document.getElementById('lbYes');
+  btn.textContent = "◎ Locating…";
+  navigator.geolocation.getCurrentPosition(pos => {
+    setLocChoice('yes');
+    hideLocBanner();
+    setUserLoc(pos.coords.latitude, pos.coords.longitude);
+  }, () => {
+    btn.textContent = "◎ Location blocked — try Near Me in the list";
+    setTimeout(hideLocBanner, 3200);
+  }, { timeout: 10000 });
+});
+document.getElementById('lbNo').addEventListener('click', () => {
+  setLocChoice('no');
+  hideLocBanner();
+});
 
 applyUrlState();
 refresh();
