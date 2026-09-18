@@ -7,6 +7,15 @@
 <title>US Cyber Resource Map</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
 
+<!-- PWA: installable + offline-capable via sw.js (see that file for the
+     caching strategy — network-first-with-no-store for the app shell/data,
+     cache-first for map tiles, never for Nominatim geocoding). -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#070B12">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <!-- Open Graph / Twitter share card — og-image.png is a 1200x630 screenshot of the live map -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="US Cyber Resource Map">
@@ -197,16 +206,18 @@
   .uprow.live .d{ color:var(--gold); font-weight:700; }
   .uprow.live .live-dot{ color:var(--gold); }
 
-  /* Near-me / Open-now / My-list toggle buttons + user dot */
-  #nearme, #opennow, #mylist{
+  /* Near-me / Search-a-place / Open-now / My-list toggle buttons + user dot */
+  #nearme, #searchloc, #opennow, #mylist{
     margin-top:8px; margin-right:6px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;
     font-family:var(--mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase;
     color:var(--muted); background:var(--glass-2); border:1px solid var(--line);
     border-radius:999px; padding:5px 12px; transition:color .15s ease, border-color .15s ease;
   }
-  #nearme:hover, #opennow:hover, #mylist:hover{ color:var(--text); }
-  #nearme[aria-pressed="true"], #opennow[aria-pressed="true"], #mylist[aria-pressed="true"]{ color:var(--accent); border-color:var(--accent); }
-  #nearme:focus-visible, #opennow:focus-visible, #mylist:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  #nearme:hover, #searchloc:hover, #opennow:hover, #mylist:hover{ color:var(--text); }
+  #nearme[aria-pressed="true"], #searchloc[aria-pressed="true"], #opennow[aria-pressed="true"], #mylist[aria-pressed="true"]{ color:var(--accent); border-color:var(--accent); }
+  #nearme:focus-visible, #searchloc:focus-visible, #opennow:focus-visible, #mylist:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  #locSearchInput:focus{ outline:none; border-color:var(--accent); }
+  #locSearchGo:hover{ background:rgba(255,255,255,.08); }
   .you{
     width:14px; height:14px; border-radius:50%; background:var(--accent);
     border:2px solid rgba(233,241,252,.95);
@@ -501,7 +512,8 @@
     .chip{ padding:9px 14px 9px 11px; font-size:.78rem; flex:none; white-space:nowrap; }
     .chip .dot{ width:10px; height:10px; }
     #search{ padding:12px 12px 12px 34px; font-size:.88rem; }
-    #nearme, #opennow, #mylist{ padding:9px 14px; font-size:.72rem; }
+    #nearme, #searchloc, #opennow, #mylist{ padding:9px 14px; font-size:.72rem; }
+    #locSearchInput, #locSearchGo{ padding:12px 14px; font-size:.82rem; }
     .pin{ width:17px; height:17px; border-width:2.5px; }
     /* Popups become a bottom sheet on mobile instead of a small floating
        bubble mid-map (which was easy to lose and covered nearby pins). Pure
@@ -561,6 +573,9 @@
   .maptools-ctl button:hover{ background:rgba(255,255,255,.07); }
   .maptools-ctl button:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
   .maptools-ctl button + button{ border-top:1px solid var(--line); }
+  /* display:flex above otherwise outranks the UA stylesheet's [hidden]{display:none}
+     by specificity, so an explicit override is needed to actually hide installBtn. */
+  .maptools-ctl button[hidden]{ display:none; }
   #legendBody{
     padding:3px 12px 10px; display:grid; gap:5px; max-height:220px;
     overflow-y:auto; border-top:1px solid var(--line);
@@ -634,8 +649,13 @@
       <div id="searchSuggest" class="search-suggest" hidden role="listbox" aria-label="Matching resources"></div>
     </div>
     <button id="nearme" aria-pressed="false" title="Sort the list by distance from your location">◎ Near me</button>
+    <button id="searchloc" aria-pressed="false" aria-expanded="false" aria-controls="locSearchForm" title="Search a city, address, or zip to center the map there">📍 Search a place</button>
     <button id="opennow" aria-pressed="false" title="Only show spaces currently reporting open (via SpaceAPI)">⏱ Open now</button>
     <button id="mylist" aria-pressed="false" title="Only show resources you've saved">☆ My list</button>
+    <div id="locSearchForm" hidden style="margin-top:8px; display:flex; gap:6px">
+      <input id="locSearchInput" type="text" placeholder="City, address, or zip…" aria-label="Search a location" style="flex:1; min-width:0; padding:9px 12px; border-radius:10px; background:var(--glass-2); border:1px solid var(--line); color:var(--text); font-family:var(--sans); font-size:.82rem">
+      <button id="locSearchGo" type="button" style="flex:none; padding:9px 14px; border-radius:10px; background:var(--glass-2); border:1px solid var(--line); color:var(--text); font-family:var(--sans); font-size:.78rem; cursor:pointer">Go</button>
+    </div>
   </div>
 
   <div id="list"></div>
@@ -946,7 +966,8 @@ const MapTools = L.Control.extend({
       <button id="legendToggle" type="button" aria-expanded="false" aria-controls="legendBody">
         <span aria-hidden="true">🎨</span> Legend
       </button>
-      <div id="legendBody" hidden></div>`;
+      <div id="legendBody" hidden></div>
+      <button id="installBtn" type="button" hidden><span aria-hidden="true">📲</span> Install app</button>`;
     L.DomEvent.disableClickPropagation(c);
     L.DomEvent.disableScrollPropagation(c);
     return c;
@@ -1747,10 +1768,11 @@ function setUserLoc(lat, lng){
   // result on a tab that's about to be hidden behind the Map view.
   if (isMobile()) setMobileView('list');
 }
-/* Manual fallback for denied/unavailable geolocation — no geocoding service
-   needed (keeps this a no-API-key site): just let the user click the map
-   to set their own reference point. Requires the Map tab to actually be
-   visible to click on, so switch to it first on mobile. */
+/* Manual fallback for denied/unavailable geolocation — click the map to set
+   your own reference point directly, no geocoding round-trip needed.
+   Requires the Map tab to actually be visible to click on, so switch to it
+   first on mobile. (Search-a-place below is the geocoded alternative for
+   when you know a place by name rather than by tapping the map.) */
 function enableManualLocationPick(){
   if (isMobile()) setMobileView('map');
   nearBtn.textContent = "◎ click the map…";
@@ -1789,6 +1811,58 @@ nearBtn.onclick = () => {
     { timeout: 10000, maximumAge: 300000 }
   );
 };
+
+/* ============ SEARCH A PLACE (Nominatim geocoding → same setUserLoc pipeline) ============
+   Reuses the entire near-me pipeline (distance sort, user marker, mobile
+   view switch) regardless of how the coordinate was obtained — GPS, a
+   manual map click, or now a geocoded place name. Nominatim's public
+   instance is free/keyless; usage policy asks for max ~1 req/sec and an
+   attribution, both satisfied here (one request per manual "Go" click,
+   button disabled for the request's duration; attribution added once
+   below, unconditionally, since the feature is always available). */
+map.attributionControl.addAttribution('Geocoding © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>');
+
+const searchLocBtn = document.getElementById('searchloc');
+const locSearchForm = document.getElementById('locSearchForm');
+const locSearchInput = document.getElementById('locSearchInput');
+const locSearchGoBtn = document.getElementById('locSearchGo');
+
+searchLocBtn.onclick = () => {
+  const show = locSearchForm.hidden;
+  locSearchForm.hidden = !show;
+  searchLocBtn.setAttribute('aria-pressed', String(show));
+  searchLocBtn.setAttribute('aria-expanded', String(show));
+  if (show) locSearchInput.focus();
+};
+
+async function geocodeAndGo(){
+  const query = locSearchInput.value.trim();
+  if (!query || locSearchGoBtn.disabled) return;
+  const original = locSearchGoBtn.textContent;
+  locSearchGoBtn.disabled = true;
+  locSearchGoBtn.textContent = 'Locating…';
+  try {
+    const res = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(query));
+    const results = await res.json();
+    if (results && results[0]){
+      setUserLoc(parseFloat(results[0].lat), parseFloat(results[0].lon));
+      locSearchForm.hidden = true;
+      searchLocBtn.setAttribute('aria-pressed', 'false');
+      searchLocBtn.setAttribute('aria-expanded', 'false');
+      locSearchGoBtn.textContent = original;
+    } else {
+      locSearchGoBtn.textContent = 'Not found';
+      setTimeout(() => { locSearchGoBtn.textContent = original; }, 1800);
+    }
+  } catch(e){
+    locSearchGoBtn.textContent = 'Error — try again';
+    setTimeout(() => { locSearchGoBtn.textContent = original; }, 1800);
+  } finally {
+    locSearchGoBtn.disabled = false;
+  }
+}
+locSearchGoBtn.onclick = geocodeAndGo;
+locSearchInput.addEventListener('keydown', e => { if (e.key === 'Enter') geocodeAndGo(); });
 
 /* ============ LOCATION BANNER (soft-prompt over the Map tab, mobile only) ============
    Offers the same "Near me" capability up front instead of waiting for
@@ -1837,6 +1911,32 @@ document.getElementById('lbNo').addEventListener('click', () => {
 
 applyUrlState();
 refresh();
+
+/* ============ PWA: SERVICE WORKER + INSTALL PROMPT ============ */
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(e => console.warn('[pwa] service worker registration failed', e));
+  });
+}
+/* The browser withholds its own install affordance in an unpredictable spot
+   (an omnibox icon, a menu item) unless a page calls prompt() itself in
+   response to a user gesture — so capture the event and show our own
+   visible button instead of relying on visitors to find the built-in one. */
+const installBtn = document.getElementById('installBtn');
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  installBtn.hidden = false;
+});
+installBtn.onclick = async () => {
+  if (!deferredInstallPrompt) return;
+  installBtn.hidden = true;
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+};
+window.addEventListener('appinstalled', () => { installBtn.hidden = true; deferredInstallPrompt = null; });
 </script>
 </body>
 </html>
