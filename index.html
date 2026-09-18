@@ -197,16 +197,16 @@
   .uprow.live .d{ color:var(--gold); font-weight:700; }
   .uprow.live .live-dot{ color:var(--gold); }
 
-  /* Near-me / Open-now toggle buttons + user dot */
-  #nearme, #opennow{
+  /* Near-me / Open-now / My-list toggle buttons + user dot */
+  #nearme, #opennow, #mylist{
     margin-top:8px; margin-right:6px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;
     font-family:var(--mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase;
     color:var(--muted); background:var(--glass-2); border:1px solid var(--line);
     border-radius:999px; padding:5px 12px; transition:color .15s ease, border-color .15s ease;
   }
-  #nearme:hover, #opennow:hover{ color:var(--text); }
-  #nearme[aria-pressed="true"], #opennow[aria-pressed="true"]{ color:var(--accent); border-color:var(--accent); }
-  #nearme:focus-visible, #opennow:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  #nearme:hover, #opennow:hover, #mylist:hover{ color:var(--text); }
+  #nearme[aria-pressed="true"], #opennow[aria-pressed="true"], #mylist[aria-pressed="true"]{ color:var(--accent); border-color:var(--accent); }
+  #nearme:focus-visible, #opennow:focus-visible, #mylist:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   .you{
     width:14px; height:14px; border-radius:50%; background:var(--accent);
     border:2px solid rgba(233,241,252,.95);
@@ -230,25 +230,39 @@
   #search::placeholder{ color:var(--muted); }
   #search:focus{ outline:none; border-color:var(--accent); }
 
-  /* Certification dropdown */
-  #certSelect{
-    width:100%; padding:9px 32px 9px 12px; border-radius:10px;
-    background:var(--glass-2) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="%238CA0B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>') no-repeat right 10px center;
-    border:1px solid var(--line); color:var(--text);
-    font-family:var(--sans); font-size:.82rem; appearance:none; cursor:pointer;
-    transition:background .18s ease, border-color .18s ease;
+  /* Search suggestions — jump straight to a result (pan/zoom + open its
+     popup) instead of only ever narrowing the list in place. */
+  .search-suggest{
+    position:absolute; left:0; right:0; top:calc(100% + 6px); z-index:10;
+    background:rgba(15,21,32,.97); backdrop-filter:blur(14px);
+    border:1px solid var(--line); border-radius:10px;
+    box-shadow:0 16px 40px rgba(0,0,0,.5);
+    max-height:260px; overflow-y:auto; padding:4px;
   }
-  #certSelect:hover{ background-color:rgba(255,255,255,.08); }
-  #certSelect:focus{ outline:none; border-color:var(--accent); }
-  /* The dropdown's own option list is drawn by the OS/browser outside the page's
-     translucent glass layers, so it needs a solid (non-transparent) dark background —
-     var(--glass-2) would otherwise render against the OS's default white. */
-  #certSelect option, #certSelect optgroup{
-    background:var(--bg); color:var(--text); font-family:var(--sans);
+  .search-suggest[hidden]{ display:none; }
+  .search-suggest button{
+    display:block; width:100%; text-align:left; cursor:pointer;
+    background:none; border:none; border-radius:7px; color:var(--text);
+    font-family:var(--sans); font-size:.78rem; padding:7px 9px;
   }
-  #certSelect optgroup{ color:var(--muted); font-weight:600; font-style:normal; }
-  #certSelect option:checked, #certSelect option:hover{
-    background:var(--accent); color:var(--bg);
+  .search-suggest button:hover, .search-suggest button:focus-visible{
+    background:rgba(255,255,255,.08); outline:none;
+  }
+  .search-suggest .ss-city{ color:var(--muted); font-size:.7rem; margin-left:4px; }
+
+  /* Certification chip groups (was a <select>; 34 certs across 9 vendors reads
+     better as the same Set-based multi-select chip pattern the Topics filter
+     already uses, grouped under vendor labels and tucked behind a <details>
+     since it's a deep power-user filter most visitors won't need open). */
+  #certDetails summary{
+    list-style:none; cursor:pointer; display:flex; align-items:center; gap:6px;
+  }
+  #certDetails summary::-webkit-details-marker{ display:none; }
+  #certDetails summary::before{ content:"▸"; color:var(--muted); font-size:.6rem; }
+  #certDetails[open] summary::before{ content:"▾"; }
+  .cert-group-label{
+    font-family:var(--mono); font-size:.6rem; font-weight:500; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted); opacity:.75; margin-bottom:6px;
   }
   #certNotes{
     margin-top:8px; padding:9px 11px; border-radius:10px;
@@ -323,6 +337,15 @@
   .popup p{ font-size:.78rem; color:var(--muted); line-height:1.5; margin-bottom:7px; }
   .popup a{ color:var(--accent); font-size:.78rem; text-decoration:none; }
   .popup a:hover{ text-decoration:underline; }
+  .popup button.linklike{
+    background:none; border:none; color:var(--accent); font-size:.78rem;
+    font-family:var(--sans); cursor:pointer; padding:0; text-decoration:none;
+  }
+  .popup button.linklike:hover{ text-decoration:underline; }
+  .popup .fav-toggle{
+    font-size:.72rem; color:var(--muted); white-space:nowrap;
+  }
+  .popup .fav-toggle[aria-pressed="true"]{ color:var(--gold); }
   .popup .facts{
     border-top:1px solid var(--line); margin:2px 0 7px; padding-top:7px;
     display:grid; gap:4px;
@@ -478,20 +501,30 @@
     .chip{ padding:9px 14px 9px 11px; font-size:.78rem; flex:none; white-space:nowrap; }
     .chip .dot{ width:10px; height:10px; }
     #search{ padding:12px 12px 12px 34px; font-size:.88rem; }
-    #certSelect{ padding:12px 32px 12px 12px; font-size:.88rem; }
-    #nearme, #opennow{ padding:9px 14px; font-size:.72rem; }
+    #nearme, #opennow, #mylist{ padding:9px 14px; font-size:.72rem; }
     .pin{ width:17px; height:17px; border-width:2.5px; }
-    /* Popups are opened with a fixed maxWidth sized for desktop (see
-       bindPopup/revealMarker below) — on a 320-375px phone that overruns
-       the screen edges. Cap it to the viewport, and let very long popups
-       (a con with 40 talks) scroll internally instead of running off the
-       bottom of the screen. */
-    .leaflet-popup-content-wrapper, .leaflet-popup{ max-width:calc(100vw - 24px) !important; }
-    .leaflet-popup-content{ max-height:60vh; overflow-y:auto; }
+    /* Popups become a bottom sheet on mobile instead of a small floating
+       bubble mid-map (which was easy to lose and covered nearby pins). Pure
+       CSS repositioning of Leaflet's own popup DOM — no JS popup-rendering
+       path is duplicated, so category-color borders, SpaceAPI status,
+       favorite/share buttons, and focus management all keep working
+       unchanged; only autoPan is disabled for mobile popups in JS since a
+       viewport-docked sheet has nothing for the map to pan toward. */
+    .leaflet-popup{
+      position:fixed !important; left:0 !important; right:0 !important;
+      bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom)) !important; top:auto !important;
+      margin:0 !important; transform:none !important; width:100% !important; max-width:100% !important;
+      animation:sheetUp .22s ease-out;
+    }
+    .leaflet-popup-tip-container{ display:none; }
+    .leaflet-popup-content-wrapper{ border-radius:16px 16px 0 0 !important; }
+    .leaflet-popup-content{ max-height:60vh; overflow-y:auto; margin:16px 18px; }
+    @keyframes sheetUp{ from{ transform:translateY(100%); } to{ transform:translateY(0); } }
   }
   @media (prefers-reduced-motion: reduce){
     .cursor{ animation:none; }
     .pin, .sector, .chip, .item{ transition:none; }
+    .leaflet-popup{ animation:none; }
     .pin.ongoing, .popup .tag.live-tag{ animation:none; }
   }
 
@@ -588,17 +621,21 @@
   </div>
 
   <div class="pad hairline">
-    <div class="label">Certification <span style="opacity:.55; font-weight:400">— studying for one?</span></div>
-    <select id="certSelect" aria-label="Filter by certification"></select>
-    <div id="certNotes" style="display:none"></div>
+    <details id="certDetails">
+      <summary class="label">Certification <span style="opacity:.55; font-weight:400">— studying for one?</span></summary>
+      <div id="certGroups" style="margin-top:10px; display:grid; gap:10px"></div>
+      <div id="certNotes" style="display:none"></div>
+    </details>
   </div>
 
   <div class="pad hairline">
     <div class="searchwrap">
-      <input id="search" type="search" placeholder="Search by name or city…" aria-label="Search resources">
+      <input id="search" type="search" placeholder="Search by name or city…" aria-label="Search resources" autocomplete="off">
+      <div id="searchSuggest" class="search-suggest" hidden role="listbox" aria-label="Matching resources"></div>
     </div>
     <button id="nearme" aria-pressed="false" title="Sort the list by distance from your location">◎ Near me</button>
     <button id="opennow" aria-pressed="false" title="Only show spaces currently reporting open (via SpaceAPI)">⏱ Open now</button>
+    <button id="mylist" aria-pressed="false" title="Only show resources you've saved">☆ My list</button>
   </div>
 
   <div id="list"></div>
@@ -831,6 +868,11 @@ function milesTo(a, b){
   return 2 * R * Math.asin(Math.sqrt(s));
 }
 function isMobile(){ return window.matchMedia('(max-width:760px)').matches; }
+/* Deterministic per-resource id from stable fields — no entries carry a real
+   id (see data.js), so this stands in for one wherever a stable reference is
+   needed across page loads (favorites, share-a-pin links) without a data
+   migration across all ~5600 entries. */
+function resourceId(r){ return (r.name + "|" + r.city + "|" + r.st).toLowerCase(); }
 
 /* ============ MAP SETUP ============ */
 const map = L.map('map', { zoomControl:false, preferCanvas:true }).setView([38.5, -96.5], 5);
@@ -1163,7 +1205,10 @@ const markers = RESOURCES.map(r => {
   }).toString();
   m.bindPopup(`
     <div class="popup">
-      <h3>${esc(r.name)}</h3>
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px">
+        <h3>${esc(r.name)}</h3>
+        <button type="button" class="fav-toggle linklike" aria-pressed="false" style="flex:none"><span aria-hidden="true">☆</span> Save</button>
+      </div>
       ${live ? `<span class="tag live-tag"><span aria-hidden="true">●</span> LIVE NOW</span>` : ""}
       ${isCfpOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700"><span aria-hidden="true">📄</span> CFP OPEN</span>` : ""}
       ${isCftOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700"><span aria-hidden="true">🎓</span> CFT OPEN</span>` : ""}
@@ -1176,9 +1221,10 @@ const markers = RESOURCES.map(r => {
       ${facts.length ? `<div class="facts">${facts.join("")}</div>` : ""}
       ${talksHtml}${eventsHtml}
       ${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">Website ↗</a>` : ""}
-      <a href="https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}" target="_blank" rel="noopener" style="${r.url ? "margin-left:10px" : ""}">Directions ↗</a>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}" target="_blank" rel="noopener" style="margin-left:${r.url ? "10" : "0"}px">Directions ↗</a>
+      <button type="button" class="share-btn linklike" style="margin-left:10px">Share ↗</button>
       <div style="margin-top:8px"><a href="${esc(reportUrl)}" target="_blank" rel="noopener" style="font-size:.68rem; opacity:.6"><span aria-hidden="true">⚑</span> Report incorrect info</a></div>
-    </div>`, { maxWidth: 320, maxHeight: 420 });
+    </div>`, { maxWidth: 320, maxHeight: 420, autoPan: !isMobile() });
   m._data = r;
   return m;
 });
@@ -1200,6 +1246,29 @@ map.on('popupopen', e => {
   preOpenFocusEl = document.activeElement;
   const closeBtn = el.querySelector('.leaflet-popup-close-button');
   if (closeBtn) closeBtn.focus({ preventScroll:true });
+
+  const favBtn = el.querySelector('.fav-toggle');
+  if (favBtn){
+    const on = favorites.has(resourceId(data));
+    favBtn.setAttribute('aria-pressed', String(on));
+    favBtn.innerHTML = on ? '<span aria-hidden="true">★</span> Saved' : '<span aria-hidden="true">☆</span> Save';
+    favBtn.onclick = () => toggleFavorite(data, favBtn);
+  }
+  const shareBtn = el.querySelector('.share-btn');
+  if (shareBtn){
+    const label = shareBtn.textContent;
+    shareBtn.onclick = async () => {
+      const url = pinUrl(data);
+      history.replaceState(null, '', url.slice(url.indexOf('?')));
+      try {
+        await navigator.clipboard.writeText(url);
+        shareBtn.textContent = 'Copied!';
+      } catch(e){
+        shareBtn.textContent = url;
+      }
+      setTimeout(() => { shareBtn.textContent = label; }, 2000);
+    };
+  }
 
   /* Live "open now" status for spaces that publish a SpaceAPI endpoint
      (https://spaceapi.io) — fetched on demand when the popup opens, not
@@ -1241,9 +1310,35 @@ map.on('popupclose', () => {
 /* ============ STATE + FILTERING ============ */
 const enabledCats = new Set(Object.keys(CATEGORIES));
 const enabledTopics = new Set();   // empty = no topic filter applied
-let activeCert = "";               // "" = no certification filter applied
+const enabledCerts = new Set();    // empty = no certification filter applied
 let searchTerm = "";
 let openNowFilter = false;
+let myListFilter = false;
+
+/* Saved/favorited entries — personal, browser-local, not part of the
+   shareable URL state (same treatment as near-me's location, which is also
+   personal rather than a content filter). Keyed by resourceId() since no
+   entry carries a real id. */
+const FAVORITES_KEY = 'uscm_favorites';
+const favorites = new Set((function loadFavorites(){
+  try { return JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"); }
+  catch(e){ return []; }
+})());
+function saveFavorites(){
+  try { localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites])); }
+  catch(e){ /* private mode, etc — fine, just won't be remembered */ }
+}
+function toggleFavorite(r, btn){
+  const id = resourceId(r);
+  const on = favorites.has(id);
+  on ? favorites.delete(id) : favorites.add(id);
+  saveFavorites();
+  if (btn){
+    btn.setAttribute('aria-pressed', String(!on));
+    btn.innerHTML = !on ? '<span aria-hidden="true">★</span> Saved' : '<span aria-hidden="true">☆</span> Save';
+  }
+  refresh();
+}
 
 /* SpaceAPI "open now" status, keyed by resource object (not id — none of
    these entries carry a stable id field). Prefetched once for every entry
@@ -1272,8 +1367,9 @@ function visible(r){
     && (activeRegion === null || r.region === activeRegion)
     && (activeState === null || r.st === activeState)
     && (searchTerm === "" || r._search.includes(searchTerm))
-    && (activeCert === "" || (r.certs || []).includes(activeCert))
+    && (enabledCerts.size === 0 || (r.certs || []).some(c => enabledCerts.has(c)))
     && (!openNowFilter || spaceApiStatus.get(r) === true)
+    && (!myListFilter || favorites.has(resourceId(r)))
     && (enabledTopics.size === 0 || (r.topics || []).some(t => enabledTopics.has(t))
         || (r.talks || []).some(tk => (tk.topics || []).some(t => enabledTopics.has(t)))
         || (r.events || []).some(ev => (ev.topics || []).some(t => enabledTopics.has(t))));
@@ -1295,8 +1391,9 @@ function refresh(){
     const el = document.createElement('button');
     el.className = 'item';
     el.style.setProperty('--cc', dotColor);
+    const fav = favorites.has(resourceId(r));
     el.innerHTML = `<span class="dot" style="background:${dotColor}"></span>
-                    <span><span class="t">${esc(r.name)}</span>
+                    <span><span class="t">${fav ? '<span aria-hidden="true">★</span> ' : ''}${esc(r.name)}</span>
                     <span class="m" style="display:block">${live ? '<span class="live-label"><span aria-hidden="true">●</span> LIVE NOW</span> · ' : ''}${dist}${esc(r.city)} · ${cat.label}</span></span>`;
     el.onclick = () => revealMarker(m);
     list.appendChild(el);
@@ -1307,11 +1404,12 @@ function refresh(){
     activeState ? STATES[activeState].name.toUpperCase()
     : activeRegion ? REGIONS[activeRegion].name.toUpperCase() : "ALL SECTORS";
   /* "Clear filters" only covers the facet filters below it (categories,
-     topics, cert, search, open-now) — region/state selection and near-me
-     are navigation/location, not filters, and un-touched by it. */
+     topics, certs, search, open-now, my-list) — region/state selection and
+     near-me are navigation/location, not filters, and un-touched by it. */
   document.getElementById('clearFilters').hidden = !(
     enabledCats.size !== Object.keys(CATEGORIES).length
-    || enabledTopics.size > 0 || activeCert !== "" || searchTerm !== "" || openNowFilter
+    || enabledTopics.size > 0 || enabledCerts.size > 0 || searchTerm !== ""
+    || openNowFilter || myListFilter
   );
 }
 
@@ -1387,28 +1485,46 @@ for (const [key, label] of Object.entries(TOPICS)){
   topicsChipEls[key] = b;
 }
 
-const certSelect = document.getElementById('certSelect');
-const certOpt0 = document.createElement('option');
-certOpt0.value = ""; certOpt0.textContent = "All certifications";
-certSelect.appendChild(certOpt0);
+const certChipEls = {};
+const certGroupsEl = document.getElementById('certGroups');
 for (const { label: groupLabel, keys } of CERT_GROUPS){
-  const group = document.createElement('optgroup');
-  group.label = groupLabel;
-  let any = false;
-  for (const key of keys){
+  const relevantKeys = keys.filter(key => RESOURCES.some(r => (r.certs || []).includes(key)));
+  if (!relevantKeys.length) continue;   // no point offering an empty group
+  const groupWrap = document.createElement('div');
+  const groupLabelEl = document.createElement('div');
+  groupLabelEl.className = 'cert-group-label';
+  groupLabelEl.textContent = groupLabel;
+  groupWrap.appendChild(groupLabelEl);
+  const row = document.createElement('div');
+  row.className = 'cats';
+  for (const key of relevantKeys){
     const n = RESOURCES.filter(r => (r.certs || []).includes(key)).length;
-    if (!n) continue;   // no point offering an empty filter
-    any = true;
-    const opt = document.createElement('option');
-    opt.value = key;
-    opt.textContent = `${CERTS[key]} (${n})`;
-    group.appendChild(opt);
+    const b = document.createElement('button');
+    b.className = 'chip';
+    b.setAttribute('aria-pressed', 'false');
+    b.style.setProperty('--cc', CATEGORIES.testing.color);
+    b.innerHTML = `<span class="dot"></span>${esc(CERTS[key])}&nbsp;<span style="opacity:.55">${n}</span>`;
+    b.onclick = () => {
+      const on = b.getAttribute('aria-pressed') === 'true';
+      b.setAttribute('aria-pressed', String(!on));
+      on ? enabledCerts.delete(key) : enabledCerts.add(key);
+      renderCertNotes();
+      syncUrl();
+      refresh();
+    };
+    row.appendChild(b);
+    certChipEls[key] = b;
   }
-  if (any) certSelect.appendChild(group);
+  groupWrap.appendChild(row);
+  certGroupsEl.appendChild(groupWrap);
 }
 const certNotesEl = document.getElementById('certNotes');
 function renderCertNotes(){
-  const info = CERT_INFO[activeCert];
+  /* Cliff notes only make sense for exactly one selected cert — with
+     several enabled at once (a real multi-select, unlike the old
+     single-value <select>) there's no one cert to show detail for. */
+  const only = enabledCerts.size === 1 ? [...enabledCerts][0] : null;
+  const info = only && CERT_INFO[only];
   if (!info){ certNotesEl.style.display = 'none'; certNotesEl.innerHTML = ''; return; }
   const row = (k, v) => `<div class="cn-row"><span class="cn-k">${esc(k)}</span><span>${esc(v)}</span></div>`;
   certNotesEl.innerHTML = `
@@ -1420,14 +1536,33 @@ function renderCertNotes(){
     ${row('RENEWAL', info.renewal)}`;
   certNotesEl.style.display = '';
 }
-certSelect.onchange = () => { activeCert = certSelect.value; renderCertNotes(); syncUrl(); refresh(); };
 
 const searchInput = document.getElementById('search');
+const searchSuggestEl = document.getElementById('searchSuggest');
+function hideSuggestions(){ searchSuggestEl.hidden = true; searchSuggestEl.innerHTML = ""; }
+function updateSuggestions(){
+  if (!searchTerm){ hideSuggestions(); return; }
+  const matches = markers.filter(m => visible(m._data)).slice(0, 6);
+  if (!matches.length){ hideSuggestions(); return; }
+  searchSuggestEl.innerHTML = matches.map((m, i) =>
+    `<button type="button" role="option" data-i="${i}">${esc(m._data.name)}<span class="ss-city">${esc(m._data.city)}</span></button>`
+  ).join("");
+  [...searchSuggestEl.children].forEach((btn, i) => btn.onclick = () => {
+    hideSuggestions();
+    revealMarker(matches[i]);
+  });
+  searchSuggestEl.hidden = false;
+}
 searchInput.addEventListener('input', e => {
   searchTerm = e.target.value.trim().toLowerCase();
   syncUrl();
   refresh();
+  updateSuggestions();
 });
+searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') hideSuggestions(); });
+/* Delay hiding on blur so a click on a suggestion button still registers —
+   a blur fires before that click's own event otherwise. */
+searchInput.addEventListener('blur', () => setTimeout(hideSuggestions, 150));
 
 /* ============ MOBILE MAP/LIST TABS ============ */
 const tabMapBtn = document.getElementById('tabMap');
@@ -1465,7 +1600,7 @@ function syncUrl(){
   const off = Object.keys(CATEGORIES).filter(k => !enabledCats.has(k));
   if (off.length) p.set('off', off.join(','));
   if (enabledTopics.size) p.set('t', [...enabledTopics].join(','));
-  if (activeCert) p.set('cert', activeCert);
+  if (enabledCerts.size) p.set('certs', [...enabledCerts].join(','));
   if (searchTerm) p.set('q', searchTerm);
   if (openNowFilter) p.set('open', '1');
   const qs = p.toString();
@@ -1491,9 +1626,12 @@ function applyUrlState(){
       topicsChipEls[key]?.setAttribute('aria-pressed', 'true');
     }
   }
-  if (p.has('cert') && CERTS[p.get('cert')]){
-    activeCert = p.get('cert');
-    certSelect.value = activeCert;
+  if (p.has('certs')){
+    for (const key of p.get('certs').split(',')){
+      if (!CERTS[key]) continue;
+      enabledCerts.add(key);
+      certChipEls[key]?.setAttribute('aria-pressed', 'true');
+    }
     renderCertNotes();
   }
   if (p.get('open') === '1'){
@@ -1504,6 +1642,20 @@ function applyUrlState(){
   if (REGIONS[r]) selectRegion(r);
   const s = p.get('s');
   if (s && STATES[s] && activeRegion !== null) selectState(s);
+  /* Share-a-pin: reveal one specific resource regardless of whether it
+     passes the current filters — revealMarker() already falls back to a
+     standalone popup+flyTo when the marker isn't in the visible cluster
+     set, so a shared link still works even if its filters don't apply. */
+  if (p.has('pin')){
+    const id = p.get('pin');
+    const m = markers.find(x => resourceId(x._data) === id);
+    if (m) revealMarker(m);
+  }
+}
+function pinUrl(r){
+  const p = new URLSearchParams(location.search);
+  p.set('pin', resourceId(r));
+  return location.origin + location.pathname + '?' + p.toString();
 }
 
 /* Reveal a marker even if it's clustered (or filtered out) */
@@ -1513,7 +1665,7 @@ function revealMarker(m){
     clusters.zoomToShowLayer(m, () => m.openPopup());
   } else {
     flyTo([m._data._jlat, m._data._jlng], 12, {duration:.8});
-    const p = L.popup({ maxWidth:320, maxHeight:420 }).setLatLng([m._data._jlat, m._data._jlng])
+    const p = L.popup({ maxWidth:320, maxHeight:420, autoPan:!isMobile() }).setLatLng([m._data._jlat, m._data._jlng])
       .setContent(m.getPopup().getContent());
     p._data = m._data;
     p.openOn(map);
@@ -1550,6 +1702,14 @@ openNowBtn.onclick = () => {
 };
 prefetchSpaceApiStatuses();
 
+/* ============ MY LIST (saved/favorited entries) ============ */
+const myListBtn = document.getElementById('mylist');
+myListBtn.onclick = () => {
+  myListFilter = !myListFilter;
+  myListBtn.setAttribute('aria-pressed', String(myListFilter));
+  refresh();
+};
+
 /* ============ CLEAR FILTERS ============ */
 document.getElementById('clearFilters').onclick = () => {
   for (const key of Object.keys(CATEGORIES)){
@@ -1558,9 +1718,12 @@ document.getElementById('clearFilters').onclick = () => {
   }
   enabledTopics.clear();
   for (const b of Object.values(topicsChipEls)) b.setAttribute('aria-pressed', 'false');
-  activeCert = ""; certSelect.value = ""; renderCertNotes();
-  searchTerm = ""; searchInput.value = "";
+  enabledCerts.clear();
+  for (const b of Object.values(certChipEls)) b.setAttribute('aria-pressed', 'false');
+  renderCertNotes();
+  searchTerm = ""; searchInput.value = ""; hideSuggestions();
   openNowFilter = false; openNowBtn.setAttribute('aria-pressed', 'false');
+  myListFilter = false; myListBtn.setAttribute('aria-pressed', 'false');
   syncUrl();
   refresh();
 };
