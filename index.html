@@ -71,6 +71,17 @@
   html,body{ height:100%; }
   body{ font-family:var(--sans); background:var(--bg); color:var(--text); overflow:hidden; }
 
+  /* ============ SKIP LINK ============
+     Keyboard/screen-reader users otherwise have to tab through the entire
+     filter sidebar (~10+ controls) before reaching the map on every load. */
+  .skip-link{
+    position:absolute; left:-9999px; top:0; z-index:2000;
+    background:var(--accent); color:var(--bg); font-weight:700;
+    padding:10px 16px; border-radius:0 0 10px 0;
+    font-family:var(--sans); font-size:.82rem; text-decoration:none;
+  }
+  .skip-link:focus{ left:0; }
+
   /* ============ MAP (full bleed) ============ */
   #map{ position:fixed; inset:0; background:var(--bg); }
   .leaflet-container{ font-family:var(--sans); }
@@ -483,19 +494,70 @@
     .pin, .sector, .chip, .item{ transition:none; }
     .pin.ongoing, .popup .tag.live-tag{ animation:none; }
   }
+
+  /* ============ CLEAR FILTERS PILL ============ */
+  .clear-filters{
+    margin-top:8px; display:inline-flex; align-items:center; gap:5px; cursor:pointer;
+    font-family:var(--mono); font-size:.64rem; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--muted); background:var(--glass-2); border:1px solid var(--line);
+    border-radius:999px; padding:5px 12px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .clear-filters:hover{ color:var(--text); border-color:var(--accent); }
+  .clear-filters:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .clear-filters[hidden]{ display:none; }
+
+  /* ============ MAP TOOLS CONTROL (legend + light/dark tile toggle) ============
+     Lives inside Leaflet's own bottomright control stack (above the existing
+     attribution control) so it never needs manual pixel-collision math, and
+     is naturally hidden on mobile's List tab since Leaflet controls sit at a
+     lower z-index than #panel, which covers the full screen there. */
+  .maptools-ctl{
+    background:var(--glass); backdrop-filter:blur(14px) saturate(1.2);
+    -webkit-backdrop-filter:blur(14px) saturate(1.2);
+    border:1px solid var(--line); border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,.35);
+    overflow:hidden; font-family:var(--sans);
+  }
+  .maptools-ctl button{
+    display:flex; align-items:center; gap:6px; width:100%;
+    background:none; border:none; color:var(--text); cursor:pointer;
+    font-family:var(--sans); font-size:.7rem; font-weight:500;
+    padding:7px 12px; white-space:nowrap;
+  }
+  .maptools-ctl button:hover{ background:rgba(255,255,255,.07); }
+  .maptools-ctl button:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+  .maptools-ctl button + button{ border-top:1px solid var(--line); }
+  #legendBody{
+    padding:3px 12px 10px; display:grid; gap:5px; max-height:220px;
+    overflow-y:auto; border-top:1px solid var(--line);
+  }
+  #legendBody[hidden]{ display:none; }
+  .legend-row{ display:flex; align-items:center; gap:7px; font-size:.66rem; color:var(--muted); white-space:nowrap; }
+  .legend-row .dot{ width:8px; height:8px; border-radius:50%; flex:none; }
+  @media (max-width:760px){
+    .maptools-ctl button{ padding:10px 14px; font-size:.76rem; }
+    .legend-row{ font-size:.72rem; }
+    /* Leaflet's own controls (attribution + our new maptools) sit at
+       z-index 1000 by default — below the mobile tab bar (1300), which
+       was silently covering them on the Map tab. Lift them clear of it. */
+    .leaflet-bottom{ margin-bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 8px); }
+  }
 </style>
 </head>
 <body>
 
-<div id="map"></div>
+<a href="#map" class="skip-link">Skip to map</a>
+<div id="map" tabindex="-1"></div>
 
 <div id="credit-badge">Created Open Source by Savvy Security LLC @ <a href="https://www.facebook.com/savvyissecurity" target="_blank" rel="noopener">facebook.com/savvyissecurity</a></div>
 
 <aside id="panel">
   <header class="pad hairline">
-    <h1><span class="prompt">❯</span>US Cyber Resource Map</h1>
+    <h1><span class="prompt" aria-hidden="true">❯</span>US Cyber Resource Map</h1>
     <p class="sub">A free map for students and lifelong learners to find their community — hacker cons, DEF CON groups, 2600 meetings, hackerspaces, ham radio clubs, cyber schools, library makerspaces, certification testing sites, and student STEM programs — by region, state, and category.</p>
     <div class="status" aria-live="polite" aria-atomic="true"><b id="statusText">ALL SECTORS</b> · <span id="visCount"></span> NODES<span class="cursor" aria-hidden="true"></span></div>
+    <button id="clearFilters" class="clear-filters" hidden><span aria-hidden="true">✕</span> Clear filters</button>
   </header>
 
   <div id="panelbody">
@@ -551,8 +613,8 @@
      full-screen panel; JS toggles body.mobile-list-active. Hidden entirely
      above 760px via the #mobileTabs media rule, so desktop is unaffected. -->
 <nav id="mobileTabs" role="tablist" aria-label="View">
-  <button id="tabMap" role="tab" aria-pressed="true" aria-controls="map"><span class="ico">◈</span>Map</button>
-  <button id="tabList" role="tab" aria-pressed="false" aria-controls="panel"><span class="ico">☰</span>List</button>
+  <button id="tabMap" role="tab" aria-pressed="true" aria-controls="map"><span class="ico" aria-hidden="true">◈</span>Map</button>
+  <button id="tabList" role="tab" aria-pressed="false" aria-controls="panel"><span class="ico" aria-hidden="true">☰</span>List</button>
 </nav>
 
 <div id="locBanner" role="region" aria-label="Use your location">
@@ -773,6 +835,19 @@ function isMobile(){ return window.matchMedia('(max-width:760px)').matches; }
 /* ============ MAP SETUP ============ */
 const map = L.map('map', { zoomControl:false, preferCanvas:true }).setView([38.5, -96.5], 5);
 L.control.zoom({ position:'topright' }).addTo(map);
+
+/* Reduced-motion-aware pan/zoom — map.flyTo/flyToBounds always animate at a
+   fixed duration regardless of the OS-level "reduce motion" setting (CSS
+   media queries can't reach into Leaflet's own animation code), a real
+   vestibular-trigger risk. Every pan/zoom in this file goes through these
+   two wrappers instead of calling the Leaflet methods directly. */
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function flyTo(latlng, zoom, opts={}){
+  if (REDUCED_MOTION) map.setView(latlng, zoom); else map.flyTo(latlng, zoom, opts);
+}
+function flyToBounds(bounds, opts={}){
+  if (REDUCED_MOTION) map.fitBounds(bounds, opts); else map.flyToBounds(bounds, opts);
+}
 /* CARTO's free dark_all basemap started requiring an API key (2026) and
    serves "API KEY REQUIRED" watermark tiles without one — as a plain 200 OK
    PNG, which never fires Leaflet's tileerror event. That failure mode is
@@ -790,21 +865,84 @@ const esriBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/servic
 const esriRef = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
   attribution:'© Esri', maxZoom:16, maxNativeZoom:16
 }).addTo(map);
+/* Light-mode counterpart to the dark tiles above — same provider (Esri),
+   same keyless/free tier, same two-layer (base + labels) shape, so it needs
+   no new attribution or credential management. Not added to the map by
+   default; toggled in by the map-tools control below. */
+const esriLightBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  attribution:'© Esri', maxZoom:16, maxNativeZoom:16
+});
+const esriLightRef = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+  attribution:'© Esri', maxZoom:16, maxNativeZoom:16
+});
+
 let esriTileErrors = 0, fellBackToOsm = false;
 function fallBackToOsmTiles(){
   if (fellBackToOsm) return;
   fellBackToOsm = true;
-  map.removeLayer(esriBase); map.removeLayer(esriRef);
+  [esriBase, esriRef, esriLightBase, esriLightRef].forEach(l => { if (map.hasLayer(l)) map.removeLayer(l); });
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution:'© OpenStreetMap contributors', maxZoom:19
   }).addTo(map);
+  const themeBtn = document.getElementById('tileThemeToggle');
+  if (themeBtn) themeBtn.hidden = true;   // nothing left to toggle between
   console.warn('[map] Esri basemap tiles failed repeatedly — switched to OpenStreetMap fallback.');
 }
 /* A handful of dropped requests is normal (flaky connection, one bad tile);
    a run of failures means the provider itself is down. */
-[esriBase, esriRef].forEach(layer => layer.on('tileerror', () => {
+[esriBase, esriRef, esriLightBase, esriLightRef].forEach(layer => layer.on('tileerror', () => {
   if (++esriTileErrors > 8) fallBackToOsmTiles();
 }));
+
+/* ============ MAP TOOLS CONTROL (legend + light/dark tile toggle) ============ */
+const MapTools = L.Control.extend({
+  options:{ position:'bottomright' },
+  onAdd(){
+    const c = L.DomUtil.create('div', 'maptools-ctl');
+    c.innerHTML = `
+      <button id="tileThemeToggle" type="button"></button>
+      <button id="legendToggle" type="button" aria-expanded="false" aria-controls="legendBody">
+        <span aria-hidden="true">🎨</span> Legend
+      </button>
+      <div id="legendBody" hidden></div>`;
+    L.DomEvent.disableClickPropagation(c);
+    L.DomEvent.disableScrollPropagation(c);
+    return c;
+  }
+});
+map.addControl(new MapTools());
+
+const legendBody = document.getElementById('legendBody');
+legendBody.innerHTML = Object.values(CATEGORIES).map(c =>
+  `<div class="legend-row"><span class="dot" style="background:${c.color}"></span>${esc(c.label)}</div>`
+).join('') +
+  `<div class="legend-row"><span class="dot" style="background:var(--gold)"></span>Live now / open call</div>
+   <div class="legend-row"><span class="dot" style="background:var(--accent)"></span>Your location</div>`;
+const legendToggleBtn = document.getElementById('legendToggle');
+legendToggleBtn.onclick = () => {
+  const willOpen = legendBody.hidden;
+  legendBody.hidden = !willOpen;
+  legendToggleBtn.setAttribute('aria-expanded', String(willOpen));
+};
+
+const tileThemeBtn = document.getElementById('tileThemeToggle');
+const TILE_THEME_KEY = 'uscm_tileTheme';
+function getTileTheme(){
+  try { return localStorage.getItem(TILE_THEME_KEY) === 'light' ? 'light' : 'dark'; }
+  catch(e){ return 'dark'; }
+}
+function applyTileTheme(theme){
+  if (fellBackToOsm) return;   // Esri's down entirely — nothing to switch between
+  const showLight = theme === 'light';
+  [esriBase, esriRef].forEach(l => showLight ? map.removeLayer(l) : l.addTo(map));
+  [esriLightBase, esriLightRef].forEach(l => showLight ? l.addTo(map) : map.removeLayer(l));
+  tileThemeBtn.innerHTML = showLight
+    ? '<span aria-hidden="true">🌙</span> Dark map'
+    : '<span aria-hidden="true">☀</span> Light map';
+  try { localStorage.setItem(TILE_THEME_KEY, theme); } catch(e){ /* private mode, etc — fine, just won't be remembered */ }
+}
+tileThemeBtn.onclick = () => applyTileTheme(getTileTheme() === 'light' ? 'dark' : 'light');
+applyTileTheme(getTileTheme());
 
 /* Region polygons — county-accurate MultiPolygons from regions.js */
 const regionLayers = {};
@@ -858,9 +996,9 @@ function selectState(code){
   restyleStates();
   renderStateChips();
   if (activeState){
-    map.flyToBounds(stateLayers[activeState].getBounds().pad(0.08), {duration:.8});
+    flyToBounds(stateLayers[activeState].getBounds().pad(0.08), {duration:.8});
   } else if (activeRegion !== null){
-    map.flyToBounds(regionLayers[activeRegion].getBounds().pad(0.05), {duration:.8});
+    flyToBounds(regionLayers[activeRegion].getBounds().pad(0.05), {duration:.8});
   }
   syncUrl();
   refresh();
@@ -1026,10 +1164,10 @@ const markers = RESOURCES.map(r => {
   m.bindPopup(`
     <div class="popup">
       <h3>${esc(r.name)}</h3>
-      ${live ? `<span class="tag live-tag">● LIVE NOW</span>` : ""}
-      ${isCfpOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">📄 CFP OPEN</span>` : ""}
-      ${isCftOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">🎓 CFT OPEN</span>` : ""}
-      ${isCfvOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700">🙋 CFV OPEN</span>` : ""}
+      ${live ? `<span class="tag live-tag"><span aria-hidden="true">●</span> LIVE NOW</span>` : ""}
+      ${isCfpOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700"><span aria-hidden="true">📄</span> CFP OPEN</span>` : ""}
+      ${isCftOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700"><span aria-hidden="true">🎓</span> CFT OPEN</span>` : ""}
+      ${isCfvOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700"><span aria-hidden="true">🙋</span> CFV OPEN</span>` : ""}
       ${r.spaceApiUrl ? `<span class="tag spaceapi-status" style="display:none"></span>` : ""}
       <span class="tag" style="color:${cat.color}; border-color:${cat.color}">${cat.label}</span>
       <span class="tag" style="color:${REGIONS[r.region].color}; border-color:${REGIONS[r.region].color}">${REGIONS[r.region].name}</span>
@@ -1038,20 +1176,30 @@ const markers = RESOURCES.map(r => {
       ${facts.length ? `<div class="facts">${facts.join("")}</div>` : ""}
       ${talksHtml}${eventsHtml}
       ${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">Website ↗</a>` : ""}
-      <div style="margin-top:8px"><a href="${esc(reportUrl)}" target="_blank" rel="noopener" style="font-size:.68rem; opacity:.6">⚑ Report incorrect info</a></div>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}" target="_blank" rel="noopener" style="${r.url ? "margin-left:10px" : ""}">Directions ↗</a>
+      <div style="margin-top:8px"><a href="${esc(reportUrl)}" target="_blank" rel="noopener" style="font-size:.68rem; opacity:.6"><span aria-hidden="true">⚑</span> Report incorrect info</a></div>
     </div>`, { maxWidth: 320, maxHeight: 420 });
   m._data = r;
   return m;
 });
 
 /* Color each popup's border to match its resource's category on open —
-   Leaflet builds the wrapper/tip outside our HTML, so this can't be inline style in bindPopup. */
+   Leaflet builds the wrapper/tip outside our HTML, so this can't be inline
+   style in bindPopup. Also handles focus management: opening a popup didn't
+   move focus into it, so keyboard/screen-reader users stayed wherever they'd
+   tabbed from with no indication anything happened; closing it never
+   returned focus either. */
+let preOpenFocusEl = null;
 map.on('popupopen', e => {
   const data = e.popup._data || (e.popup._source && e.popup._source._data);
   if (!data) return;
   const el = e.popup._container;
   if (!el) return;
   el.style.setProperty('--cc', CATEGORIES[data.category].color);
+
+  preOpenFocusEl = document.activeElement;
+  const closeBtn = el.querySelector('.leaflet-popup-close-button');
+  if (closeBtn) closeBtn.focus({ preventScroll:true });
 
   /* Live "open now" status for spaces that publish a SpaceAPI endpoint
      (https://spaceapi.io) — fetched on demand when the popup opens, not
@@ -1069,13 +1217,13 @@ map.on('popupopen', e => {
           clearTimeout(timeoutId);
           const open = json && json.state && typeof json.state.open === 'boolean' ? json.state.open : null;
           if (open === true) {
-            statusEl.textContent = '🟢 OPEN NOW';
+            statusEl.innerHTML = '<span aria-hidden="true">🟢</span> OPEN NOW';
             statusEl.style.color = 'var(--gold)';
             statusEl.style.borderColor = 'var(--gold)';
             statusEl.style.fontWeight = '700';
             statusEl.style.display = '';
           } else if (open === false) {
-            statusEl.textContent = '⚪ CLOSED NOW';
+            statusEl.innerHTML = '<span aria-hidden="true">⚪</span> CLOSED NOW';
             statusEl.style.color = 'var(--muted)';
             statusEl.style.borderColor = 'var(--muted)';
             statusEl.style.display = '';
@@ -1084,6 +1232,10 @@ map.on('popupopen', e => {
         .catch(() => clearTimeout(timeoutId));
     }
   }
+});
+map.on('popupclose', () => {
+  if (preOpenFocusEl && document.body.contains(preOpenFocusEl)) preOpenFocusEl.focus({ preventScroll:true });
+  preOpenFocusEl = null;
 });
 
 /* ============ STATE + FILTERING ============ */
@@ -1145,7 +1297,7 @@ function refresh(){
     el.style.setProperty('--cc', dotColor);
     el.innerHTML = `<span class="dot" style="background:${dotColor}"></span>
                     <span><span class="t">${esc(r.name)}</span>
-                    <span class="m" style="display:block">${live ? '<span class="live-label">● LIVE NOW</span> · ' : ''}${dist}${esc(r.city)} · ${cat.label}</span></span>`;
+                    <span class="m" style="display:block">${live ? '<span class="live-label"><span aria-hidden="true">●</span> LIVE NOW</span> · ' : ''}${dist}${esc(r.city)} · ${cat.label}</span></span>`;
     el.onclick = () => revealMarker(m);
     list.appendChild(el);
   });
@@ -1154,6 +1306,13 @@ function refresh(){
   document.getElementById('statusText').textContent =
     activeState ? STATES[activeState].name.toUpperCase()
     : activeRegion ? REGIONS[activeRegion].name.toUpperCase() : "ALL SECTORS";
+  /* "Clear filters" only covers the facet filters below it (categories,
+     topics, cert, search, open-now) — region/state selection and near-me
+     are navigation/location, not filters, and un-touched by it. */
+  document.getElementById('clearFilters').hidden = !(
+    enabledCats.size !== Object.keys(CATEGORIES).length
+    || enabledTopics.size > 0 || activeCert !== "" || searchTerm !== "" || openNowFilter
+  );
 }
 
 /* ============ PANEL UI ============ */
@@ -1166,9 +1325,9 @@ function selectRegion(id){
   showStates();
   renderStateChips();
   if (activeRegion){
-    map.flyToBounds(regionLayers[activeRegion].getBounds().pad(0.05), {duration:.8});
+    flyToBounds(regionLayers[activeRegion].getBounds().pad(0.05), {duration:.8});
   } else {
-    map.flyTo([38.5, -96.5], 5, {duration:.8});
+    flyTo([38.5, -96.5], 5, {duration:.8});
   }
   syncUrl();
   refresh();
@@ -1290,7 +1449,7 @@ function fitMapIfResultsOffscreen(){
   if (!shown.length) return; // empty state is already communicated via #empty
   const bounds = map.getBounds();
   if (shown.some(m => bounds.contains(m.getLatLng()))) return;
-  map.flyToBounds(L.latLngBounds(shown.map(m => m.getLatLng())), { duration:.6, padding:[40,40], maxZoom:12 });
+  flyToBounds(L.latLngBounds(shown.map(m => m.getLatLng())), { duration:.6, padding:[40,40], maxZoom:12 });
 }
 tabMapBtn.addEventListener('click', () => { setMobileView('map'); fitMapIfResultsOffscreen(); });
 tabListBtn.addEventListener('click', () => setMobileView('list'));
@@ -1353,7 +1512,7 @@ function revealMarker(m){
   if (clusters.hasLayer(m)){
     clusters.zoomToShowLayer(m, () => m.openPopup());
   } else {
-    map.flyTo([m._data._jlat, m._data._jlng], 12, {duration:.8});
+    flyTo([m._data._jlat, m._data._jlng], 12, {duration:.8});
     const p = L.popup({ maxWidth:320, maxHeight:420 }).setLatLng([m._data._jlat, m._data._jlng])
       .setContent(m.getPopup().getContent());
     p._data = m._data;
@@ -1375,7 +1534,7 @@ if (upcoming.length){
     const el = document.createElement('button');
     el.className = 'uprow' + (live ? ' live' : '');
     el.innerHTML = `<span class="d">${live ? 'NOW' : d.toLocaleDateString('en-US', {month:'short', day:'numeric'}) + yr}</span>
-                    <span class="n">${live ? '<span class="live-dot">● </span>' : ''}${esc(r.name)}</span>`;
+                    <span class="n">${live ? '<span class="live-dot" aria-hidden="true">● </span>' : ''}${esc(r.name)}</span>`;
     el.onclick = () => { const m = markers.find(x => x._data === r); if (m) revealMarker(m); };
     upEl.appendChild(el);
   });
@@ -1391,6 +1550,21 @@ openNowBtn.onclick = () => {
 };
 prefetchSpaceApiStatuses();
 
+/* ============ CLEAR FILTERS ============ */
+document.getElementById('clearFilters').onclick = () => {
+  for (const key of Object.keys(CATEGORIES)){
+    enabledCats.add(key);
+    catsChipEls[key]?.setAttribute('aria-pressed', 'true');
+  }
+  enabledTopics.clear();
+  for (const b of Object.values(topicsChipEls)) b.setAttribute('aria-pressed', 'false');
+  activeCert = ""; certSelect.value = ""; renderCertNotes();
+  searchTerm = ""; searchInput.value = "";
+  openNowFilter = false; openNowBtn.setAttribute('aria-pressed', 'false');
+  syncUrl();
+  refresh();
+};
+
 /* ============ NEAR ME (geolocation → distance sort) ============ */
 let userLoc = null, userMarker = null;
 const nearBtn = document.getElementById('nearme');
@@ -1403,7 +1577,7 @@ function setUserLoc(lat, lng){
     icon: L.divIcon({ className:'', iconSize:[18,18], iconAnchor:[9,9], html:'<div class="you"></div>' }),
     interactive: false
   }).addTo(map);
-  map.flyTo([lat, lng], 9, {duration:.8});
+  flyTo([lat, lng], 9, {duration:.8});
   refresh();
   // A location was just established (button, banner, or manual pick) —
   // jump straight to the sorted-by-distance list instead of leaving the
