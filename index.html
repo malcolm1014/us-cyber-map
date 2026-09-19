@@ -117,7 +117,16 @@
   #credit-badge a{ color:var(--accent); text-decoration:none; }
   #credit-badge a:hover{ text-decoration:underline; }
   @media (max-width:760px){
-    #credit-badge{ right:8px; top:auto; bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 10px); }
+    /* Bottom-LEFT, not right: the bottom-right corner is Leaflet's own
+       attribution control (which credits Leaflet itself — created by a
+       Ukrainian developer, Volodymyr Agafonkin — plus Esri/OSM) stacked
+       with the legend/tile-theme/install controls. This badge sat on top
+       of that corner at a higher z-index, visually burying the map
+       library's own credit under ours — a real problem when the whole
+       site depends on his work. Left side is otherwise empty on the Map
+       tab, so this fully separates the two rather than just reordering
+       who's on top. */
+    #credit-badge{ left:8px; right:auto; top:auto; bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 10px); }
     /* The List tab is a full-screen panel with its own footer — only show
        this badge over the Map tab, where nothing else occupies that corner. */
     body.mobile-list-active #credit-badge{ display:none; }
@@ -1263,6 +1272,22 @@ map.on('popupopen', e => {
   const el = e.popup._container;
   if (!el) return;
   el.style.setProperty('--cc', CATEGORIES[data.category].color);
+
+  /* Mobile bottom-sheet fix: `.leaflet-popup` is normally rendered inside
+     `.leaflet-popup-pane`, itself inside `.leaflet-map-pane` — which
+     Leaflet gives an inline `transform: translate3d(...)` to pan the map.
+     Per the CSS spec, ANY transformed ancestor becomes the containing
+     block for a `position:fixed` descendant, so the mobile CSS's
+     `.leaflet-popup{position:fixed}` was never actually fixed to the
+     viewport — it was "fixed" relative to the constantly-moving map pane,
+     landing off-screen depending on current pan position. That's why
+     tapping a pin appeared to do nothing. Reparenting the popup element to
+     the map's own outer container (which has no transform) escapes that
+     trap. Desktop is untouched — there `.leaflet-popup` MUST stay inside
+     the transformed pane for Leaflet's own relative-positioning math
+     (which keeps computing a transform on this element regardless of
+     where it's parented) to place it correctly next to its marker. */
+  if (isMobile() && el.parentElement !== map.getContainer()) map.getContainer().appendChild(el);
 
   preOpenFocusEl = document.activeElement;
   const closeBtn = el.querySelector('.leaflet-popup-close-button');
