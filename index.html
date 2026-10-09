@@ -216,15 +216,15 @@
   .uprow.live .live-dot{ color:var(--gold); }
 
   /* Near-me / Search-a-place / Open-now / My-list toggle buttons + user dot */
-  #nearme, #searchloc, #opennow, #mylist{
+  #nearme, #searchloc, #opennow, #mylist, #beginneronly{
     margin-top:8px; margin-right:6px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;
     font-family:var(--mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase;
     color:var(--muted); background:var(--glass-2); border:1px solid var(--line);
     border-radius:999px; padding:5px 12px; transition:color .15s ease, border-color .15s ease;
   }
-  #nearme:hover, #searchloc:hover, #opennow:hover, #mylist:hover{ color:var(--text); }
-  #nearme[aria-pressed="true"], #searchloc[aria-pressed="true"], #opennow[aria-pressed="true"], #mylist[aria-pressed="true"]{ color:var(--accent); border-color:var(--accent); }
-  #nearme:focus-visible, #searchloc:focus-visible, #opennow:focus-visible, #mylist:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  #nearme:hover, #searchloc:hover, #opennow:hover, #mylist:hover, #beginneronly:hover{ color:var(--text); }
+  #nearme[aria-pressed="true"], #searchloc[aria-pressed="true"], #opennow[aria-pressed="true"], #mylist[aria-pressed="true"], #beginneronly[aria-pressed="true"]{ color:var(--accent); border-color:var(--accent); }
+  #nearme:focus-visible, #searchloc:focus-visible, #opennow:focus-visible, #mylist:focus-visible, #beginneronly:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   #locSearchInput:focus{ outline:none; border-color:var(--accent); }
   #locSearchGo:hover{ background:rgba(255,255,255,.08); }
   .you{
@@ -521,7 +521,7 @@
     .chip{ padding:9px 14px 9px 11px; font-size:.78rem; flex:none; white-space:nowrap; }
     .chip .dot{ width:10px; height:10px; }
     #search{ padding:12px 12px 12px 34px; font-size:.88rem; }
-    #nearme, #searchloc, #opennow, #mylist{ padding:9px 14px; font-size:.72rem; }
+    #nearme, #searchloc, #opennow, #mylist, #beginneronly{ padding:9px 14px; font-size:.72rem; }
     #locSearchInput, #locSearchGo{ padding:12px 14px; font-size:.82rem; }
     .pin{ width:17px; height:17px; border-width:2.5px; }
     /* Popups become a bottom sheet on mobile instead of a small floating
@@ -544,9 +544,10 @@
   }
   @media (prefers-reduced-motion: reduce){
     .cursor{ animation:none; }
-    .pin, .sector, .chip, .item{ transition:none; }
+    .pin, .sector, .chip, .item, .persona, #contribute a.contrib{ transition:none; }
     .leaflet-popup{ animation:none; }
     .pin.ongoing, .popup .tag.live-tag{ animation:none; }
+    .you{ animation:none; }   /* user-location dot — was the one infinite pulse left uncovered */
   }
 
   /* ============ CLEAR FILTERS PILL ============ */
@@ -600,6 +601,62 @@
        was silently covering them on the Map tab. Lift them clear of it. */
     .leaflet-bottom{ margin-bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 8px); }
   }
+
+  /* ===== Added features: personas, beginner badge, related, contribute ===== */
+  /* "Start here" persona / collection presets */
+  #personas{ display:flex; flex-wrap:wrap; gap:7px; }
+  .persona{
+    display:inline-flex; align-items:center; gap:7px; cursor:pointer;
+    padding:8px 13px 8px 11px; font-family:var(--sans); font-size:.78rem; font-weight:500;
+    color:var(--text); background:var(--glass-2); border:1.5px solid var(--accent);
+    border-radius:999px; transition:background .18s ease;
+  }
+  .persona .pico{ font-size:.95rem; line-height:1; }
+  .persona:hover{ background:rgba(255,255,255,.08); }
+  .persona:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  #personaSteps{
+    display:none; margin-top:10px; padding:11px 13px; border-radius:11px;
+    background:var(--glass-2); border:1px solid var(--line);
+    font-size:.78rem; color:var(--text); line-height:1.5;
+  }
+  #personaSteps .ps-title{ font-weight:700; margin-bottom:4px; }
+  #personaSteps a{ color:var(--accent); text-decoration:none; }
+  #personaSteps a:hover{ text-decoration:underline; }
+  #personaSteps .ps-clear{
+    display:inline-block; margin-top:7px; font-family:var(--mono); font-size:.62rem;
+    color:var(--muted); background:none; border:none; cursor:pointer; padding:0;
+  }
+  #personaSteps .ps-clear:hover{ color:var(--text); text-decoration:underline; }
+  /* Beginner-friendly popup badge */
+  .popup .tag.beginner-tag{ color:var(--accent); border-color:var(--accent); font-weight:700; }
+  /* Nearby & related mini-list in popups */
+  .popup .related{ margin-top:9px; border-top:1px solid var(--line); padding-top:8px; }
+  .popup .related .rl-label{
+    font-family:var(--mono); font-size:.58rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:5px;
+  }
+  .popup .related .rl-item{
+    display:block; width:100%; text-align:left; background:none; border:none; cursor:pointer;
+    padding:4px 0; font-size:.74rem; color:var(--text); line-height:1.3;
+  }
+  .popup .related .rl-item:hover .rl-name{ text-decoration:underline; }
+  .popup .related .rl-item .rl-dot{ display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  .popup .related .rl-item .rl-meta{ color:var(--muted); }
+  .popup .cal-btn{ color:var(--accent); }
+  /* Keyboard focus rings for popup/related/contribute controls (the popup's
+     own links & linklike buttons had none before) — matches the app's style. */
+  .popup .rl-item:focus-visible, .popup .linklike:focus-visible, .popup a:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:4px; }
+  #contribute a.contrib:focus-visible, #personaSteps .ps-clear:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  /* Contribute / keep-it-current section */
+  #contribute .contrib-links{ display:flex; flex-wrap:wrap; gap:8px; }
+  #contribute a.contrib{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 13px; font-family:var(--sans); font-size:.76rem; font-weight:500;
+    color:var(--text); background:var(--glass-2); border:1px solid var(--line);
+    border-radius:10px; text-decoration:none; transition:border-color .18s ease;
+  }
+  #contribute a.contrib:hover{ border-color:var(--accent); color:var(--accent); }
+  #contribute .contrib-note{ margin-top:8px; font-size:.72rem; color:var(--muted); line-height:1.45; }
 </style>
 </head>
 <body>
@@ -618,6 +675,12 @@
   </header>
 
   <div id="panelbody">
+
+  <div class="pad hairline" id="startHere">
+    <div class="label">New here? <span style="opacity:.55; font-weight:400">— pick a path to start</span></div>
+    <div id="personas"></div>
+    <div id="personaSteps" aria-live="polite"></div>
+  </div>
 
   <div class="pad hairline" id="upwrap" style="display:none">
     <div class="label">Upcoming</div>
@@ -661,6 +724,7 @@
     <button id="searchloc" aria-pressed="false" aria-expanded="false" aria-controls="locSearchForm" title="Search a city, address, or zip to center the map there">📍 Search a place</button>
     <button id="opennow" aria-pressed="false" title="Only show spaces currently reporting open (via SpaceAPI)">⏱ Open now</button>
     <button id="mylist" aria-pressed="false" title="Only show resources you've saved">☆ My list</button>
+    <button id="beginneronly" aria-pressed="false" title="Only show beginner-friendly resources — youth & library programs, DEF CON groups, 2600 meetings, and anything flagged for newcomers">🟢 Beginner-friendly</button>
     <div id="locSearchForm" hidden style="margin-top:8px; display:flex; gap:6px">
       <input id="locSearchInput" type="text" placeholder="City, address, or zip…" aria-label="Search a location" style="flex:1; min-width:0; padding:9px 12px; border-radius:10px; background:var(--glass-2); border:1px solid var(--line); color:var(--text); font-family:var(--sans); font-size:.82rem">
       <button id="locSearchGo" type="button" style="flex:none; padding:9px 14px; border-radius:10px; background:var(--glass-2); border:1px solid var(--line); color:var(--text); font-family:var(--sans); font-size:.78rem; cursor:pointer">Go</button>
@@ -669,6 +733,15 @@
 
   <div id="list"></div>
   <div id="empty">No resources match. Clear the search or turn categories back on.</div>
+
+  <div class="pad hairline" id="contribute">
+    <div class="label">Help keep this map current</div>
+    <div class="contrib-links">
+      <a class="contrib" href="https://github.com/malcolm1014/us-cyber-map/issues/new?template=add-a-resource.md" target="_blank" rel="noopener"><span aria-hidden="true">➕</span> Add a resource</a>
+      <a class="contrib" href="https://github.com/malcolm1014/us-cyber-map/issues/new?template=fix-or-report.md" target="_blank" rel="noopener"><span aria-hidden="true">✎</span> Suggest a fix</a>
+    </div>
+    <div class="contrib-note">This map is open-source and community-kept — if a con, club, or space is missing, moved, or out of date, a 30-second GitHub issue is all it takes. Every pin links out to the real site too, so you can always double-check before you go.</div>
+  </div>
 
   </div><!-- /panelbody -->
 
@@ -902,6 +975,70 @@ function isMobile(){ return window.matchMedia('(max-width:760px)').matches; }
    needed across page loads (favorites, share-a-pin links) without a data
    migration across all ~5600 entries. */
 function resourceId(r){ return (r.name + "|" + r.city + "|" + r.st).toLowerCase(); }
+
+/* ---- Add-to-calendar: build a minimal all-day VEVENT and download it,
+   entirely client-side (Blob), no library, no backend. Only offered on dated,
+   not-yet-past entries. All-day DTEND is exclusive, so it's the last day + 1. */
+function downloadIcs(r){
+  if (!r.next) return;
+  const start = r.next.replace(/-/g, "");
+  const endInclusive = conEndYMD(r) || r.next;
+  const end = ymd(new Date(parseISO(endInclusive).getTime() + 86400000)).replace(/-/g, "");
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z");
+  const escIcs = s => String(s).replace(/([,;\\])/g, "\\$1").replace(/\n/g, "\\n");
+  const uid = resourceId(r).replace(/[^a-z0-9]+/g, "-") + "-" + start + "@us-cyber-map";
+  const desc = [r.when, r.notes, r.url].filter(Boolean).join(" — ");
+  const lines = [
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//US Cyber Map//EN", "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT", "UID:" + uid, "DTSTAMP:" + stamp,
+    "DTSTART;VALUE=DATE:" + start, "DTEND;VALUE=DATE:" + end,
+    "SUMMARY:" + escIcs(r.name),
+    "LOCATION:" + escIcs(r.address ? r.address + ", " + r.city : r.city),
+    desc ? "DESCRIPTION:" + escIcs(desc) : null,
+    r.url ? "URL:" + r.url : null,
+    "END:VEVENT", "END:VCALENDAR",
+  ].filter(Boolean);
+  const blob = new Blob([lines.join("\r\n")], { type:"text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = (resourceId(r).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "event") + ".ics";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* ---- "Nearby & related": up to 3 closest resources in a *different* category
+   within ~75 mi, so one pin becomes a connected next step. Computed lazily on
+   popup open (O(n)) and cached on the resource. ---- */
+function fillRelated(container, r){
+  if (r._related === undefined){
+    r._related = RESOURCES
+      .filter(x => x !== r && x.category !== r.category)
+      .map(x => ({ x, d: milesTo(r, x) }))
+      .filter(o => o.d <= 75)
+      .sort((a, b) => a.d - b.d)
+      .slice(0, 3)
+      .map(o => o.x);
+  }
+  if (!r._related.length){ container.style.display = "none"; return; }
+  container.setAttribute('role', 'group');
+  container.setAttribute('aria-label', 'Nearby and related resources');
+  container.innerHTML = `<div class="rl-label">Nearby &amp; related</div>` +
+    r._related.map(x => {
+      const c = CATEGORIES[x.category];
+      return `<button type="button" class="rl-item" data-id="${esc(resourceId(x))}">` +
+        `<span class="rl-dot" style="background:${c.color}"></span>` +
+        `<span class="rl-name">${esc(x.name)}</span>` +
+        `<span class="rl-meta"> · ${esc(x.city)} · ${c.label}</span></button>`;
+    }).join("");
+  container.querySelectorAll('.rl-item').forEach(btn => {
+    btn.onclick = () => {
+      const m = markers.find(mm => resourceId(mm._data) === btn.dataset.id);
+      if (m) revealMarker(m);
+    };
+  });
+  container.style.display = "";
+}
 
 /* ============ MAP SETUP ============ */
 const map = L.map('map', { zoomControl:false, preferCanvas:true }).setView([38.5, -96.5], 5);
@@ -1172,7 +1309,21 @@ const markers = RESOURCES.map(r => {
      including re-adds after un-spiderfying). */
   m.on('add', () => {
     const el = m.getElement();
-    if (el){ el.setAttribute('aria-label', r.name); el.setAttribute('role', 'button'); }
+    if (el){
+      el.setAttribute('aria-label', r.name);
+      el.setAttribute('role', 'button');
+      /* role="button" tells assistive tech the marker is activatable, so both
+         Enter and Space are expected to open it. Leaflet handles Enter, but
+         Space would otherwise scroll the page — make both open the popup.
+         Set via onkeydown (property, not addEventListener) so repeated
+         add/re-add events (de-spiderfying) never stack duplicate handlers. */
+      el.onkeydown = ev => {
+        if (ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar'){
+          ev.preventDefault();
+          m.openPopup();
+        }
+      };
+    }
   });
   const topicLabel = t => TOPICS[t] || t;
   r._search = [
@@ -1244,6 +1395,7 @@ const markers = RESOURCES.map(r => {
       ${isCftOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700"><span aria-hidden="true">🎓</span> CFT OPEN</span>` : ""}
       ${isCfvOpen(r) ? `<span class="tag" style="color:var(--gold); border-color:var(--gold); font-weight:700"><span aria-hidden="true">🙋</span> CFV OPEN</span>` : ""}
       ${r.spaceApiUrl ? `<span class="tag spaceapi-status" style="display:none"></span>` : ""}
+      ${r.beginner ? `<span class="tag beginner-tag"><span aria-hidden="true">🟢</span> BEGINNER-FRIENDLY</span>` : ""}
       <span class="tag" style="color:${cat.color}; border-color:${cat.color}">${cat.label}</span>
       <span class="tag" style="color:${REGIONS[r.region].color}; border-color:${REGIONS[r.region].color}">${REGIONS[r.region].name}</span>
       ${topicTags}${certTags}
@@ -1253,6 +1405,8 @@ const markers = RESOURCES.map(r => {
       ${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">Website ↗</a>` : ""}
       <a href="https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}" target="_blank" rel="noopener" style="margin-left:${r.url ? "10" : "0"}px">Directions ↗</a>
       <button type="button" class="share-btn linklike" style="margin-left:10px">Share ↗</button>
+      ${(r.next && !isPast(r)) ? `<button type="button" class="cal-btn linklike" style="margin-left:10px"><span aria-hidden="true">📅</span> Add to calendar</button>` : ""}
+      <div class="related" style="display:none"></div>
       <div style="margin-top:8px"><a href="${esc(reportUrl)}" target="_blank" rel="noopener" style="font-size:.68rem; opacity:.6"><span aria-hidden="true">⚑</span> Report incorrect info</a></div>
     </div>`, { maxWidth: 320, maxHeight: 420, autoPan: !isMobile() });
   m._data = r;
@@ -1316,6 +1470,12 @@ map.on('popupopen', e => {
     };
   }
 
+  const calBtn = el.querySelector('.cal-btn');
+  if (calBtn) calBtn.onclick = () => downloadIcs(data);
+
+  const relEl = el.querySelector('.related');
+  if (relEl) fillRelated(relEl, data);
+
   /* Live "open now" status for spaces that publish a SpaceAPI endpoint
      (https://spaceapi.io) — fetched on demand when the popup opens, not
      on page load, since most of these are small self-hosted JSON files
@@ -1360,6 +1520,7 @@ const enabledCerts = new Set();    // empty = no certification filter applied
 let searchTerm = "";
 let openNowFilter = false;
 let myListFilter = false;
+let beginnerFilter = false;
 
 /* Saved/favorited entries — personal, browser-local, not part of the
    shareable URL state (same treatment as near-me's location, which is also
@@ -1416,6 +1577,7 @@ function visible(r){
     && (enabledCerts.size === 0 || (r.certs || []).some(c => enabledCerts.has(c)))
     && (!openNowFilter || spaceApiStatus.get(r) === true)
     && (!myListFilter || favorites.has(resourceId(r)))
+    && (!beginnerFilter || r.beginner === true)
     && (enabledTopics.size === 0 || (r.topics || []).some(t => enabledTopics.has(t))
         || (r.talks || []).some(tk => (tk.topics || []).some(t => enabledTopics.has(t)))
         || (r.events || []).some(ev => (ev.topics || []).some(t => enabledTopics.has(t))));
@@ -1455,7 +1617,7 @@ function refresh(){
   document.getElementById('clearFilters').hidden = !(
     enabledCats.size !== Object.keys(CATEGORIES).length
     || enabledTopics.size > 0 || enabledCerts.size > 0 || searchTerm !== ""
-    || openNowFilter || myListFilter
+    || openNowFilter || myListFilter || beginnerFilter
   );
 }
 
@@ -1649,6 +1811,7 @@ function syncUrl(){
   if (enabledCerts.size) p.set('certs', [...enabledCerts].join(','));
   if (searchTerm) p.set('q', searchTerm);
   if (openNowFilter) p.set('open', '1');
+  if (beginnerFilter) p.set('bg', '1');
   const qs = p.toString();
   history.replaceState(null, '', qs ? '?' + qs : location.pathname);
 }
@@ -1683,6 +1846,10 @@ function applyUrlState(){
   if (p.get('open') === '1'){
     openNowFilter = true;
     openNowBtn.setAttribute('aria-pressed', 'true');
+  }
+  if (p.get('bg') === '1'){
+    beginnerFilter = true;
+    beginnerBtn.setAttribute('aria-pressed', 'true');
   }
   const r = Number(p.get('r'));
   if (REGIONS[r]) selectRegion(r);
@@ -1756,6 +1923,15 @@ myListBtn.onclick = () => {
   refresh();
 };
 
+/* ============ BEGINNER-FRIENDLY FILTER ============ */
+const beginnerBtn = document.getElementById('beginneronly');
+beginnerBtn.onclick = () => {
+  beginnerFilter = !beginnerFilter;
+  beginnerBtn.setAttribute('aria-pressed', String(beginnerFilter));
+  syncUrl();
+  refresh();
+};
+
 /* ============ CLEAR FILTERS ============ */
 document.getElementById('clearFilters').onclick = () => {
   for (const key of Object.keys(CATEGORIES)){
@@ -1770,9 +1946,75 @@ document.getElementById('clearFilters').onclick = () => {
   searchTerm = ""; searchInput.value = ""; hideSuggestions();
   openNowFilter = false; openNowBtn.setAttribute('aria-pressed', 'false');
   myListFilter = false; myListBtn.setAttribute('aria-pressed', 'false');
+  beginnerFilter = false; beginnerBtn.setAttribute('aria-pressed', 'false');
+  hidePersonaSteps();
   syncUrl();
   refresh();
 };
+
+/* ============ START-HERE PERSONAS / COLLECTIONS ============ */
+/* Each preset just drives the existing category filter + beginner flag, so a
+   chosen path is already captured in the shareable URL (off= / bg=). This is
+   both the "Start here" onboarding picker and the curated-collections idea —
+   a collection is just a saved filter preset. */
+const PERSONAS = [
+  { key:'teen', icon:'🧒', label:'Kid / teen', cats:['youth','library','maker','ctf'], beginner:true,
+    steps:'Start at a <b>library makerspace</b> or <b>youth program</b> near you — free and built for newcomers. Online, try <a href="https://picoctf.org" target="_blank" rel="noopener">picoCTF</a> (free, from Carnegie Mellon) and look for <b>CyberPatriot</b>.' },
+  { key:'student', icon:'🎓', label:'Student', cats:['school','con','ctf','meetup'], beginner:false,
+    steps:'Join your <b>school\'s security club</b>, hit a nearby <b>BSides</b> (cheap and welcoming), and play a beginner <b>CTF</b>. DEF CON groups and 2600 meetings are free to drop into.' },
+  { key:'career', icon:'🔁', label:'Career-changer', cats:['meetup','con','testing','maker','hamradio','accelerator'], beginner:false,
+    steps:'<b>DEF CON groups</b> and <b>2600</b> meetings are free — just show up. Browse <b>certification testing</b> sites when you\'re ready to validate skills, and hackerspaces to build hands-on.' },
+  { key:'curious', icon:'🧭', label:'Just curious', cats:['maker','meetup','con'], beginner:true,
+    steps:'Drop into a <b>hackerspace</b> open night or a <b>local meetup</b> — no experience needed. Check a pin\'s site for its next open evening.' },
+  { key:'free', icon:'🆓', label:'Free & just-show-up', cats:['meetup','library','youth','hamradio','ctf'], beginner:true,
+    steps:'The <b>no-cost, no-signup</b> doors: 2600 and DEF CON groups, library makerspaces, youth programs, ham clubs, and open CTFs.' },
+];
+const personasEl = document.getElementById('personas');
+const personaStepsEl = document.getElementById('personaSteps');
+function hidePersonaSteps(){ personaStepsEl.style.display = 'none'; personaStepsEl.innerHTML = ''; }
+function setCategorySet(cats){
+  const want = new Set(cats);
+  for (const key of Object.keys(CATEGORIES)){
+    const on = want.has(key);
+    on ? enabledCats.add(key) : enabledCats.delete(key);
+    catsChipEls[key]?.setAttribute('aria-pressed', String(on));
+  }
+}
+function applyPersona(p){
+  setCategorySet(p.cats);
+  enabledTopics.clear(); for (const b of Object.values(topicsChipEls)) b.setAttribute('aria-pressed', 'false');
+  enabledCerts.clear();  for (const b of Object.values(certChipEls))  b.setAttribute('aria-pressed', 'false');
+  renderCertNotes();
+  beginnerFilter = p.beginner;
+  beginnerBtn.setAttribute('aria-pressed', String(p.beginner));
+  personaStepsEl.innerHTML =
+    `<div class="ps-title">${p.icon} ${esc(p.label)} — your first moves</div><div>${p.steps}</div>` +
+    `<button type="button" class="ps-clear">✕ show everything again</button>`;
+  personaStepsEl.querySelector('.ps-clear').onclick = () => document.getElementById('clearFilters').click();
+  personaStepsEl.style.display = 'block';
+  syncUrl();
+  refresh();
+}
+for (const p of PERSONAS){
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'persona';
+  b.innerHTML = `<span class="pico" aria-hidden="true">${p.icon}</span>${esc(p.label)}`;
+  b.onclick = () => applyPersona(p);
+  personasEl.appendChild(b);
+}
+personasEl.setAttribute('role', 'group');
+personasEl.setAttribute('aria-label', 'Start-here paths');
+
+/* ============ A11Y: section-heading semantics ============ */
+/* The panel's `.label` section titles are styled divs — give screen-reader
+   users real heading navigation (the H key) with no visual change at all.
+   Skip the cert <summary>, which already carries disclosure semantics. */
+document.querySelectorAll('#panel .label').forEach(el => {
+  if (el.tagName === 'SUMMARY') return;
+  el.setAttribute('role', 'heading');
+  el.setAttribute('aria-level', '2');
+});
 
 /* ============ NEAR ME (geolocation → distance sort) ============ */
 let userLoc = null, userMarker = null;

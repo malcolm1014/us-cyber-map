@@ -69,3 +69,16 @@ Data sweep: **July 2026**. Verified 2026 dates at sweep time: DEF CON 34
 (Aug 6–9), Black Hat USA (Aug 1–6), HOPE 26 (Aug 14–16), GrrCON
 (Sept 24–25), Wild West Hackin' Fest Deadwood (Oct 7–9), SAINTCON
 (Oct 27–30), BSides Orlando (Sept 25–26).
+
+Dated-event refresh: **October 2026**. All 100 `next:` dates that had
+expired by Oct 9 (Aug–Oct 2026 cons) were cleared so they stop flagging as
+expired and dropping into the Upcoming panel; each one's `when:` now reads
+as a recurring descriptor ("Annual, September — 2027 dates TBA"). Where a
+next edition was actually published, that detail is folded in: **TechNet
+Augusta** carries a verified `next:` of Aug 17–19, 2027 (AFCEA), and the
+`when:` text flags the confirmed-but-relocating editions — GSX 2027
+(Orlando, Sep 20–22), USENIX Security / WOOT / VehicleSec 2027 (Denver,
+Aug 11–13), IAPP PSR 2027 (Vancouver, Canada, Sep 14–17), Crypto 2027
+(UC Santa Barbara, August), and WWHF @ Mile High (Denver, Feb 17–19, 2027).
+As of early October 2026, no other 2027 dates were announced yet; per the
+house rule, only verified dates get a `next:`.
