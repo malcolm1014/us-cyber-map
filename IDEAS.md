@@ -3,11 +3,14 @@
 A deep dive into how large, successful communities help newcomers *find their
 people and get in the door*, translated into concrete features for this map.
 
-> **Build status (Oct 2026):** items **1–5 of the shortlist are shipped** —
+> **Build status (Oct 2026):** the whole shortlist (items **1–6) is shipped** —
 > add-to-calendar `.ics`, the Suggest-edit / Add-a-resource GitHub flow (+ two
 > issue templates), the beginner-friendly flag & filter (925 rows tagged), the
-> "Start here" persona picker, and nearby/related pins + collection presets.
-> Item 6 (a dedicated accessibility pass) is the remaining open item.
+> "Start here" persona picker, nearby/related pins + collection presets, and the
+> accessibility pass (Enter/Space marker activation without page-scroll, section
+> headings for screen-reader navigation, group labels, completed
+> reduced-motion coverage, and focus rings on every new control + the popup's
+> previously-unringed links).
 
 **Who this is for:** the two audiences in the README — the "average con-goer"
 and the "lifelong learner" (kid discovering hacking, student picking a program,

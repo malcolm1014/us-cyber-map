@@ -544,9 +544,10 @@
   }
   @media (prefers-reduced-motion: reduce){
     .cursor{ animation:none; }
-    .pin, .sector, .chip, .item{ transition:none; }
+    .pin, .sector, .chip, .item, .persona, #contribute a.contrib{ transition:none; }
     .leaflet-popup{ animation:none; }
     .pin.ongoing, .popup .tag.live-tag{ animation:none; }
+    .you{ animation:none; }   /* user-location dot — was the one infinite pulse left uncovered */
   }
 
   /* ============ CLEAR FILTERS PILL ============ */
@@ -642,6 +643,10 @@
   .popup .related .rl-item .rl-dot{ display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:6px; vertical-align:middle; }
   .popup .related .rl-item .rl-meta{ color:var(--muted); }
   .popup .cal-btn{ color:var(--accent); }
+  /* Keyboard focus rings for popup/related/contribute controls (the popup's
+     own links & linklike buttons had none before) — matches the app's style. */
+  .popup .rl-item:focus-visible, .popup .linklike:focus-visible, .popup a:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:4px; }
+  #contribute a.contrib:focus-visible, #personaSteps .ps-clear:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   /* Contribute / keep-it-current section */
   #contribute .contrib-links{ display:flex; flex-wrap:wrap; gap:8px; }
   #contribute a.contrib{
@@ -1016,6 +1021,8 @@ function fillRelated(container, r){
       .map(o => o.x);
   }
   if (!r._related.length){ container.style.display = "none"; return; }
+  container.setAttribute('role', 'group');
+  container.setAttribute('aria-label', 'Nearby and related resources');
   container.innerHTML = `<div class="rl-label">Nearby &amp; related</div>` +
     r._related.map(x => {
       const c = CATEGORIES[x.category];
@@ -1302,7 +1309,21 @@ const markers = RESOURCES.map(r => {
      including re-adds after un-spiderfying). */
   m.on('add', () => {
     const el = m.getElement();
-    if (el){ el.setAttribute('aria-label', r.name); el.setAttribute('role', 'button'); }
+    if (el){
+      el.setAttribute('aria-label', r.name);
+      el.setAttribute('role', 'button');
+      /* role="button" tells assistive tech the marker is activatable, so both
+         Enter and Space are expected to open it. Leaflet handles Enter, but
+         Space would otherwise scroll the page — make both open the popup.
+         Set via onkeydown (property, not addEventListener) so repeated
+         add/re-add events (de-spiderfying) never stack duplicate handlers. */
+      el.onkeydown = ev => {
+        if (ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar'){
+          ev.preventDefault();
+          m.openPopup();
+        }
+      };
+    }
   });
   const topicLabel = t => TOPICS[t] || t;
   r._search = [
@@ -1982,6 +2003,18 @@ for (const p of PERSONAS){
   b.onclick = () => applyPersona(p);
   personasEl.appendChild(b);
 }
+personasEl.setAttribute('role', 'group');
+personasEl.setAttribute('aria-label', 'Start-here paths');
+
+/* ============ A11Y: section-heading semantics ============ */
+/* The panel's `.label` section titles are styled divs — give screen-reader
+   users real heading navigation (the H key) with no visual change at all.
+   Skip the cert <summary>, which already carries disclosure semantics. */
+document.querySelectorAll('#panel .label').forEach(el => {
+  if (el.tagName === 'SUMMARY') return;
+  el.setAttribute('role', 'heading');
+  el.setAttribute('aria-level', '2');
+});
 
 /* ============ NEAR ME (geolocation → distance sort) ============ */
 let userLoc = null, userMarker = null;
